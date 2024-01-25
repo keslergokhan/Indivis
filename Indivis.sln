@@ -1,0 +1,83 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DF268B11-0A2E-43FD-83D2-D1CF5F539E62}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{67A5D9B2-1BDE-46C6-9ECD-8122D3F52516}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{EACD582C-F47E-4ED1-AAAF-5283E7D60FCD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{1D4E32EB-3CFE-4647-9A6C-D5968BF54EA1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebUI", "WebUI", "{FB8B62E8-B08D-4B40-BC77-6F21904CC831}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indivis.Core.Application", "..\indivis\src\Core\Indivis.Core.Application\Indivis.Core.Application.csproj", "{E568DF59-5108-47D6-96DD-476FD4B53B7F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indivis.Core.Domain", "..\indivis\src\Core\Indivis.Core.Domain\Indivis.Core.Domain.csproj", "{6C1F54C1-F4FA-465E-BE4E-842738811372}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indivis.Presentation.WebUI", "..\indivis\src\Presentation\Indivis.Presentation.WebUI\Indivis.Presentation.WebUI.csproj", "{7AED010A-E97D-4CFA-98DA-97A042BB1329}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indivis.Infrastructure.Infrastructure", "..\indivis\src\Infrastructure\Indivis.Infrastructure.Infrastructure\Indivis.Infrastructure.Infrastructure.csproj", "{AF373824-37A6-456B-9887-4CCFE2E75D37}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indivis.Infrastructure.Persistence", "..\indivis\src\Infrastructure\Indivis.Infrastructure.Persistence\Indivis.Infrastructure.Persistence.csproj", "{5F3C6088-F0DC-47CE-BDA1-DECCBF134A75}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controllers", "Controllers", "{BE7EA631-92E4-4FBB-8914-8ECA7450938F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indivis.Presentation.WebUI.Controllers", "..\indivis\src\Presentation\Controllers\Indivis.Presentation.WebUI.Controllers\Indivis.Presentation.WebUI.Controllers.csproj", "{AD493238-E0EE-4BB3-BE83-41FFEBF6CB27}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E568DF59-5108-47D6-96DD-476FD4B53B7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E568DF59-5108-47D6-96DD-476FD4B53B7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E568DF59-5108-47D6-96DD-476FD4B53B7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E568DF59-5108-47D6-96DD-476FD4B53B7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C1F54C1-F4FA-465E-BE4E-842738811372}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C1F54C1-F4FA-465E-BE4E-842738811372}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C1F54C1-F4FA-465E-BE4E-842738811372}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C1F54C1-F4FA-465E-BE4E-842738811372}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AED010A-E97D-4CFA-98DA-97A042BB1329}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AED010A-E97D-4CFA-98DA-97A042BB1329}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AED010A-E97D-4CFA-98DA-97A042BB1329}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AED010A-E97D-4CFA-98DA-97A042BB1329}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF373824-37A6-456B-9887-4CCFE2E75D37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF373824-37A6-456B-9887-4CCFE2E75D37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF373824-37A6-456B-9887-4CCFE2E75D37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF373824-37A6-456B-9887-4CCFE2E75D37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F3C6088-F0DC-47CE-BDA1-DECCBF134A75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F3C6088-F0DC-47CE-BDA1-DECCBF134A75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F3C6088-F0DC-47CE-BDA1-DECCBF134A75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F3C6088-F0DC-47CE-BDA1-DECCBF134A75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD493238-E0EE-4BB3-BE83-41FFEBF6CB27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD493238-E0EE-4BB3-BE83-41FFEBF6CB27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD493238-E0EE-4BB3-BE83-41FFEBF6CB27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD493238-E0EE-4BB3-BE83-41FFEBF6CB27}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{67A5D9B2-1BDE-46C6-9ECD-8122D3F52516} = {DF268B11-0A2E-43FD-83D2-D1CF5F539E62}
+		{EACD582C-F47E-4ED1-AAAF-5283E7D60FCD} = {DF268B11-0A2E-43FD-83D2-D1CF5F539E62}
+		{1D4E32EB-3CFE-4647-9A6C-D5968BF54EA1} = {DF268B11-0A2E-43FD-83D2-D1CF5F539E62}
+		{FB8B62E8-B08D-4B40-BC77-6F21904CC831} = {EACD582C-F47E-4ED1-AAAF-5283E7D60FCD}
+		{E568DF59-5108-47D6-96DD-476FD4B53B7F} = {67A5D9B2-1BDE-46C6-9ECD-8122D3F52516}
+		{6C1F54C1-F4FA-465E-BE4E-842738811372} = {67A5D9B2-1BDE-46C6-9ECD-8122D3F52516}
+		{7AED010A-E97D-4CFA-98DA-97A042BB1329} = {FB8B62E8-B08D-4B40-BC77-6F21904CC831}
+		{AF373824-37A6-456B-9887-4CCFE2E75D37} = {1D4E32EB-3CFE-4647-9A6C-D5968BF54EA1}
+		{5F3C6088-F0DC-47CE-BDA1-DECCBF134A75} = {1D4E32EB-3CFE-4647-9A6C-D5968BF54EA1}
+		{BE7EA631-92E4-4FBB-8914-8ECA7450938F} = {FB8B62E8-B08D-4B40-BC77-6F21904CC831}
+		{AD493238-E0EE-4BB3-BE83-41FFEBF6CB27} = {BE7EA631-92E4-4FBB-8914-8ECA7450938F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F0B128BF-70EF-4FD4-8418-5308150EEBA4}
+	EndGlobalSection
+EndGlobal
