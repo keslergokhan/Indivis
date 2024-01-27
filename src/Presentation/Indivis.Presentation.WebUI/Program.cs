@@ -1,7 +1,13 @@
+using Indivis.Infrastructure.Persistence;
+using Indivis.Core.Application;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddApplication(builder.Configuration);
+
 
 var app = builder.Build();
 
