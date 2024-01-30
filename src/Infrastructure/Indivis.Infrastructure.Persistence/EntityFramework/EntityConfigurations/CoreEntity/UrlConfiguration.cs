@@ -30,7 +30,7 @@ namespace Indivis.Infrastructure.Persistence.EntityFramework.EntityConfiguration
             builder.HasOne(x => x.ParentUrl)
                 .WithMany(x => x.SubUrls)
                 .HasForeignKey(x => x.ParentUrlId)
-                .IsRequired(false).OnDelete(DeleteBehavior.Restrict);
+                .IsRequired(false).OnDelete(DeleteBehavior.NoAction);
 
 
 

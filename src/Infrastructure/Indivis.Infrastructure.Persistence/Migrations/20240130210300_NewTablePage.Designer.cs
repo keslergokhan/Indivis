@@ -4,6 +4,7 @@ using Indivis.Infrastructure.Persistence.EntityFramework.IndivisContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Indivis.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IndivisContext))]
-    partial class IndivisContextModelSnapshot : ModelSnapshot
+    [Migration("20240130210300_NewTablePage")]
+    partial class NewTablePage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,85 +24,6 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Entity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnOrder(0);
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnOrder(998);
-
-                    b.Property<string>("EntityDefaultProperty")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)")
-                        .HasColumnOrder(5);
-
-                    b.Property<bool>("IsUrlData")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnOrder(3);
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnOrder(999);
-
-                    b.Property<byte>("State")
-                        .HasColumnType("tinyint")
-                        .HasColumnOrder(9999);
-
-                    b.Property<string>("TypeName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnOrder(1);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Entity", (string)null);
-                });
-
-            modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.EntityUrl", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnOrder(0);
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnOrder(998);
-
-                    b.Property<Guid>("EntityId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnOrder(999);
-
-                    b.Property<byte>("State")
-                        .HasColumnType("tinyint")
-                        .HasColumnOrder(9999);
-
-                    b.Property<Guid>("UrlId")
-                        .IsUnicode(true)
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EntityId")
-                        .IsUnique();
-
-                    b.HasIndex("UrlId")
-                        .IsUnique();
-
-                    b.ToTable("EntityUrl", (string)null);
-                });
 
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Language", b =>
                 {
@@ -209,7 +133,7 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     b.HasIndex("UrlId")
                         .IsUnique();
 
-                    b.ToTable("Page", (string)null);
+                    b.ToTable("Page");
                 });
 
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Url", b =>
@@ -282,26 +206,7 @@ namespace Indivis.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UrlSystemType", (string)null);
-                });
-
-            modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.EntityUrl", b =>
-                {
-                    b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Entity", "Entity")
-                        .WithOne()
-                        .HasForeignKey("Indivis.Core.Domain.Entities.CoreEntities.EntityUrl", "EntityId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Url", "Url")
-                        .WithOne()
-                        .HasForeignKey("Indivis.Core.Domain.Entities.CoreEntities.EntityUrl", "UrlId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Entity");
-
-                    b.Navigation("Url");
+                    b.ToTable("UrlSystemType");
                 });
 
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.ManyToMany.Url_UrlSystemType", b =>
@@ -334,7 +239,7 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Url", "Url")
                         .WithOne()
                         .HasForeignKey("Indivis.Core.Domain.Entities.CoreEntities.Page", "UrlId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Url");
@@ -351,7 +256,7 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Url", "ParentUrl")
                         .WithMany("SubUrls")
                         .HasForeignKey("ParentUrlId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("ParentUrl");
                 });

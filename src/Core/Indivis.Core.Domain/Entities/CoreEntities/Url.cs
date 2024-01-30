@@ -9,17 +9,22 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Domain.Entities.CoreEntities
 {
-    public class Url :BaseEntity,IEntity, IEntityLanguage
+    public partial class Url :BaseEntity,IEntity
     {
-        public Guid LanguageId { get; set; }
         public string Path { get; set; }
         public string FullPath { get; set; }
 
         public Guid? ParentUrlId { get; set; }
         public Url ParentUrl { get; set; }
+    }
 
+    public partial class Url : IEntityLanguage
+    {
+        public Guid LanguageId { get; set; }
+    }
 
-
+    public partial class Url
+    {
         public ICollection<Url> SubUrls { get; set; }
         public ICollection<Url_UrlSystemType> Url_UrlSystemTypes { get; set; }
     }

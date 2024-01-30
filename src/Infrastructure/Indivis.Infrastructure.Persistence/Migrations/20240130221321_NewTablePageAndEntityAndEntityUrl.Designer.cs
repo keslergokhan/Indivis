@@ -4,6 +4,7 @@ using Indivis.Infrastructure.Persistence.EntityFramework.IndivisContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Indivis.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IndivisContext))]
-    partial class IndivisContextModelSnapshot : ModelSnapshot
+    [Migration("20240130221321_NewTablePageAndEntityAndEntityUrl")]
+    partial class NewTablePageAndEntityAndEntityUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,8 +89,7 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         .HasColumnType("tinyint")
                         .HasColumnOrder(9999);
 
-                    b.Property<Guid>("UrlId")
-                        .IsUnicode(true)
+                    b.Property<Guid>("fffId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -95,7 +97,7 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     b.HasIndex("EntityId")
                         .IsUnique();
 
-                    b.HasIndex("UrlId")
+                    b.HasIndex("fffId")
                         .IsUnique();
 
                     b.ToTable("EntityUrl", (string)null);
@@ -295,7 +297,7 @@ namespace Indivis.Infrastructure.Persistence.Migrations
 
                     b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Url", "Url")
                         .WithOne()
-                        .HasForeignKey("Indivis.Core.Domain.Entities.CoreEntities.EntityUrl", "UrlId")
+                        .HasForeignKey("Indivis.Core.Domain.Entities.CoreEntities.EntityUrl", "fffId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 

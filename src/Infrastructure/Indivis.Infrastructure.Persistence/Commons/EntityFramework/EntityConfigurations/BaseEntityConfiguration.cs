@@ -14,6 +14,7 @@ namespace Indivis.Infrastructure.Persistence.Commons.EntityFramework.EntityConfi
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.ToTable(typeof(T).Name);
             builder.Property(x => x.Id).HasColumnOrder(0);
 
             builder

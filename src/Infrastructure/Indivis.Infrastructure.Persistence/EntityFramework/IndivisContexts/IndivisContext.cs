@@ -26,5 +26,8 @@ namespace Indivis.Infrastructure.Persistence.EntityFramework.IndivisContexts
         public DbSet<Language> Languages { get; set; }
         public DbSet<Url> Urls { get; set; }
         public DbSet<Url_UrlSystemType> Url_UrlSystemType { get; set; }
+        public DbSet<EntityUrl> EntityUrls { get; set; }
+        public DbSet<Entity> Entity { get; set; }
+        public DbSet<Page> Pages { get; set; }
     }
 }
