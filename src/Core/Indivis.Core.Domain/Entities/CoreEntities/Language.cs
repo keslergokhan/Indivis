@@ -1,5 +1,5 @@
 ﻿using Indivis.Core.Domain.Commons.CoreEntities;
-using Indivis.Core.Domain.Interfaces.Entities;
+using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Domain.Entities.CoreEntities
 {
-    public class Language : BaseEntity, ILanguage
+    public class Language : BaseEntity
     {
         public string Name { get; set; }
         public string CountryCode { get; set; }

@@ -4,6 +4,7 @@ using Indivis.Infrastructure.Persistence.EntityFramework.IndivisContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Indivis.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IndivisContext))]
-    partial class IndivisContextModelSnapshot : ModelSnapshot
+    [Migration("20240128162945_NewDatabaseTables")]
+    partial class NewDatabaseTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,6 +57,9 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)")
                         .HasColumnOrder(7);
+
+                    b.Property<Guid>("LanguageId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2")

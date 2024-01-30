@@ -1,5 +1,6 @@
 ﻿using Indivis.Core.Domain.Commons.CoreEntities;
-using Indivis.Core.Domain.Interfaces.Entities;
+using Indivis.Core.Domain.Entities.CoreEntities;
+using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
 using Indivis.Infrastructure.Persistence.Commons.EntityFramework.EntityConfigurations;
 using Indivis.Infrastructure.Persistence.Constans;
 using Microsoft.EntityFrameworkCore;
@@ -12,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace Indivis.Infrastructure.Persistence.EntityFramework.EntityConfigurations.CoreEntity
 {
-    public class LanguageConfiguration<T> : BaseEntityConfiguration<T> where T : class,ILanguage
+    public class LanguageConfiguration : BaseEntityConfiguration<Language>
     {
-        public override void Configure(EntityTypeBuilder<T> builder)
+        public override void Configure(EntityTypeBuilder<Language> builder)
         {
             base.Configure(builder);
 
-            builder.ToTable(typeof(T).Name);
+            builder.ToTable(typeof(Language).Name);
             builder.Property(x => x.Name)
                 .IsRequired(true)
                 .HasMaxLength(EntityConfigurationConstants.MaxStringLv1)
@@ -46,8 +47,7 @@ namespace Indivis.Infrastructure.Persistence.EntityFramework.EntityConfiguration
             builder.Property(x => x.Sort)
                 .IsRequired(true)
                 .HasColumnOrder(8);
-            
         }
-        
+
     }
 }
