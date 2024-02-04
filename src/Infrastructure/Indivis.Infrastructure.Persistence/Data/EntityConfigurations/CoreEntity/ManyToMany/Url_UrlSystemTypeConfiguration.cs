@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Infrastructure.Persistence.EntityFramework.EntityConfigurations.CoreEntity.ManyToMany
+namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntity.ManyToMany
 {
     public class Url_UrlSystemTypeConfiguration : IEntityTypeConfiguration<Url_UrlSystemType>
     {

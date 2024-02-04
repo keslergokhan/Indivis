@@ -1,6 +1,8 @@
-﻿using Indivis.Core.Domain.Entities.CoreEntities;
+﻿using Indivis.Core.Application.Common.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Indivis.Core.Domain.Entities.CoreEntities;
 using Indivis.Core.Domain.Entities.CoreEntities.ManyToMany;
-using Indivis.Infrastructure.Persistence.EntityFramework.IndivisContexts;
+using Indivis.Infrastructure.Persistence.Data.IndivisContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,18 +11,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Indivis.Infrastructure.Persistence.Identities;
 
 namespace Indivis.Infrastructure.Persistence
 {
-    public static class ServiceRegistrations
+    public static class ConfigureServices
     {
-        public static void AddPersistence(this IServiceCollection services,IConfiguration configuration)
+        public static IServiceCollection AddPersistence(this IServiceCollection services,IConfiguration configuration)
         {
-            services.AddDbContext<IndivisContext>(x=>x.UseSqlServer(configuration.GetConnectionString("default")));
+            services.AddDbContext<IndivisContext>(x=>x.UseSqlServer(configuration.GetConnectionString("default2")));
 
-            IndivisContext db = services.BuildServiceProvider().GetService<IndivisContext>();
+            services.AddScoped<IApplicationDbContext>(sp =>
+            sp.GetRequiredService<IndivisContext>());
+
+            services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<ApplicationRole>()
+                .AddEntityFrameworkStores<IndivisContext>();
+
+            //IndivisContext db = services.BuildServiceProvider().GetService<IndivisContext>();
             //ServiceRegistrations.InsertDbData(db);
-            ServiceRegistrations.ListData(db);
+            //ServiceRegistrations.ListData(db);
+
+            return services;
         }
 
         public static void InsertDbData(IndivisContext db)

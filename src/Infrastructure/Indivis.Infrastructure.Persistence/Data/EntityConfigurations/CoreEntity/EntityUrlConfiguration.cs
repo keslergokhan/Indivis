@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Infrastructure.Persistence.EntityFramework.EntityConfigurations.CoreEntity
+namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntity
 {
     public class EntityUrlConfiguration : BaseEntityConfiguration<EntityUrl>
     {
