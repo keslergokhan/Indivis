@@ -12,7 +12,7 @@ namespace Indivis.Core.Application
     {
         public static void AddApplication(this IServiceCollection services, IConfiguration configuration)
         {
-
+             
         }
     }
 }
