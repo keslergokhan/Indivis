@@ -20,7 +20,6 @@ namespace Indivis.Infrastructure.Persistence
 
             IndivisContext db = services.BuildServiceProvider().GetService<IndivisContext>();
             //ServiceRegistrations.InsertDbData(db);
-            ServiceRegistrations.ListData(db);
         }
 
         public static void InsertDbData(IndivisContext db)
@@ -127,13 +126,6 @@ namespace Indivis.Infrastructure.Persistence
             }   
         }
 
-        public static void ListData(IndivisContext db)
-        {
-            var deneem = db.Urls.ToList();
-
-            var ffff = db.Urls.Include(x => x.Url_UrlSystemTypes).ToList();
-
-            var ss1 = db.Urls.Include(x => x.SubUrls).ToList();
-        }
+        
     }
 }
