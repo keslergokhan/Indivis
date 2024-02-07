@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Interfaces.Results
 {
-    public interface IDataResultControl<T> : IResultControl
+    public interface IResultDataControl<T> : IResultControl
     {
         public T Data { get; }
-        public IDataResultControl<T> SetData(T t);
+        public IResultDataControl<T> SetData(T t);
 
-        public IDataResultControl<T> SuccessSetData(T t);
+        public IResultDataControl<T> SuccessSetData(T t);
     }
 
 }

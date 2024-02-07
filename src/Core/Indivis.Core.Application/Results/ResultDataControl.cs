@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Results
 {
-    public class DataResultControl<T> : BaseResultControl, IDataResultControl<T>
+    public class ResultDataControl<T> : BaseResultControl, IResultDataControl<T>
     {
         private T _data;
         public T Data => _data;
 
-        public IDataResultControl<T> SetData(T t)
+        public IResultDataControl<T> SetData(T t)
         {
             _data = t;
             return this;
         }
 
-        public IDataResultControl<T> SuccessSetData(T t)
+        public IResultDataControl<T> SuccessSetData(T t)
         {
             this.SetData(t);
             base.Success();

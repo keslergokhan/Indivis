@@ -1,11 +1,11 @@
-﻿using Indivis.Core.Application.Interfaces.Dtos;
+﻿using Indivis.Core.Application.Interfaces.Dtos.CoreEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Core.Application.Common.Dtos
+namespace Indivis.Core.Application.Common.Dtos.CoreEntities
 {
     public abstract class BaseReadEntityDto : IReadEntityDto
     {

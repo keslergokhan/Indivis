@@ -31,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\" />
     <Folder Include="Features\Pages\Commands\" />
   </ItemGroup>
 
