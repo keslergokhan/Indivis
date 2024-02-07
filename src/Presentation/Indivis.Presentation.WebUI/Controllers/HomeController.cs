@@ -2,6 +2,7 @@ using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
 using Indivis.Presentation.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using System.Diagnostics;
 
 namespace Indivis.Presentation.WebUI.Controllers
@@ -25,7 +26,6 @@ namespace Indivis.Presentation.WebUI.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             IResultControl resultControl = new ResultControl();
@@ -37,7 +37,7 @@ namespace Indivis.Presentation.WebUI.Controllers
             result.SuccessSetData(new ErrorViewModel() { RequestId = "sdfsdf" });
 
             var sss = result.Data;
-
+            
             IDataResultControl<ErrorViewModel> result2 = new DataResultControl<ErrorViewModel>();
 
             result2.Fail(new ExceptionResult("Hata","bu bir hatadýr",new ArgumentNullException("sdfsdfsd ")));
