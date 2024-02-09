@@ -32,7 +32,10 @@ namespace Indivis.Core.Application.Common.SystemInitializers
            
             foreach (Type classType in assembly.GetTypes().Where(x => x.GetInterface(SystemClassTypeConstant.Instance.IGetByIdEntityQuery.Name) is not null))
             {
-                classType.GetInterface(SystemClassTypeConstant.Instance.IGetByIdEntityQuery.Name);
+                Type interfaceType = classType.GetInterface(SystemClassTypeConstant.Instance.IGetByIdEntityQuery.Name);
+                Type genericEntityType = interfaceType.GenericTypeArguments.FirstOrDefault();
+
+                serviceDescriptors.AddSingleton(interfaceType, classType);
             }
         }
 
