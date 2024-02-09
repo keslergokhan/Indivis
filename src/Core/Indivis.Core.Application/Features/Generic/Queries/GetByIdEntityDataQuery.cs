@@ -1,6 +1,6 @@
-﻿using Indivis.Core.Application.Common.Data;
+﻿using AutoMapper;
+using Indivis.Core.Application.Common.Data;
 using Indivis.Core.Application.Common.Dtos.CoreEntities;
-using Indivis.Core.Application.Dtos.PageDtos.Reads;
 using Indivis.Core.Application.Features.Pages.Queries;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
@@ -25,11 +25,13 @@ namespace Indivis.Core.Application.Features.Generic.Queries
         where TResult : BaseReadEntityDto, new()
         where T : class,IEntity
     {
+        protected IMapper _mapper;
         protected IApplicationDbContext _applicationDbContext;
 
-        public GetByIdEntityDataHandlerQuery(IApplicationDbContext applicationDbContext)
+        public GetByIdEntityDataHandlerQuery(IApplicationDbContext applicationDbContext, IMapper mapper)
         {
             this._applicationDbContext = applicationDbContext;
+            _mapper = mapper;
         }
 
         public async Task<IResultDataControl<TResult>> Handle(GetByIdEntityDataQuery<T,TResult> request, CancellationToken cancellationToken)
@@ -37,6 +39,9 @@ namespace Indivis.Core.Application.Features.Generic.Queries
             IResultDataControl<TResult> outModel = new ResultDataControl<TResult>();
 
             T result = await this._applicationDbContext.Set<T>().FirstOrDefaultAsync(x => x.Id == request.Id);
+
+
+            var sss = this._mapper.Map<TResult>(result);
 
             return outModel.SuccessSetData(new TResult() { Id = request.Id });
         }

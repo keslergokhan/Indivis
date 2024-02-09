@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Indivis.Core.Application.Common.SystemInitializers;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Configuration;
@@ -24,7 +25,15 @@ namespace Indivis.Core.Application
 
 
             services.AddMediatR(x=>x.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+
+            services.AddAutoMapper(x =>
+            {
+                AssemblyMapperInitializer.Instance.AssemblyCreateMapper(Assembly.GetExecutingAssembly(), x);
+            });
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+           
+
             return services;
         }
     }

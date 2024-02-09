@@ -1,4 +1,5 @@
-﻿using Indivis.Core.Application.Common.Data;
+﻿using AutoMapper;
+using Indivis.Core.Application.Common.Data;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Pages.Reads;
 using Indivis.Core.Application.Features.Generic.Queries;
 using Indivis.Core.Application.Interfaces.Results;
@@ -13,7 +14,7 @@ namespace Indivis.Core.Application.Features.Pages.Queries
 
     public class GetByIdPageQueryHandler : GetByIdEntityDataHandlerQuery<Page,ReadPageDto>, IRequestHandler<GetByIdPageQuery, IResultDataControl<ReadPageDto>>
     {
-        public GetByIdPageQueryHandler(IApplicationDbContext applicationDbContext):base(applicationDbContext)
+        public GetByIdPageQueryHandler(IApplicationDbContext applicationDbContext,IMapper mapper):base(applicationDbContext, mapper)
         {
             
         }
