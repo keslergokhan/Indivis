@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Core.Application.Common.Results
+namespace Indivis.Core.Application.Common.BaseClasses.Results
 {
     public abstract class BaseResultControl : IResultControl
     {
@@ -18,7 +18,7 @@ namespace Indivis.Core.Application.Common.Results
 
         public BaseResultControl()
         {
-            this._isSuccess = true;
+            _isSuccess = true;
         }
         public IResultControl Success()
         {
@@ -31,7 +31,7 @@ namespace Indivis.Core.Application.Common.Results
             return this;
         }
 
-        public IResultControl Fail(string title,string message)
+        public IResultControl Fail(string title, string message)
         {
             return this;
         }
@@ -43,13 +43,13 @@ namespace Indivis.Core.Application.Common.Results
 
         public IResultControl Fail(IExceptionResult error)
         {
-            this._error = error;
+            _error = error;
             return this;
         }
 
         public IResultControl Fail(Exception exception)
         {
-            this._error = new ExceptionResult(exception.Source,exception.Message,exception);
+            _error = new ExceptionResult(exception.Source, exception.Message, exception);
             return this;
         }
     }

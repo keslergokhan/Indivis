@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Indivis.Core.Application.Common.BaseClasses.Dtos.CoreEntities;
 using Indivis.Core.Application.Common.Data;
-using Indivis.Core.Application.Common.Dtos.CoreEntities;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
 using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Core.Application.Common.Features.Queries
+namespace Indivis.Core.Application.Common.BaseClasses.Features.Queries
 {
     public interface BaseGetByIdEntityDataQuery
     {
@@ -36,18 +36,18 @@ namespace Indivis.Core.Application.Common.Features.Queries
 
         public BaseGetByIdEntityDataHandlerQuery(IServiceProvider serviceProvider)
         {
-            this._serviceProvider = serviceProvider;
-            this._applicationDbContext = serviceProvider.GetService<IApplicationDbContext>();
-            this._mapper = serviceProvider.GetService<IMapper>();
+            _serviceProvider = serviceProvider;
+            _applicationDbContext = serviceProvider.GetService<IApplicationDbContext>();
+            _mapper = serviceProvider.GetService<IMapper>();
         }
 
         public async Task<IResultDataControl<TResult>> Handle(BaseGetByIdEntityDataQuery<TEntity, TResult> request, CancellationToken cancellationToken)
         {
             IResultDataControl<TResult> outModel = new ResultDataControl<TResult>();
 
-            TEntity result = await this._applicationDbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == request.Id);
+            TEntity result = await _applicationDbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == request.Id);
 
-            var sss = this._mapper.Map<TResult>(result);
+            var sss = _mapper.Map<TResult>(result);
 
             return outModel.SuccessSetData(new TResult() { Id = request.Id });
         }

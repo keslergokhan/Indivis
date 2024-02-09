@@ -1,4 +1,4 @@
-﻿using Indivis.Core.Application.Common.Results;
+﻿using Indivis.Core.Application.Common.BaseClasses.Results;
 using Indivis.Core.Application.Interfaces.Results;
 using System;
 using System.Collections.Generic;

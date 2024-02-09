@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Indivis.Core.Application.Common.BaseClasses.Features.Queries;
 using Indivis.Core.Application.Common.Data;
-using Indivis.Core.Application.Common.Features.Queries;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Pages.Reads;
 using Indivis.Core.Application.Interfaces.Features.Systems;
 using Indivis.Core.Application.Interfaces.Results;
