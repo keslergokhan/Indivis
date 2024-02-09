@@ -1,4 +1,7 @@
 ﻿using Indivis.Core.Application.Common.SystemInitializers;
+using Indivis.Core.Application.Features.Systems.Queries;
+using Indivis.Core.Application.Interfaces.Features.Systems;
+using Indivis.Core.Domain.Entities.CoreEntities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -23,13 +26,9 @@ namespace Indivis.Core.Application
 
 
             services.AddMediatR(x=>x.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-
-
-            services.AddAutoMapper(x =>
-            {
-                AssemblyMapperInitializer.Instance.AssemblyCreateMapper(Assembly.GetExecutingAssembly(), x);
-            });
+            services.AddSystemMapper(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddSystemCoreEntityFeatures(Assembly.GetExecutingAssembly());
            
 
             return services;

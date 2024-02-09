@@ -1,4 +1,4 @@
-﻿using Indivis.Core.Application.Attributes.System;
+﻿using Indivis.Core.Application.Attributes.Systems;
 using Indivis.Core.Application.Common.Dtos.CoreEntities;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads;
 using Indivis.Core.Application.Interfaces.Dtos;

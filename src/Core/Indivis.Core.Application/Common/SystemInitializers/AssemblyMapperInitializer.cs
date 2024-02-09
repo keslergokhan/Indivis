@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Indivis.Core.Application.Attributes.System;
+using Indivis.Core.Application.Attributes.Systems;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Pages.Reads;
 using Indivis.Core.Domain.Entities.CoreEntities;
 using System;
@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Common.SystemInitializers
 {
+
     public class AssemblyMapperInitializer
     {
         private AssemblyMapperInitializer()
@@ -32,7 +33,7 @@ namespace Indivis.Core.Application.Common.SystemInitializers
         /// </summary>
         /// <param name="assembly"></param>
         /// <param name="mapperConfiguration"></param>
-        public void AssemblyCreateMapper(Assembly assembly, IMapperConfigurationExpression mapperConfiguration)
+        public void AddAssemblySystemCreateMapper(Assembly assembly, IMapperConfigurationExpression mapperConfiguration)
         {
             //assembly içerisinde CreateMapAttribute tanımlanmış type değerlerini getir.
             assembly.GetTypes()?.Where(type => type.GetCustomAttribute<CreateMapAttribute>() is not null)?.ToList().ForEach(classType =>

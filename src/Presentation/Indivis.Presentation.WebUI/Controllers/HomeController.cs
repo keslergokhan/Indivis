@@ -1,7 +1,10 @@
 using AutoMapper;
-using Indivis.Core.Application.Features.Pages.Queries;
+using Indivis.Core.Application.Common.Features.Queries;
+using Indivis.Core.Application.Features.Systems.Queries;
+using Indivis.Core.Application.Interfaces.Features.Systems;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
+using Indivis.Core.Domain.Entities.CoreEntities;
 using Indivis.Presentation.WebUI.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +27,10 @@ namespace Indivis.Presentation.WebUI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var sss = await this._mediator.Send(new GetByIdPageQuery() { Id = Guid.Parse("A2098C4A-F18B-4E41-AC31-BE8BA9D0342A") });
+            //BaseGetByIdEntityDataQuery query = (BaseGetByIdEntityDataQuery)HttpContext.RequestServices.GetService<IGetByIdEntityQuery<Page>>();
+
+            //query.Id = Guid.Parse("A2098C4A-F18B-4E41-AC31-BE8BA9D0342A");
+            //var sss = await this._mediator.Send(new GetByIdPageQuery() { Id = Guid.Parse("A2098C4A-F18B-4E41-AC31-BE8BA9D0342A") });
             return View();
         }
 

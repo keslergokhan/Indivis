@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Core.Application.Attributes.System
+namespace Indivis.Core.Application.Attributes.Systems
 {
 
 
