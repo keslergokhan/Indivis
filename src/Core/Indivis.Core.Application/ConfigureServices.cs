@@ -16,8 +16,6 @@ namespace Indivis.Core.Application
             var logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
               .CreateLogger();
-
-
             services.AddLogging(x =>
             {
                 x.AddSerilog(logger, dispose: true);
