@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Attributes.System
 {
-    
+
+
+    /// <summary>
+    /// AssemblyMapperInitializer tafafından CraeteMapper sürecinin otomatik yönetilmesi istenilen sınıflar için kullanılır.
+    /// constractor içerisine gönderilen type değerlerini reflection aracılığı ile CreateMap tanımlamalarını yapar
+    /// Örnek: 
+    /// 
+    /// Mapping işleminin otomatikleşmesini sağlar.
+    /// AObject -> BObject || BObject -> AObject
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class CreateMapAttribute : Attribute
     {
