@@ -34,7 +34,7 @@
     <Folder Include="Common\Exceptions\Systems\" />
     <Folder Include="Features\Pages\Commands\" />
     <Folder Include="Features\Pages\Queries\" />
-    <Folder Include="MapperProfiles\CoreEntities\" />
+    <Folder Include="MapperProfiles\" />
   </ItemGroup>
 
 </Project>

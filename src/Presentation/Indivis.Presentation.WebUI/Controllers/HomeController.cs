@@ -1,6 +1,9 @@
 using AutoMapper;
 using Indivis.Core.Application.Common.BaseClasses.Features.Queries;
+using Indivis.Core.Application.Common.Constants.Systems;
+using Indivis.Core.Application.Common.SystemInitializers.EntityFeatureConfigurations;
 using Indivis.Core.Application.Features.Systems.Queries;
+using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Application.Interfaces.Features.Systems;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
@@ -17,20 +20,27 @@ namespace Indivis.Presentation.WebUI.Controllers
     {
         private IMediator _mediator;
         private readonly ILogger<HomeController> _logger;
+        private IEntityFeatureContext _entityFeatureContext;
 
 
-        public HomeController(ILogger<HomeController> logger, IMediator mediator = null)
+        public HomeController(ILogger<HomeController> logger, IMediator mediator , IEntityFeatureContext entityFeatureContext)
         {
             _logger = logger;
             _mediator = mediator;
+            _entityFeatureContext = entityFeatureContext;
         }
 
         public async Task<IActionResult> Index()
         {
-            BaseGetByIdEntityDataQuery query = (BaseGetByIdEntityDataQuery)HttpContext.RequestServices.GetService<IGetByIdEntityQuery<Page>>();
+            BaseGetByIdEntityDataQuery getById = 
+                this._entityFeatureContext.Page.SetMediatRByIdEntityQuery(x=>x.Id = Guid.Parse("A2098C4A-F18B-4E41-AC31-BE8BA9D0342A"));
 
-            query.Id = Guid.Parse("A2098C4A-F18B-4E41-AC31-BE8BA9D0342A");
-            var sss = await this._mediator.Send(new GetByIdPageQuery() { Id = Guid.Parse("A2098C4A-F18B-4E41-AC31-BE8BA9D0342A") });
+
+            BaseGetByIdEntityDataQuery getById2 = this._entityFeatureContext.GetByNameEntityFeature("Page").MediatRGeyByIdEntityQuery;
+
+            var sss = await this._mediator.Send(getById);
+
+            
             return View();
         }
 

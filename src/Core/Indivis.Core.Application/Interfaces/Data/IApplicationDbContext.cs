@@ -8,14 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Core.Application.Common.Data
+namespace Indivis.Core.Application.Interfaces.Data
 {
     public interface IApplicationDbContext
     {
         new DbSet<TEntity> Set<TEntity>() where TEntity : class;
-        public DbSet<Language> Languages { get;}
-        public DbSet<Url> Urls { get;}
-        public DbSet<Url_UrlSystemType> Url_UrlSystemTypes { get;}
+        public DbSet<Language> Languages { get; }
+        public DbSet<Url> Urls { get; }
+        public DbSet<Url_UrlSystemType> Url_UrlSystemTypes { get; }
         public DbSet<EntityUrl> EntityUrls { get; }
         public DbSet<Entity> Entitys { get; }
         public DbSet<Page> Pages { get; }

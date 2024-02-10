@@ -1,5 +1,4 @@
-﻿using Indivis.Core.Application.Common.Data;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Indivis.Core.Domain.Entities.CoreEntities;
 using Indivis.Core.Domain.Entities.CoreEntities.ManyToMany;
 using Indivis.Infrastructure.Persistence.Data.IndivisContexts;
@@ -12,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Indivis.Infrastructure.Persistence.Identities;
+using Indivis.Core.Application.Interfaces.Data;
 
 namespace Indivis.Infrastructure.Persistence
 {

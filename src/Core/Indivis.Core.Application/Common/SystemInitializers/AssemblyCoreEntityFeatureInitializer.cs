@@ -27,7 +27,7 @@ namespace Indivis.Core.Application.Common.SystemInitializers
         }
 
 
-        public void AddAssemblySystemCoreQueries(Assembly assembly,IServiceCollection serviceDescriptors)
+        public void AddAssemblySystemCoreQueries(Assembly assembly,IServiceCollection serviceCollection)
         {
            
             foreach (Type classType in assembly.GetTypes().Where(x => x.GetInterface(SystemClassTypeConstant.Instance.IGetByIdEntityQuery.Name) is not null))
@@ -35,10 +35,9 @@ namespace Indivis.Core.Application.Common.SystemInitializers
                 Type interfaceType = classType.GetInterface(SystemClassTypeConstant.Instance.IGetByIdEntityQuery.Name);
                 Type genericEntityType = interfaceType.GenericTypeArguments.FirstOrDefault();
 
-                serviceDescriptors.AddSingleton(interfaceType, classType);
+                serviceCollection.AddSingleton(interfaceType, classType);
             }
         }
-
-      
+        
     }
 }

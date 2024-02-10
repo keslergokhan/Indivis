@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Indivis.Core.Application.Common.BaseClasses.Dtos.CoreEntities;
-using Indivis.Core.Application.Common.Data;
+using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
 using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;

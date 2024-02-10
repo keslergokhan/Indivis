@@ -1,5 +1,9 @@
-﻿using Indivis.Core.Application.Common.SystemInitializers;
+﻿using Indivis.Core.Application.Common.Data;
+using Indivis.Core.Application.Common.Data.EntityFeatureConfigurations;
+using Indivis.Core.Application.Common.SystemInitializers;
+using Indivis.Core.Application.Common.SystemInitializers.EntityFeatureConfigurations;
 using Indivis.Core.Application.Features.Systems.Queries;
+using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Application.Interfaces.Features.Systems;
 using Indivis.Core.Domain.Entities.CoreEntities;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +20,9 @@ namespace Indivis.Core.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
         {
+           
+
+
             var logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
               .CreateLogger();
@@ -29,7 +36,10 @@ namespace Indivis.Core.Application
             services.AddSystemMapper(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddSystemCoreEntityFeatures(Assembly.GetExecutingAssembly());
-           
+            services.AddScoped<IEntityFeatureContext, EntityFeatureContext>();
+
+            services.AddScoped<PageEntityConfiguration>();
+            
 
             return services;
         }
