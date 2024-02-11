@@ -15,6 +15,8 @@ namespace Indivis.Core.Application.Attributes.Systems
     /// 
     /// Mapping işleminin otomatikleşmesini sağlar.
     /// AObject -> BObject || BObject -> AObject
+    /// 
+    /// Daha fazlası : README_SYSTEM_INITIALİZER.md
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class CreateMapAttribute : Attribute

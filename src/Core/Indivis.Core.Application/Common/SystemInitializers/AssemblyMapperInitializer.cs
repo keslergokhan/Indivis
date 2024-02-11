@@ -25,11 +25,12 @@ namespace Indivis.Core.Application.Common.SystemInitializers
             return new AssemblyMapperInitializer();
         });
 
-       
+
         /// <summary>
         /// Method içerisine gönderilen Assembly içerisinde CraeteMapAttribute tanımlanmış sınıflara ulaşır.
-        /// Sınıf üzerindeki tanımlanmış CreateMap gönderilmiş olan type değerlerini IMapperConfiguration içerisine ekler
+        /// Sınıf üzerindeki tanımlanmış CreateMap gönderilmiş olan type değerlerini IMapperConfiguration içerisine ekler<br></br>
         /// 
+        /// Daha fazlası : README_SYSTEM_INITIALİZER.md
         /// </summary>
         /// <param name="assembly"></param>
         /// <param name="mapperConfiguration"></param>

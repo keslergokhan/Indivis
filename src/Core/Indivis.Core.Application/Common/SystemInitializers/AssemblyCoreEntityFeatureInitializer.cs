@@ -28,7 +28,11 @@ namespace Indivis.Core.Application.Common.SystemInitializers
             } 
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assembly"></param>
+        /// <param name="serviceCollection"></param>
         public void AddAssemblySystemCoreQueries(Assembly assembly,IServiceCollection serviceCollection)
         {
            

@@ -19,11 +19,11 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Pages
 
     public class GetByIdPageQueryHandler : BaseGetByIdEntityDataHandlerQuery<Page, ReadPageDto>, IRequestHandler<GetByIdPageQuery, IResultDataControl<ReadPageDto>>
     {
+
         public GetByIdPageQueryHandler(IServiceProvider serviceProvider) : base(serviceProvider)
         {
 
         }
-
         public async Task<IResultDataControl<ReadPageDto>> Handle(GetByIdPageQuery request, CancellationToken cancellationToken)
         {
             return await base.Handle(request, cancellationToken);
