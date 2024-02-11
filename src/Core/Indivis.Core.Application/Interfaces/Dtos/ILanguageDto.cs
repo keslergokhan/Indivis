@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Interfaces.Dtos
 {
-    public interface IReadLanguageDto
+    public interface ILanguageDto
     {
         public Guid LanguageId { get; set; }
     }

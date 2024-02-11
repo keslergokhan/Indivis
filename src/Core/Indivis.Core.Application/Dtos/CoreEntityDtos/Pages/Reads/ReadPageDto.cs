@@ -20,7 +20,7 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Pages.Reads
         public ReadUrlDto Url { get; set; }
     }
 
-    public partial class ReadPageDto : IReadLanguageDto
+    public partial class ReadPageDto : ILanguageDto
     {
         public Guid LanguageId { get; set; }
     }
