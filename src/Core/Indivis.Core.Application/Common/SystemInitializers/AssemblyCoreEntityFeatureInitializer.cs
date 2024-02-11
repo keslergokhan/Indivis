@@ -1,14 +1,8 @@
 ﻿using Indivis.Core.Application.Common.Constants.Systems;
 using Indivis.Core.Application.Common.Data;
 using Indivis.Core.Application.Interfaces.Data;
-using Indivis.Core.Application.Interfaces.Features.Systems;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Common.SystemInitializers
 {
