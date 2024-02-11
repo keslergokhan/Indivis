@@ -32,8 +32,6 @@
 
   <ItemGroup>
     <Folder Include="Common\Exceptions\Systems\" />
-    <Folder Include="Features\Pages\Commands\" />
-    <Folder Include="Features\Pages\Queries\" />
     <Folder Include="MapperProfiles\" />
   </ItemGroup>
 

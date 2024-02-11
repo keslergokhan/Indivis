@@ -7,10 +7,10 @@ using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Domain.Entities.CoreEntities;
 using MediatR;
 
-namespace Indivis.Core.Application.Features.Systems.Queries
+namespace Indivis.Core.Application.Features.Systems.Queries.Pages
 {
     public class GetByIdPageQuery :
-        BaseGetByIdEntityDataQuery<Page, ReadPageDto>, 
+        BaseGetByIdEntityDataQuery<Page, ReadPageDto>,
         IRequest<IResultDataControl<ReadPageDto>>,
         IGetByIdEntityQuery<Page>
     {
