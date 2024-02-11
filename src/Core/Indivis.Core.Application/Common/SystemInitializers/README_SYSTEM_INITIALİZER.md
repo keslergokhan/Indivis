@@ -1,38 +1,32 @@
 ﻿# 1) AssemblyMapperInitializer
 
-## Görevi
+### Görevi
 Sınıf CreateMap attributes tanımlanmış sınıflara ulaşır.
-Attributes değeri içerisine girilen type değerlerini CreateMap(class,DType) şeklinde IMapperConfiguration içerisine ekler.
-
-## Süreç
-Dto uygulanacak sınıf için attrubtes tanımlanır
+Attributes değeri içerisine girilen type değerlerini CreateMap(class,DType) şeklinde IMapperConfiguration aracılığı ile tip dönüşüm tanımlamalarını yapar.
 
 
-    [CreateMap(typeof(Page))]
-    public partial class ReadPageDto : BaseReadEntityDto
 
-Bir sonraki aşama IServiceCollection içerisinde AddAutoMapper içinde sınıfımızı çağırmak ve CreateMap attributeslerimizin olduğu Assembly göndermek
+### Süreç
+
+1. AssemblyMapperInitializer.AddAssemblySystemCreateMapper Methodunda assembly ve IMapperConfigurationExpression değerleri iletilir.
+
+3. AddAssemblySystemCreateMapper methodu gönderilen assemblye içerisinde **CreateMap** attrubtes tanımlanan sınıflara reflection ile ulaşır.
+
+5. Ardından attrubtes içerisine girilen type değerlerinin sınıf ile birlikte IMapperConfigurationExpression kullanarak tanımlamaları yapar.
 
 
+
+
+### IServiceCollection kullanımı
 
     services.AddAutoMapper(x =>
     {
         AssemblyMapperInitializer.Instance.AssemblyCreateMapper(Assembly.GetExecutingAssembly(), x);
     });
 
+### NOT
+CreateMapAttributes hakkında daha fazla bilgi almak için: **README_SSTEMS_ATTRIBUTE.md** göz atınız
 
-## Sonuç
-
-CreateMapAttributes kullanılmış olan tüm sınıflar içerisine gönderilen tipler aracılığı ile dinamik bir şeklide IMapperConfiguration içerisine dahil edilir ve kullanılmaya hazır hale gelir.
-
-`_mapper.Map<ReadPageDto>(page)`
-
-
-# 2) AssemblyCoreEntityFeatureInitializer
-
-## 2.1 AssemblyCoreEntityFeatureInitializer.AddAssemblySystemCoreQueries
-
-Proje içerisinde ihtiyaç duyulan bussiness iş sürecinin yönetilmesi MediatR aracılığı ile gerçekleştirilmiştir.
 
 
 
