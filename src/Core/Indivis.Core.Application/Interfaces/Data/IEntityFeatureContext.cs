@@ -1,4 +1,4 @@
-﻿using Indivis.Core.Application.Common.SystemInitializers.EntityFeatureConfigurations;
+﻿using Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfigurations;
 using Indivis.Core.Domain.Entities.CoreEntities;
 using System;
 using System.Collections.Generic;

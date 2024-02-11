@@ -12,7 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Core.Application.Common.SystemInitializers.EntityFeatureConfigurations
+namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfigurations
 {
     public class EntityFeature
     {
@@ -28,21 +28,21 @@ namespace Indivis.Core.Application.Common.SystemInitializers.EntityFeatureConfig
         }
     }
 
-    public class EntityFeatureConfiguration<TEntity> where TEntity : class,IEntity
+    public abstract class BaseEntityFeatureConfiguration<TEntity> where TEntity : class, IEntity
     {
         private EntityFeature _entityFeature = new EntityFeature();
 
         public EntityFeature Features => _entityFeature;
         private IServiceProvider _serviceProvider;
 
-        public EntityFeatureConfiguration(IServiceProvider serviceProvider)
+        public BaseEntityFeatureConfiguration(IServiceProvider serviceProvider)
         {
-            this._serviceProvider = serviceProvider;
+            _serviceProvider = serviceProvider;
         }
         public EntityFeatureBuilder<TEntity> Entity()
         {
-            this._entityFeature.EntityType = typeof(TEntity);
-            return new EntityFeatureBuilder<TEntity>(this._entityFeature, this._serviceProvider);
+            _entityFeature.EntityType = typeof(TEntity);
+            return new EntityFeatureBuilder<TEntity>(_entityFeature, _serviceProvider);
         }
     }
 
@@ -50,27 +50,27 @@ namespace Indivis.Core.Application.Common.SystemInitializers.EntityFeatureConfig
     {
         private EntityFeature _features;
         private IServiceProvider _serviceProvider;
-        public EntityFeatureBuilder(EntityFeature features,IServiceProvider serviceProvider)
+        public EntityFeatureBuilder(EntityFeature features, IServiceProvider serviceProvider)
         {
-            this._features = features;
-            this._serviceProvider = serviceProvider;
+            _features = features;
+            _serviceProvider = serviceProvider;
         }
-        
 
-        public EntityFeatureBuilder<TEntity> SetEntityDefaultProperty<TResult>(Expression<Func<TEntity,TResult>> expression) where TResult : class
+
+        public EntityFeatureBuilder<TEntity> SetEntityDefaultProperty<TResult>(Expression<Func<TEntity, TResult>> expression) where TResult : class
         {
             string member = expression.GetMember().Name;
-            this._features.EntityDefaultPropertyType = this._features.EntityType.GetProperty(member);
+            _features.EntityDefaultPropertyType = _features.EntityType.GetProperty(member);
             return this;
         }
 
         public EntityFeatureBuilder<TEntity> SetMediatRGetByIdEntityQuery<TQuery>()
-            where TQuery : class,IGetByIdEntityQuery<TEntity>,new()
+            where TQuery : class, IGetByIdEntityQuery<TEntity>, new()
         {
-            this._features.MediatRGeyByIdEntityQuery = (BaseGetByIdEntityDataQuery)this._serviceProvider.GetService(typeof(IGetByIdEntityQuery<TEntity>));
+            _features.MediatRGeyByIdEntityQuery = (BaseGetByIdEntityDataQuery)_serviceProvider.GetService(typeof(IGetByIdEntityQuery<TEntity>));
             return this;
         }
     }
 
-    
+
 }

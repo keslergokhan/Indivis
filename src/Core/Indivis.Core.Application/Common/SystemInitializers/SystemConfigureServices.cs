@@ -22,5 +22,10 @@ namespace Indivis.Core.Application.Common.SystemInitializers
         {
             AssemblyCoreEntityFeatureInitializer.Instance.AddAssemblySystemCoreQueries(assembly,services);
         }
+
+        public static void AddAssemblySystemEntityFeatures(this IServiceCollection services, Assembly assembly)
+        {
+            AssemblyCoreEntityFeatureInitializer.Instance.AddAssemblySystemEntityFeatures(assembly,services);
+        }
     }
 }

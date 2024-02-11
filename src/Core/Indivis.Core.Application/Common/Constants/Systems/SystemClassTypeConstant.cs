@@ -1,5 +1,7 @@
 ﻿using Indivis.Core.Application.Attributes.Systems;
+using Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfigurations;
 using Indivis.Core.Application.Common.SystemInitializers;
+using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Application.Interfaces.Features.Systems;
 using System;
 using System.Collections.Generic;
@@ -30,6 +32,11 @@ namespace Indivis.Core.Application.Common.Constants.Systems
             
         }
 
+
+
+
+
+
         public Type IGetByIdEntityQuery { get
             {
                 return typeof(IGetByIdEntityQuery<>);
@@ -42,6 +49,21 @@ namespace Indivis.Core.Application.Common.Constants.Systems
             get
             {
                 return typeof(CreateMapAttribute);
+            }
+        }
+
+        public Type IEntityFeatureContext
+        {
+            get{
+                return typeof(IEntityFeatureContext);
+            }
+        }
+
+        public Type BaseEntityFeatureConfiguration
+        {
+            get
+            {
+                return typeof(BaseEntityFeatureConfiguration<>);
             }
         }
 

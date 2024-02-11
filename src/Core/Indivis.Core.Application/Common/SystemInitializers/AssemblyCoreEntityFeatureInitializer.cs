@@ -1,4 +1,6 @@
 ﻿using Indivis.Core.Application.Common.Constants.Systems;
+using Indivis.Core.Application.Common.Data;
+using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Application.Interfaces.Features.Systems;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -37,6 +39,18 @@ namespace Indivis.Core.Application.Common.SystemInitializers
 
                 serviceCollection.AddSingleton(interfaceType, classType);
             }
+        }
+
+        public void AddAssemblySystemEntityFeatures(Assembly assembly,IServiceCollection serviceCollection)
+        {
+            foreach (Type type in 
+                assembly.GetTypes()?
+                .Where(x => x.BaseType != null && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == SystemClassTypeConstant.Instance.BaseEntityFeatureConfiguration)
+                ?.ToList())
+            {
+                serviceCollection.AddScoped(type);
+            }
+            serviceCollection.AddScoped<IEntityFeatureContext, EntityFeatureContext>();
         }
         
     }

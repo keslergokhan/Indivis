@@ -1,17 +1,10 @@
-using AutoMapper;
 using Indivis.Core.Application.Common.BaseClasses.Features.Queries;
-using Indivis.Core.Application.Common.Constants.Systems;
-using Indivis.Core.Application.Common.SystemInitializers.EntityFeatureConfigurations;
-using Indivis.Core.Application.Features.Systems.Queries;
 using Indivis.Core.Application.Interfaces.Data;
-using Indivis.Core.Application.Interfaces.Features.Systems;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
-using Indivis.Core.Domain.Entities.CoreEntities;
 using Indivis.Presentation.WebUI.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 using System.Diagnostics;
 
 namespace Indivis.Presentation.WebUI.Controllers

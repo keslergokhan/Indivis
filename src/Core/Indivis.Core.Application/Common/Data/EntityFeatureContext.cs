@@ -1,6 +1,5 @@
 ﻿using Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfigurations;
-using Indivis.Core.Application.Common.Data.EntityFeatureConfigurations;
-using Indivis.Core.Application.Common.SystemInitializers.EntityFeatureConfigurations;
+using Indivis.Core.Application.EntityFeatureConfigurations;
 using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Domain.Entities.CoreEntities;
 using System;
