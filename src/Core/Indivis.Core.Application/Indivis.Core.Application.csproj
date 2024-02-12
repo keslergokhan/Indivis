@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <Folder Include="Common\Exceptions\Systems\" />
-    <Folder Include="Dtos\CoreEntityDtos\Languages\Writes\WriteLanguageDto\" />
     <Folder Include="MapperProfiles\" />
   </ItemGroup>
 

@@ -1,14 +1,12 @@
-﻿using Indivis.Core.Application.Attributes.Systems;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Language.Reads
+namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Languages.Writes
 {
-    [CreateMap(typeof(Indivis.Core.Domain.Entities.CoreEntities.Language))]
-    public partial class ReadLanguageDto
+    public partial class WriteLanguageDto
     {
         public string Name { get; set; }
         public string CountryCode { get; set; }
