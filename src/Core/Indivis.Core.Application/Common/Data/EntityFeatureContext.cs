@@ -22,6 +22,15 @@ namespace Indivis.Core.Application.Common.Data
 
         public EntityFeature Page => SetConfigure<Page, PageEntityConfiguration>().Features;
 
+
+
+
+
+
+
+
+
+
         public EntityFeature GetByNameEntityFeature(string entityName)
         {
             EntityFeature feature = base.EntityFeatures.GetValueOrDefault(entityName);

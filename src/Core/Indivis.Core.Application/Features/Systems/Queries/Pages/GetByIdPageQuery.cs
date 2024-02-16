@@ -14,7 +14,6 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Pages
         IRequest<IResultDataControl<ReadPageDto>>,
         IGetByIdEntityQuery<Page>
     {
-
     }
 
     public class GetByIdPageQueryHandler : BaseGetByIdEntityDataHandlerQuery<Page, ReadPageDto>, IRequestHandler<GetByIdPageQuery, IResultDataControl<ReadPageDto>>

@@ -25,13 +25,10 @@ namespace Indivis.Presentation.WebUI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            BaseGetByIdEntityDataQuery getById = 
-                this._entityFeatureContext.Page.SetMediatRByIdEntityQuery(x=>x.Id = Guid.Parse("A2098C4A-F18B-4E41-AC31-BE8BA9D0342A"));
-
 
             BaseGetByIdEntityDataQuery getById2 = this._entityFeatureContext.GetByNameEntityFeature("Page").MediatRGeyByIdEntityQuery;
 
-            var sss = await this._mediator.Send(getById);
+            var sss = await this._mediator.Send(getById2);
 
             
             return View();
