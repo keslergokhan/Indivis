@@ -1,12 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Indivis.Core.Application.Common.BaseClasses.Features.Queries;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.UrlSystemType.Reads;
+using Indivis.Core.Application.Interfaces.Features.Systems;
+using Indivis.Core.Application.Interfaces.Results;
+using Indivis.Core.Domain.Entities.CoreEntities;
+using MediatR;
 
 namespace Indivis.Core.Application.Features.Systems.Queries.UrlSystemTypes
 {
-    internal class GetByIdUrlSystemTypeQuery
+    public class GetByIdUrlSystemTypeQuery :
+         BaseGetByIdEntityDataQuery<UrlSystemType, ReadUrlSystemTypeDto>,
+         IRequest<IResultDataControl<ReadUrlSystemTypeDto>>,
+         IGetByIdEntityQuery<UrlSystemType>
     {
+
+    }
+
+    public class GetByIdUrlSystemTypeQueryHandler : BaseGetByIdEntityDataHandlerQuery<UrlSystemType, ReadUrlSystemTypeDto>, IRequestHandler<GetByIdUrlSystemTypeQuery, IResultDataControl<ReadUrlSystemTypeDto>>
+    {
+
+        public GetByIdUrlSystemTypeQueryHandler(IServiceProvider serviceProvider) : base(serviceProvider)
+        {
+
+        }
+        public async Task<IResultDataControl<ReadUrlSystemTypeDto>> Handle(GetByIdUrlSystemTypeQuery request, CancellationToken cancellationToken)
+        {
+            return await base.Handle(request, cancellationToken);
+        }
     }
 }

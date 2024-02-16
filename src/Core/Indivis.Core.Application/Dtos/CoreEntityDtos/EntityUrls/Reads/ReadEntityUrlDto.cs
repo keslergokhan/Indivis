@@ -1,4 +1,5 @@
 ﻿using Indivis.Core.Application.Attributes.Systems;
+using Indivis.Core.Application.Common.BaseClasses.Dtos.CoreEntities;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Entities.Reads;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 namespace Indivis.Core.Application.Dtos.CoreEntityDtos.EntityUrl.Reads
 {
     [CreateMap(typeof(Indivis.Core.Domain.Entities.CoreEntities.EntityUrl))]
-    public partial class ReadEntityUrlDto
+    public partial class ReadEntityUrlDto : BaseReadEntityDto
     {
         public Guid UrlId { get; set; }
         public ReadUrlDto Url { get; set; }

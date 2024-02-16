@@ -1,12 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Indivis.Core.Application.Common.BaseClasses.Features.Queries;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.Language.Reads;
+using Indivis.Core.Application.Interfaces.Features.Systems;
+using Indivis.Core.Application.Interfaces.Results;
+using Indivis.Core.Domain.Entities.CoreEntities;
+using MediatR;
+
 
 namespace Indivis.Core.Application.Features.Systems.Queries.Languages
 {
-    internal class GetByIdLanguageQuery
+    public class GetByIdLanguageQuery :
+        BaseGetByIdEntityDataQuery<Language, ReadLanguageDto>,
+        IRequest<IResultDataControl<ReadLanguageDto>>,
+        IGetByIdEntityQuery<Language>
     {
+
+    }
+
+    public class GetByIdLanguageQueryHandler : BaseGetByIdEntityDataHandlerQuery<Language, ReadLanguageDto>, IRequestHandler<GetByIdLanguageQuery, IResultDataControl<ReadLanguageDto>>
+    {
+
+        public GetByIdLanguageQueryHandler(IServiceProvider serviceProvider) : base(serviceProvider)
+        {
+
+        }
+
+        public async Task<IResultDataControl<ReadLanguageDto>> Handle(GetByIdLanguageQuery request, CancellationToken cancellationToken)
+        {
+            return await base.Handle(request, cancellationToken);
+        }
     }
 }
