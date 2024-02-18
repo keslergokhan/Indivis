@@ -2,12 +2,16 @@ using Indivis.Infrastructure.Persistence;
 using Indivis.Core.Application;
 using Serilog;
 using Microsoft.Extensions.Configuration;
+using Indivis.Presentation.WebUI.System;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddPersistence(builder.Configuration).AddApplication(builder.Configuration);
+builder.Services
+    .AddPersistence(builder.Configuration)
+    .AddApplication(builder.Configuration)
+    .AddWebUISystem();
 
 
 var app = builder.Build();
@@ -24,6 +28,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.AddSystemWebUIApplication();
 app.UseRouting();
 
 app.UseAuthorization();

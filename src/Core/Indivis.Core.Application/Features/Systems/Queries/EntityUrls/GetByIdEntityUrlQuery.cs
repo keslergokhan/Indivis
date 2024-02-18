@@ -1,5 +1,5 @@
 ﻿using Indivis.Core.Application.Common.BaseClasses.Features.Queries;
-using Indivis.Core.Application.Dtos.CoreEntityDtos.Entities.Reads;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.EntityUrl.Reads;
 using Indivis.Core.Application.Interfaces.Features.Systems;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Domain.Entities.CoreEntities;
@@ -8,22 +8,22 @@ using MediatR;
 namespace Indivis.Core.Application.Features.Systems.Queries.EntityUrls
 {
     public class GetByIdEntityUrlQuery : 
-        BaseGetByIdEntityDataQuery<Entity,ReadEntityDto>
-        ,IRequest<IResultDataControl<ReadEntityDto>>
-        ,IGetByIdEntityQuery<Entity>
+        BaseGetByIdEntityDataQuery<EntityUrl,ReadEntityUrlDto>
+        ,IRequest<IResultDataControl<ReadEntityUrlDto>>
+        ,IGetByIdEntityQuery<EntityUrl>
     {
 
     }
 
 	public class GetByIdEntityUrlQueryHandler : 
-		BaseGetByIdEntityDataHandlerQuery<Entity, ReadEntityDto>,
-		IRequestHandler<GetByIdEntityUrlQuery,IResultDataControl<ReadEntityDto>>
+		BaseGetByIdEntityDataHandlerQuery<EntityUrl, ReadEntityUrlDto>,
+		IRequestHandler<GetByIdEntityUrlQuery,IResultDataControl<ReadEntityUrlDto>>
 	{
 		public GetByIdEntityUrlQueryHandler(IServiceProvider serviceProvider) : base(serviceProvider)
 		{
 		}
 
-		public async Task<IResultDataControl<ReadEntityDto>> Handle(GetByIdEntityUrlQuery request, CancellationToken cancellationToken)
+		public async Task<IResultDataControl<ReadEntityUrlDto>> Handle(GetByIdEntityUrlQuery request, CancellationToken cancellationToken)
 		{
 			return await base.Handle(request,cancellationToken);
 		}

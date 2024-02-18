@@ -1,5 +1,6 @@
 using Indivis.Core.Application.Common.BaseClasses.Features.Queries;
 using Indivis.Core.Application.Interfaces.Data;
+using Indivis.Core.Application.Interfaces.Data.Presentation;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
 using Indivis.Presentation.WebUI.Models;
@@ -16,7 +17,7 @@ namespace Indivis.Presentation.WebUI.Controllers
         private IEntityFeatureContext _entityFeatureContext;
 
 
-        public HomeController(ILogger<HomeController> logger, IMediator mediator , IEntityFeatureContext entityFeatureContext)
+        public HomeController(ILogger<HomeController> logger, IMediator mediator , IEntityFeatureContext entityFeatureContext,ICurrentRequest currentRequest)
         {
             _logger = logger;
             _mediator = mediator;
