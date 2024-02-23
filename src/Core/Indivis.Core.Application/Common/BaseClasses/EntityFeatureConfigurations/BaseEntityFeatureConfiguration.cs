@@ -1,9 +1,11 @@
 ﻿using AutoMapper.Execution;
 using Indivis.Core.Application.Common.BaseClasses.Features.Queries;
 using Indivis.Core.Application.Features.Systems.Queries;
+using Indivis.Core.Application.Interfaces.Features.FeatureFactories;
 using Indivis.Core.Application.Interfaces.Features.Systems;
 using Indivis.Core.Domain.Entities.CoreEntities;
 using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,13 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
 {
     public class EntityFeature
     {
+        private IServiceProvider _serverProvider;
+
+		public EntityFeature(IServiceProvider serverProvider)
+		{
+			_serverProvider = serverProvider;
+		}
+
         public Type EntityType { get; set; }
         public PropertyInfo EntityDefaultPropertyType { get; set; }
         public BaseGetByIdEntityDataQuery MediatRGeyByIdEntityQuery { get; set; }
@@ -26,11 +35,20 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
             action.Invoke(MediatRGeyByIdEntityQuery);
             return MediatRGeyByIdEntityQuery;
         }
+
+        public TQuery GetDependencyMediatRQuery<TQuery>(Action<TQuery> action)
+		where TQuery : class, IBaseRequest, IFeatureQueryFactory<TQuery>, new()
+		{
+            TQuery tQuery = (TQuery)this._serverProvider.GetService(typeof(TQuery));
+            action.Invoke(tQuery);
+
+            return tQuery;
+		}
     }
 
     public abstract class BaseEntityFeatureConfiguration<TEntity> where TEntity : class, IEntity
     {
-        private EntityFeature _entityFeature = new EntityFeature();
+        private EntityFeature _entityFeature;
 
         public EntityFeature Features => _entityFeature;
         private IServiceProvider _serviceProvider;
@@ -38,6 +56,7 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
         public BaseEntityFeatureConfiguration(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
+            this._entityFeature = new EntityFeature(serviceProvider);
         }
         public EntityFeatureBuilder<TEntity> Entity()
         {

@@ -26,8 +26,10 @@ namespace Indivis.Core.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddSystemCoreEntityFeatures(Assembly.GetExecutingAssembly());
             services.AddAssemblySystemEntityFeatures(Assembly.GetExecutingAssembly());
+            services.AddAssemblyFeatureQueryFactory(Assembly.GetExecutingAssembly());
 
-            return services;
+
+			return services;
         }
     }
 }

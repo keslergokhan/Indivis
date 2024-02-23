@@ -1,4 +1,6 @@
 using Indivis.Core.Application.Common.BaseClasses.Features.Queries;
+using Indivis.Core.Application.Features.Systems.Queries.Urls;
+using Indivis.Core.Application.Features.Urls.Queries;
 using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Application.Interfaces.Data.Presentation;
 using Indivis.Core.Application.Interfaces.Results;
@@ -27,9 +29,15 @@ namespace Indivis.Presentation.WebUI.Controllers
         public async Task<IActionResult> Index()
         {
 
-            BaseGetByIdEntityDataQuery getById2 = this._entityFeatureContext.GetByNameEntityFeature("Page").MediatRGeyByIdEntityQuery;
+			//BaseGetByIdEntityDataQuery getById2 = this._entityFeatureContext.GetByNameEntityFeature("Page").MediatRGeyByIdEntityQuery;
+			//var sss = await this._mediator.Send(getById2);
 
-            var sss = await this._mediator.Send(getById2);
+
+			GetByFullPathUrlQuery ssss = this._entityFeatureContext.Page.GetDependencyMediatRQuery<GetByFullPathUrlQuery>(x =>
+            {
+                x.FullPath = "/deneme";
+            });
+
 
             
             return View();

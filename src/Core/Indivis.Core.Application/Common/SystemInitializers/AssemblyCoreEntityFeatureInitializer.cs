@@ -50,6 +50,20 @@ namespace Indivis.Core.Application.Common.SystemInitializers
             }
             serviceCollection.AddScoped<IEntityFeatureContext, EntityFeatureContext>();
         }
+
+        public void AddAssemblyFeatureQueryFactory(Assembly assembly,IServiceCollection serviceCollection)
+        {
+            assembly.GetTypes()?
+                .ToList()
+                .Where(type => type.GetInterface(SystemClassTypeConstant.Instance.IFeatureQueryFactory.Name) is not null)
+                ?.ToList().ForEach(type =>
+                {
+                    Type interfaceType = type.GetInterface(SystemClassTypeConstant.Instance.IFeatureQueryFactory.Name);
+                    Type[] types = interfaceType.GetGenericArguments();
+                    Type queryType = types.FirstOrDefault();
+                    serviceCollection.AddSingleton(queryType);
+                });
+        }
         
     }
 }

@@ -2,6 +2,7 @@
 using Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfigurations;
 using Indivis.Core.Application.Common.SystemInitializers;
 using Indivis.Core.Application.Interfaces.Data;
+using Indivis.Core.Application.Interfaces.Features.FeatureFactories;
 using Indivis.Core.Application.Interfaces.Features.Systems;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,14 @@ namespace Indivis.Core.Application.Common.Constants.Systems
             get
             {
                 return typeof(BaseEntityFeatureConfiguration<>);
+            }
+        }
+
+        public Type IFeatureQueryFactory
+        {
+            get
+            {
+                return typeof(IFeatureQueryFactory<>);
             }
         }
 
