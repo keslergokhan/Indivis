@@ -20,7 +20,21 @@ namespace Indivis.Core.Application.Common.Data
         }
 
 
-        public EntityFeature Page => SetConfigure<Page, PageEntityConfiguration>().Features;
+        public EntityFeature Page
+        {
+            get
+            {
+                return SetConfigure<Page, PageEntityConfiguration>().Features;
+            }
+        }
+
+        public EntityFeature Url
+        {
+            get
+            {
+                return SetConfigure<Url, UrlEntityConfiguration>().Features;
+            }
+        }
 
 
 

@@ -1,5 +1,5 @@
 ﻿using Indivis.Core.Application.Interfaces.Data.Presentation;
-using Indivis.Presentation.WebUI.System.Interfaces.BaseClasses;
+using Indivis.Presentation.WebUI.System.Interfaces.Workers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,30 +8,31 @@ using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
 {
-    public abstract class BaseRequestWorker : IBaseRequestWorker
+    public abstract class BaseRequestWorker : IRequestWorker
     {
-        private IServiceProvider _serviceProvider;
+        private ICurrentRequest CurrentRequest;
+        private IServiceProvider ServiceProvider;
+        public List<IRequestWorker> RequestWorkers => new List<IRequestWorker>();
 
-        protected BaseRequestWorker(IServiceProvider serviceProvider)
+        protected BaseRequestWorker(IServiceProvider serviceProvider, ICurrentRequest currentRequest)
         {
-            _serviceProvider = serviceProvider;
+            ServiceProvider = serviceProvider;
+            CurrentRequest = currentRequest;
         }
 
-        public List<IBaseRequestWorker> BaseRequestWorkers => new List<IBaseRequestWorker>();
 
-        public void AddRequestWorker(IBaseRequestWorker baseRequestWorker)
+        public void AddRequestWorker(IRequestWorker baseRequestWorker)
         {
-            this.BaseRequestWorkers.Add(baseRequestWorker);
+            this.RequestWorkers.Add(baseRequestWorker);
         }
 
-        public ICurrentRequest Execute()
+        public List<IRequestWorker> GetRequest()
         {
-            throw new NotImplementedException();
+            return this.RequestWorkers;
         }
 
-        public List<IBaseRequestWorker> GetRequest()
-        {
-            return this.BaseRequestWorkers;
-        }
+        public 
+
+        public abstract ICurrentRequest ExecuteAsync();
     }
 }

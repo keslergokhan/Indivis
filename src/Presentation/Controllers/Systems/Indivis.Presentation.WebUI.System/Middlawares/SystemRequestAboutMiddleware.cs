@@ -1,5 +1,4 @@
 ﻿using Indivis.Core.Application.Interfaces.Data.Presentation;
-using Indivis.Presentation.WebUI.System.Interfaces.BaseClasses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,6 +22,12 @@ namespace Indivis.Presentation.WebUI.System.Middlawares
             request.FullPath = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.Path}";
             request.BaseUrl = $"{context.Request.Scheme}://{context.Request.Host}";
 
+            List<string> workers = new List<string>
+            {
+                "EntityListWorker",
+                "EntityDetailWorker",
+                "PageWorker"
+            };
 
 
             await next.Invoke(context);
