@@ -30,7 +30,7 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
         public BaseGetByIdEntityDataQuery MediatRGeyByIdEntityQuery { get; set; }
 
 
-        public BaseGetByIdEntityDataQuery SetMediatRByIdEntityQuery(Action<BaseGetByIdEntityDataQuery> action)
+        public BaseGetByIdEntityDataQuery GetMediatRByIdEntityQuery(Action<BaseGetByIdEntityDataQuery> action)
         {
             action.Invoke(MediatRGeyByIdEntityQuery);
             return MediatRGeyByIdEntityQuery;
@@ -89,6 +89,9 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
             _features.MediatRGeyByIdEntityQuery = (BaseGetByIdEntityDataQuery)_serviceProvider.GetService(typeof(IGetByIdEntityQuery<TEntity>));
             return this;
         }
+
+
+        
     }
 
 

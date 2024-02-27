@@ -44,6 +44,13 @@ namespace Indivis.Core.Application.Common.Constants.Systems
             } 
         }
 
+        public Type DependenctyRegisterAttribute
+        {
+            get
+            {
+                return typeof(DependencyRegisterAttribute);
+            }
+        }
 
         public Type CreateMapAttribute
         {

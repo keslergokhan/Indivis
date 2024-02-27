@@ -47,6 +47,7 @@ namespace Indivis.Core.Application.Common.BaseClasses.Features.Queries
 
             TEntity result = await _applicationDbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == request.Id);
 
+
             var sss = _mapper.Map<TResult>(result);
 
             return outModel.SuccessSetData(new TResult() { Id = request.Id });

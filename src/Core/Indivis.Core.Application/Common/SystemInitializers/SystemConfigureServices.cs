@@ -27,5 +27,12 @@ namespace Indivis.Core.Application.Common.SystemInitializers
         {
             AssemblyCoreEntityFeatureInitializer.Instance.AddAssemblyFeatureQueryFactory(assembly,services);
         }
+
+        public static void AddSystemsDependencyRegister(this IServiceCollection services, Assembly assembly)
+        {
+            AssemblySharedSystemsInitializer.Instance.AddSystemsDependencyRegister(assembly,services);
+        }
+
+       
     }
 }

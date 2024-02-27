@@ -1,4 +1,5 @@
 ﻿using Indivis.Core.Application.Interfaces.Data.Presentation;
+using Indivis.Presentation.WebUI.System.Interfaces.Services.Requests;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -6,28 +7,28 @@ namespace Indivis.Presentation.WebUI.System.Middlawares
 {
     public class SystemRequestAboutMiddleware : IMiddleware
     {
-        private readonly ICurrentRequest _currentRequest;
+        private ICurrentRequest _currentRequest;
+        private IRequestService _requestService;
 
-        public SystemRequestAboutMiddleware(ICurrentRequest currentRequest)
+        public SystemRequestAboutMiddleware(ICurrentRequest currentRequest, IRequestService requestService)
         {
             _currentRequest = currentRequest;
+            _requestService = requestService;
         }
+
+
+
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            ICurrentRequest request = context.RequestServices.GetRequiredService<ICurrentRequest>();    
-            request.Domain = context.Request.Host.Value;
-            request.Path = context.Request.Path;
-            request.Schema = context.Request.Scheme;
-            request.FullPath = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.Path}";
-            request.BaseUrl = $"{context.Request.Scheme}://{context.Request.Host}";
+            
+            this._currentRequest.Path = context.Request.Path;
+            this._currentRequest.Schema = context.Request.Scheme;
+            this._currentRequest.FullPath = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.Path}";
+            this._currentRequest.BaseUrl = $"{context.Request.Scheme}://{context.Request.Host}";
 
-            List<string> workers = new List<string>
-            {
-                "EntityListWorker",
-                "EntityDetailWorker",
-                "PageWorker"
-            };
+            
+            var result = await this._requestService.GetRequestUrlAsync(this._currentRequest);
 
 
             await next.Invoke(context);

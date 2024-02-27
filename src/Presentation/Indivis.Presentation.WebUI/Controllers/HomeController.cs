@@ -28,12 +28,6 @@ namespace Indivis.Presentation.WebUI.Controllers
 
         public async Task<IActionResult> Index()
         {
-			GetByFullPathUrlQuery ssss = this._entityFeatureContext.Page.GetDependencyMediatRQuery<GetByFullPathUrlQuery>(x =>
-            {
-                x.FullPath = "/deneme";
-            });
-
-
             
             return View();
         }

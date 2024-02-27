@@ -21,6 +21,7 @@ namespace Indivis.Core.Application
             });
 
 
+            services.AddSystemsDependencyRegister(Assembly.GetExecutingAssembly());
             services.AddMediatR(x=>x.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddSystemMapper(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(Assembly.GetExecutingAssembly());

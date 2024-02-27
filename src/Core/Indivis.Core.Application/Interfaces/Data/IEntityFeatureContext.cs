@@ -12,6 +12,7 @@ namespace Indivis.Core.Application.Interfaces.Data
     public interface IEntityFeatureContext
     {
         public EntityFeature Page { get; }
+        public EntityFeature Url {  get; }
 
         public EntityFeature GetByNameEntityFeature(string entityName);
 

@@ -31,8 +31,6 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
             return this.RequestWorkers;
         }
 
-        public 
-
         public abstract ICurrentRequest ExecuteAsync();
     }
 }
