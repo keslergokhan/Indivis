@@ -25,4 +25,8 @@
     <ProjectReference Include="..\..\Core\Indivis.Core.Application\Indivis.Core.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

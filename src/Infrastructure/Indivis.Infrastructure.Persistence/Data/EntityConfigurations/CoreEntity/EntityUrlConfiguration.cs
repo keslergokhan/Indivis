@@ -15,18 +15,16 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
         {
             base.Configure(builder);
 
+
             builder.HasOne(x => x.Url)
-                .WithOne()
-                .HasForeignKey<EntityUrl>(x => x.UrlId)
+                .WithMany()
+                .HasForeignKey(x => x.UrlId)
                 .IsRequired(true)
                 .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
 
-            builder.Property(x => x.UrlId).IsUnicode();
-
-
             builder.HasOne(x => x.Entity)
-                .WithOne()
-                .HasForeignKey<EntityUrl>(x => x.EntityId)
+                .WithMany()
+                .HasForeignKey(x => x.EntityId)
                 .IsRequired(true)
                 .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
         }

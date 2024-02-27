@@ -25,5 +25,6 @@ namespace Indivis.Core.Application.Results
             base.Success();
             return this;
         }
+
     }
 }

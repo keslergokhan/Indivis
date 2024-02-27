@@ -23,5 +23,6 @@ namespace Indivis.Core.Domain.Entities.CoreEntities
         /// Örnek : Page entitiysinin Name değeri
         /// </summary>
         public string EntityDefaultProperty { get; set; }
+
     }
 }

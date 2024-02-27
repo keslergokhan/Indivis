@@ -51,12 +51,6 @@ namespace Indivis.Presentation.WebUI.Controllers
             
             IResultDataControl<ErrorViewModel> result2 = new ResultDataControl<ErrorViewModel>();
 
-            result2.Fail(new ExceptionResult("Hata","bu bir hatadýr",new ArgumentNullException("sdfsdfsd ")));
-
-            if (result.IsSuccess)
-            {
-
-            }
 
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }

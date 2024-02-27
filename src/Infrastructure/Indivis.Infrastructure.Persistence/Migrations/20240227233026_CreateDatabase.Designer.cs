@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Indivis.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IndivisContext))]
-    [Migration("20240204211554_IdentityUpdateDatabase")]
-    partial class IdentityUpdateDatabase
+    [Migration("20240227233026_CreateDatabase")]
+    partial class CreateDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,16 +90,13 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         .HasColumnOrder(9999);
 
                     b.Property<Guid>("UrlId")
-                        .IsUnicode(true)
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EntityId")
-                        .IsUnique();
+                    b.HasIndex("EntityId");
 
-                    b.HasIndex("UrlId")
-                        .IsUnique();
+                    b.HasIndex("UrlId");
 
                     b.ToTable("EntityUrl", (string)null);
                 });
@@ -172,7 +169,7 @@ namespace Indivis.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("UrlSystemTypeId");
 
-                    b.ToTable("Url_UrlSystemTypes");
+                    b.ToTable("Url_UrlSystemType", (string)null);
                 });
 
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Page", b =>
@@ -488,14 +485,14 @@ namespace Indivis.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.EntityUrl", b =>
                 {
                     b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Entity", "Entity")
-                        .WithOne()
-                        .HasForeignKey("Indivis.Core.Domain.Entities.CoreEntities.EntityUrl", "EntityId")
+                        .WithMany()
+                        .HasForeignKey("EntityId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Url", "Url")
-                        .WithOne()
-                        .HasForeignKey("Indivis.Core.Domain.Entities.CoreEntities.EntityUrl", "UrlId")
+                        .WithMany()
+                        .HasForeignKey("UrlId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 

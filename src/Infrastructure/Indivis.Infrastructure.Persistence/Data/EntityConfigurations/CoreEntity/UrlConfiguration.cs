@@ -17,8 +17,6 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
         {
             base.Configure(builder);
 
-            builder.ToTable(typeof(Url).Name);
-
             builder.Property(x => x.FullPath)
                 .IsRequired(true)
                 .HasMaxLength(EntityConfigurationConstants.MaxStringLv7);
