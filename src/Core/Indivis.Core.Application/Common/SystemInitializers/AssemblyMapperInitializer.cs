@@ -43,8 +43,6 @@ namespace Indivis.Core.Application.Common.SystemInitializers
                         //çift taraflı tanımlama uygula
                         //AObject -> BObject || BObject -> AObject
                         mapperConfiguration.CreateMap(classType, DTypeClass).ReverseMap();
-
-                        mapperConfiguration.CreateMap<Page, Language>();
                     });
                 }
             });

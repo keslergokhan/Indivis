@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using Indivis.Infrastructure.Persistence.Identities;
 using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Domain.Entities;
+using System.IO.Enumeration;
+using System.Security.Cryptography;
 
 namespace Indivis.Infrastructure.Persistence
 {
@@ -31,7 +33,6 @@ namespace Indivis.Infrastructure.Persistence
 
             IndivisContext db = services.BuildServiceProvider().GetService<IndivisContext>();
             //ConfigureServices.InsertDbData(db);
-            //ServiceRegistrations.ListData(db);
 
             return services;
         }
@@ -40,164 +41,94 @@ namespace Indivis.Infrastructure.Persistence
         {
             using (db)
             {
-                var UrlSystemType = new Indivis.Core.Domain.Entities.CoreEntities.UrlSystemType()
+
+                //Dil-Türkçe
+                Language language = new Language()
                 {
                     Id = Guid.NewGuid(),
+                    CountryCode = "TR",
+                    Culture = "tr-TR",
+                    Currency = "TL",
+                    FLag = "TR",
+                    Name = "Türkçe",
+                    Sort = 1,
                     CreateDate = DateTime.Now,
-                    InterfaceType = "IEmptyPage",
-                    State = 1,
+                    State = 1
                 };
+                db.Set<Language>().Add(language);
 
-                var UrlSystemType2 = new Indivis.Core.Domain.Entities.CoreEntities.UrlSystemType()
+
+                //Announcement
+                Entity announcementEntity = new Entity()
+                {
+                    Id = Guid.NewGuid(),
+                    IsUrlData = false,
+                    TypeName = "Announcement",
+                    CreateDate = DateTime.Now,
+                    State = 1
+                };
+                db.Set<Entity>().Add(announcementEntity);
+
+
+                //UrlType
+                UrlSystemType urlSystemTypeList = new()
                 {
                     Id = Guid.NewGuid(),
                     CreateDate = DateTime.Now,
                     InterfaceType = "IEntityList",
-                    State = 1,
+                    State = 1
                 };
+                db.Set<UrlSystemType>().Add(urlSystemTypeList);
 
-
-                db.Set<UrlSystemType>().AddRange(UrlSystemType,UrlSystemType2);
-
-
-                var language = new Indivis.Core.Domain.Entities.CoreEntities.Language()
+                //duyurular url
+                Url announcementUrl = new Url()
                 {
                     Id = Guid.NewGuid(),
-                    CountryCode = "TR",
-                    CreateDate = DateTime.Now,
-                    Culture = "tr-TR",
-                    Currency = "TL",
-                    FLag = "TL",
-                    Name = "Türkçe",
-                    Sort = 1,
-                    State = 1,
-                    
-                };
-
-                db.Set<Language>().Add(language);
-
-
-                var url = new Indivis.Core.Domain.Entities.CoreEntities.Url(){
-                    Id = Guid.NewGuid(),
-                    CreateDate= DateTime.Now,
-                    FullPath = "/haberler",
-                    Path = "/haberler",
+                    FullPath = "/duyurular",
                     LanguageId = language.Id,
-                    Url_UrlSystemTypes = new List<Url_UrlSystemType>()
-                    {
-                        new Url_UrlSystemType()
-                        {
-                            UrlSystemType = UrlSystemType
-                        }
-                    },
+                    Path = "/duyurular",
+                    ParentUrl = null,
+                    ParentUrlId = null,
                     State = 1,
+                    CreateDate = DateTime.Now,
                 };
 
-                var url2 = new Indivis.Core.Domain.Entities.CoreEntities.Url()
+                announcementUrl.Url_UrlSystemTypes = new List<Url_UrlSystemType>();
+                //Entity List tipinde
+                announcementUrl.Url_UrlSystemTypes.Add(new Url_UrlSystemType()
+                {
+                    UrlSystemType = urlSystemTypeList,
+                });
+                db.Set<Url>().Add(announcementUrl);
+
+
+                EntityUrl announcementEntityUrl = new EntityUrl()
                 {
                     Id = Guid.NewGuid(),
+                    Url = announcementUrl,
+                    Entity = announcementEntity,
                     CreateDate = DateTime.Now,
-                    FullPath = "/haberler/denemehaber",
-                    Path = "/denemehaber",
+                    State = 1,
+                };
+                db.Set<EntityUrl>().Add(announcementEntityUrl);
+
+                Page Page = new Page()
+                {
+                    Id = Guid.NewGuid(),
                     LanguageId = language.Id,
-                    ParentUrlId = url.Id,
+                    Name = "Duyurular",
+                    Url = announcementUrl,
                     State = 1,
-                    Url_UrlSystemTypes = new List<Url_UrlSystemType>()
-                    {
-                        new Url_UrlSystemType()
-                        {
-                            UrlSystemType = UrlSystemType
-                        }
-                    },
+                    CreateDate = DateTime.Now
                 };
-
-                var url3 = new Indivis.Core.Domain.Entities.CoreEntities.Url()
-                {
-                    Id = Guid.NewGuid(),
-                    CreateDate = DateTime.Now,
-                    FullPath = "/haberler/basinbülteni",
-                    Path = "/basinbülteni",
-                    LanguageId = language.Id,
-                    ParentUrlId = url.Id,
-                    State = 1,
-                    Url_UrlSystemTypes = new List<Url_UrlSystemType>()
-                    {
-                        new Url_UrlSystemType()
-                        {
-                            UrlSystemType = UrlSystemType2
-                        }
-                    },
-                };
-
-
-
-                db.Set<Url>().AddRange(url,url2,url3);
-
-
-                var announcement = new Indivis.Core.Domain.Entities.Announcement()
-                {
-                    Id = Guid.NewGuid(),
-                    CreateDate = DateTime.Now,
-                    LanguageId = language.Id,
-                    ModifiedDate = DateTime.Now,
-                    State = 1,
-                    Title = "Bir haber duyurusu"
-                };
-
-
-                db.Set<Announcement>().Add(announcement);
-
-
-                var entity = new Entity()
-                {
-                    CreateDate = DateTime.Now,
-                    Id = Guid.NewGuid(),
-                    IsUrlData = true,
-                    ModifiedDate = DateTime.Now,
-                    State = 1,
-                    TypeName = "Announcement",
-                    
-                };
-
-                var entityUrl = new Indivis.Core.Domain.Entities.CoreEntities.EntityUrl()
-                {
-                    Entity = entity,
-                    CreateDate = DateTime.Now,
-                    Id = Guid.NewGuid(),
-                    UrlId = url.Id,
-                    State = 1,
-                    EntityId = entity.Id,
-                    ModifiedDate = DateTime.Now,
-                };
-                db.Set<EntityUrl>().Add(entityUrl);
-
-                var entityUrl2 = new Indivis.Core.Domain.Entities.CoreEntities.EntityUrl()
-                {
-                    Entity = entity,
-                    CreateDate = DateTime.Now,
-                    Id = Guid.NewGuid(),
-                    UrlId = url2.Id,
-                    State = 1,
-                    EntityId = entity.Id,
-                    ModifiedDate = DateTime.Now,
-                };
-                db.Set<EntityUrl>().Add(entityUrl2);
-
+                db.Set<Page>().Add(Page);
 
 
                 db.SaveChanges();
 
-
             }   
         }
 
-        public static void ListData(IndivisContext db)
-        {
-            var deneem = db.Urls.ToList();
-
-            var ffff = db.Urls.Include(x => x.Url_UrlSystemTypes).ToList();
-
-            var ss1 = db.Urls.Include(x => x.SubUrls).ToList();
-        }
+        
     }
 }

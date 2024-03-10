@@ -40,7 +40,7 @@ namespace Indivis.Core.Application.Features.Urls.Queries
 
             Url firstUrl = this._applicaitonDbContext.Urls
                 .Include(x=>x.ParentUrl).ThenInclude(x=>x.Url_UrlSystemTypes)
-                .Include(x=>x.Url_UrlSystemTypes)
+                .Include(x=>x.Url_UrlSystemTypes).ThenInclude(x=>x.UrlSystemType)
                 .FirstOrDefault(x => x.FullPath == request.FullPath);
 
             if (firstUrl==null)

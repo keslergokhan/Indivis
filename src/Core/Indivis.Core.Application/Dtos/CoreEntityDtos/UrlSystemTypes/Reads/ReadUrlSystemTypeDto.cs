@@ -1,5 +1,6 @@
 ﻿using Indivis.Core.Application.Attributes.Systems;
 using Indivis.Core.Application.Common.BaseClasses.Dtos.CoreEntities;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.ManyToMany;
 using Indivis.Core.Domain.Entities.CoreEntities.ManyToMany;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,6 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.UrlSystemType.Reads
     public partial class ReadUrlSystemTypeDto : BaseReadEntityDto
     {
         public string InterfaceType { get; set; }
-        public ReadUrlSystemTypeDto Url_UrlSystemTypes { get; set; }
+        public ICollection<ReadUrl_UrlSystemTypeDto> Url_UrlSystemTypes { get; set; }
     }
 }
