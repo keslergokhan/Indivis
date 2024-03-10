@@ -13,8 +13,4 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Core\Indivis.Core.Application\Indivis.Core.Application.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Interfaces\NewFolder\" />
-  </ItemGroup>
 </Project>

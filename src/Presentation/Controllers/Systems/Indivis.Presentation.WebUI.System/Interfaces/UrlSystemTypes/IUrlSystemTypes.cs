@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUI.System.Interfaces.Workers
 {
-    public interface IRequestWorker
+    public interface IUrlSystemTypes
     {
-        public List<IRequestWorker> RequestWorkers { get; }
-        public void AddRequestWorker(IRequestWorker baseRequestWorker);
-        public List<IRequestWorker> GetRequest();
+        public List<IUrlSystemTypes> RequestWorkers { get; }
+        public void AddRequestWorker(IUrlSystemTypes baseRequestWorker);
+        public List<IUrlSystemTypes> GetRequest();
         public ICurrentRequest ExecuteAsync();
     }
 }

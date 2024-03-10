@@ -8,25 +8,25 @@ using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
 {
-    public abstract class BaseRequestWorker : IRequestWorker
+    public abstract class BaseUrlSystemTypes : IUrlSystemTypes
     {
         private ICurrentRequest CurrentRequest;
         private IServiceProvider ServiceProvider;
-        public List<IRequestWorker> RequestWorkers => new List<IRequestWorker>();
+        public List<IUrlSystemTypes> RequestWorkers => new List<IUrlSystemTypes>();
 
-        protected BaseRequestWorker(IServiceProvider serviceProvider, ICurrentRequest currentRequest)
+        protected BaseUrlSystemTypes(IServiceProvider serviceProvider, ICurrentRequest currentRequest)
         {
             ServiceProvider = serviceProvider;
             CurrentRequest = currentRequest;
         }
 
 
-        public void AddRequestWorker(IRequestWorker baseRequestWorker)
+        public void AddRequestWorker(IUrlSystemTypes baseRequestWorker)
         {
             this.RequestWorkers.Add(baseRequestWorker);
         }
 
-        public List<IRequestWorker> GetRequest()
+        public List<IUrlSystemTypes> GetRequest()
         {
             return this.RequestWorkers;
         }
