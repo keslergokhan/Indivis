@@ -26,7 +26,6 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
 		}
 
         public Type EntityType { get; set; }
-        public PropertyInfo EntityDefaultPropertyType { get; set; }
         public BaseGetByIdEntityDataQuery MediatRGeyByIdEntityQuery { get; set; }
 
 
@@ -73,14 +72,6 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
         {
             _features = features;
             _serviceProvider = serviceProvider;
-        }
-
-
-        public EntityFeatureBuilder<TEntity> SetEntityDefaultProperty<TResult>(Expression<Func<TEntity, TResult>> expression) where TResult : class
-        {
-            string member = expression.GetMember().Name;
-            _features.EntityDefaultPropertyType = _features.EntityType.GetProperty(member);
-            return this;
         }
 
         public EntityFeatureBuilder<TEntity> SetMediatRGetByIdEntityQuery<TQuery>()

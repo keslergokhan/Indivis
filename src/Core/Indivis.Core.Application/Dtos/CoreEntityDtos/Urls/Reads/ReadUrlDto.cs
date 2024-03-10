@@ -2,6 +2,7 @@
 using Indivis.Core.Application.Common.BaseClasses.Dtos.CoreEntities;
 using Indivis.Core.Application.Interfaces.Dtos;
 using Indivis.Core.Domain.Entities.CoreEntities;
+using Indivis.Core.Domain.Entities.CoreEntities.ManyToMany;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,18 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads
     {
         public string Path { get; set; }
         public string FullPath { get; set; }
+        public Guid ParentUrlId { get; set; }
+        public ReadUrlDto ParentUrl { get; set; }
     }
 
     public partial class ReadUrlDto : ILanguageDto
     {
         public Guid LanguageId { get; set; }
+    }
+
+    public partial class ReadUrlDto
+    {
+        public ICollection<ReadUrlDto> SubUrls { get; set; }
+        public ICollection<Url_UrlSystemType> Url_UrlSystemTypes { get; set; }
     }
 }

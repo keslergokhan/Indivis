@@ -17,12 +17,6 @@ namespace Indivis.Core.Domain.Entities.CoreEntities
         /// Announcement içerisinde Url entitiysi bulunmaktadır.
         /// </summary>
         public bool IsUrlData { get; set; }
-        /// <summary>
-        /// Entitiy değerinin anlamlı bir ifade taşıyan en küçük property değeri
-        /// Örnek : Announcement entitynin Title değer
-        /// Örnek : Page entitiysinin Name değeri
-        /// </summary>
-        public string EntityDefaultProperty { get; set; }
 
     }
 }

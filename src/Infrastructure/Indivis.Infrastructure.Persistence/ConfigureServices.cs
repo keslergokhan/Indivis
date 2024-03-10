@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Indivis.Infrastructure.Persistence.Identities;
 using Indivis.Core.Application.Interfaces.Data;
+using Indivis.Core.Domain.Entities;
 
 namespace Indivis.Infrastructure.Persistence
 {
@@ -28,8 +29,8 @@ namespace Indivis.Infrastructure.Persistence
                 .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<IndivisContext>();
 
-            //IndivisContext db = services.BuildServiceProvider().GetService<IndivisContext>();
-            //ServiceRegistrations.InsertDbData(db);
+            IndivisContext db = services.BuildServiceProvider().GetService<IndivisContext>();
+            //ConfigureServices.InsertDbData(db);
             //ServiceRegistrations.ListData(db);
 
             return services;
@@ -131,6 +132,57 @@ namespace Indivis.Infrastructure.Persistence
 
 
                 db.Set<Url>().AddRange(url,url2,url3);
+
+
+                var announcement = new Indivis.Core.Domain.Entities.Announcement()
+                {
+                    Id = Guid.NewGuid(),
+                    CreateDate = DateTime.Now,
+                    LanguageId = language.Id,
+                    ModifiedDate = DateTime.Now,
+                    State = 1,
+                    Title = "Bir haber duyurusu"
+                };
+
+
+                db.Set<Announcement>().Add(announcement);
+
+
+                var entity = new Entity()
+                {
+                    CreateDate = DateTime.Now,
+                    Id = Guid.NewGuid(),
+                    IsUrlData = true,
+                    ModifiedDate = DateTime.Now,
+                    State = 1,
+                    TypeName = "Announcement",
+                    
+                };
+
+                var entityUrl = new Indivis.Core.Domain.Entities.CoreEntities.EntityUrl()
+                {
+                    Entity = entity,
+                    CreateDate = DateTime.Now,
+                    Id = Guid.NewGuid(),
+                    UrlId = url.Id,
+                    State = 1,
+                    EntityId = entity.Id,
+                    ModifiedDate = DateTime.Now,
+                };
+                db.Set<EntityUrl>().Add(entityUrl);
+
+                var entityUrl2 = new Indivis.Core.Domain.Entities.CoreEntities.EntityUrl()
+                {
+                    Entity = entity,
+                    CreateDate = DateTime.Now,
+                    Id = Guid.NewGuid(),
+                    UrlId = url2.Id,
+                    State = 1,
+                    EntityId = entity.Id,
+                    ModifiedDate = DateTime.Now,
+                };
+                db.Set<EntityUrl>().Add(entityUrl2);
+
 
 
                 db.SaveChanges();

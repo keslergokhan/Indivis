@@ -1,4 +1,5 @@
 ﻿using Indivis.Core.Application.Interfaces.Data;
+using Indivis.Core.Domain.Entities;
 using Indivis.Core.Domain.Entities.CoreEntities;
 using Indivis.Core.Domain.Entities.CoreEntities.ManyToMany;
 using Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntity;
@@ -34,5 +35,6 @@ namespace Indivis.Infrastructure.Persistence.Data.IndivisContexts
         public DbSet<EntityUrl> EntityUrls => Set<EntityUrl>();
         public DbSet<Entity> Entitys => Set<Entity>();
         public DbSet<Page> Pages => Set<Page>();
+        public DbSet<Announcement> Announcements=> Set<Announcement>();
     }
 }

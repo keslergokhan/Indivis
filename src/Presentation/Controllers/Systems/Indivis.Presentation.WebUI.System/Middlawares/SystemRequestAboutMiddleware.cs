@@ -1,7 +1,8 @@
-﻿using Indivis.Core.Application.Interfaces.Data.Presentation;
+﻿using Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads;
+using Indivis.Core.Application.Interfaces.Data.Presentation;
+using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Presentation.WebUI.System.Interfaces.Services.Requests;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Indivis.Presentation.WebUI.System.Middlawares
 {
@@ -17,8 +18,6 @@ namespace Indivis.Presentation.WebUI.System.Middlawares
         }
 
 
-
-
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             
@@ -28,9 +27,8 @@ namespace Indivis.Presentation.WebUI.System.Middlawares
             this._currentRequest.BaseUrl = $"{context.Request.Scheme}://{context.Request.Host}";
 
             
-            var result = await this._requestService.GetRequestUrlAsync(this._currentRequest);
-
-
+            IResultDataControl<ReadUrlDto> result = await this._requestService.GetRequestUrlAsync(this._currentRequest);
+            
             await next.Invoke(context);
         }
     }

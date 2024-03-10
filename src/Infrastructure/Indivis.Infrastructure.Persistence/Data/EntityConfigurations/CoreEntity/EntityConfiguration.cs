@@ -26,12 +26,7 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
                 HasDefaultValue(false)
                 .IsRequired(true)
                 .HasColumnOrder(3);
-
-
-            builder.Property(x => x.EntityDefaultProperty)
-                .HasMaxLength(EntityConfigurationConstants.MaxStringLv5)
-                .IsRequired(true)
-                .HasColumnOrder(5);
+            
         }
     }
 }

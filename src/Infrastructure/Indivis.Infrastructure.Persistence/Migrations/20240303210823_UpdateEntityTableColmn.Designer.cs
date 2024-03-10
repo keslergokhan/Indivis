@@ -4,6 +4,7 @@ using Indivis.Infrastructure.Persistence.Data.IndivisContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Indivis.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IndivisContext))]
-    partial class IndivisContextModelSnapshot : ModelSnapshot
+    [Migration("20240303210823_UpdateEntityTableColmn")]
+    partial class UpdateEntityTableColmn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,38 +24,6 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Indivis.Core.Domain.Entities.Announcement", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnOrder(0);
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnOrder(998);
-
-                    b.Property<Guid>("LanguageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnOrder(999);
-
-                    b.Property<byte>("State")
-                        .HasColumnType("tinyint")
-                        .HasColumnOrder(9999);
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Announcement", (string)null);
-                });
 
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Entity", b =>
                 {

@@ -14,7 +14,6 @@ namespace Indivis.Core.Application.EntityFeatureConfigurations
         public UrlEntityConfiguration(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             Entity()
-                .SetEntityDefaultProperty(x => x.Path)
                 .SetMediatRGetByIdEntityQuery<GetByIdUrlQuery>();
         }
 
