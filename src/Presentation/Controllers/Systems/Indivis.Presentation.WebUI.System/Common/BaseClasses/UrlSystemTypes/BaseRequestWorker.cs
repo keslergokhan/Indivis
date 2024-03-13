@@ -11,24 +11,23 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
     public abstract class BaseUrlSystemTypes : IUrlSystemTypes
     {
         private ICurrentRequest CurrentRequest;
-        private IServiceProvider ServiceProvider;
-        public List<IUrlSystemTypes> RequestWorkers => new List<IUrlSystemTypes>();
+        protected IServiceProvider ServiceProvider;
+        public List<IUrlSystemTypes> UrlSystemTypes => new List<IUrlSystemTypes>();
 
-        protected BaseUrlSystemTypes(IServiceProvider serviceProvider, ICurrentRequest currentRequest)
+        protected BaseUrlSystemTypes(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
-            CurrentRequest = currentRequest;
         }
 
 
         public void AddRequestWorker(IUrlSystemTypes baseRequestWorker)
         {
-            this.RequestWorkers.Add(baseRequestWorker);
+            this.UrlSystemTypes.Add(baseRequestWorker);
         }
 
         public List<IUrlSystemTypes> GetRequest()
         {
-            return this.RequestWorkers;
+            return this.UrlSystemTypes;
         }
 
         public abstract ICurrentRequest ExecuteAsync();

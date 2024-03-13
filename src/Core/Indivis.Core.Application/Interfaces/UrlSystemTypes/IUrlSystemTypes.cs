@@ -9,7 +9,7 @@ namespace Indivis.Presentation.WebUI.System.Interfaces.Workers
 {
     public interface IUrlSystemTypes
     {
-        public List<IUrlSystemTypes> RequestWorkers { get; }
+        public List<IUrlSystemTypes> UrlSystemTypes { get; }
         public void AddRequestWorker(IUrlSystemTypes baseRequestWorker);
         public List<IUrlSystemTypes> GetRequest();
         public ICurrentRequest ExecuteAsync();

@@ -28,27 +28,32 @@ namespace Indivis.Core.Application.Common.BaseClasses.Results
 
         public IResultControl Fail()
         {
+            this._isSuccess = false;
             return this;
         }
 
         public IResultControl Fail(string title, string message)
         {
+            this._isSuccess = false;
             return this;
         }
 
         public IResultControl Fail(string title, string message, Exception exception)
         {
+            this._isSuccess = false;
             return this;
         }
 
         public IResultControl Fail(IExceptionResult error)
         {
+            this._isSuccess = false;
             _error = error;
             return this;
         }
 
         public IResultControl Fail(Exception exception)
         {
+            this._isSuccess = false;
             _error = new ExceptionResult(exception.Source, exception.Message, exception);
             return this;
         }
