@@ -35,6 +35,7 @@ namespace Indivis.Infrastructure.Persistence.Data.IndivisContexts
         public DbSet<EntityUrl> EntityUrls => Set<EntityUrl>();
         public DbSet<Entity> Entitys => Set<Entity>();
         public DbSet<Page> Pages => Set<Page>();
+        public DbSet<PageSystem> PageSystems => Set<PageSystem>();
         public DbSet<Announcement> Announcements=> Set<Announcement>();
     }
 }

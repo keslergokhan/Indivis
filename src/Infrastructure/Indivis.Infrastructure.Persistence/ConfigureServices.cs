@@ -15,6 +15,7 @@ using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Domain.Entities;
 using System.IO.Enumeration;
 using System.Security.Cryptography;
+using System.Collections.ObjectModel;
 
 namespace Indivis.Infrastructure.Persistence
 {
@@ -33,6 +34,8 @@ namespace Indivis.Infrastructure.Persistence
 
             IndivisContext db = services.BuildServiceProvider().GetService<IndivisContext>();
             //ConfigureServices.InsertDbData(db);
+            //InsertDbDataParentUrl(db);
+            //InsertDbPage(db);
 
             return services;
         }
@@ -123,12 +126,105 @@ namespace Indivis.Infrastructure.Persistence
                 };
                 db.Set<Page>().Add(Page);
 
+                PageSystem pageSystem = new PageSystem()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Announcement Liste",
+                    Controller = "AnnouncementController",
+                    Action = "List",
+                    Description = "Duyurular Liste Sayfa Sistemi",
+                    Pages = new Collection<Page>(),
+                    State = 1,
+                    CreateDate = DateTime.Now
+                };
+
+                pageSystem.Pages.Add(Page);
+                db.Set<PageSystem>().Add(pageSystem);
 
                 db.SaveChanges();
 
             }   
         }
 
-        
+        public static void InsertDbDataParentUrl(IndivisContext db)
+        {
+            Language language = db.Set<Language>().FirstOrDefault(x => x.CountryCode == "TR");
+            PageSystem pageSystemEmpty = db.Set<PageSystem>().FirstOrDefault(x=>x.Controller == "EmptyPageController");
+
+            if (!db.Urls.Any(x=>x.FullPath == "/duyurular"))
+            {
+                PageSystem pageSystem = new PageSystem()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "İçerik Sayfası",
+                    Description = "Doldurulmaya müsait boş sayfa",
+                    Controller = "EmptyPageController",
+                    Action = "Default",
+                    State = 1,
+                    CreateDate = DateTime.Now
+                };
+                db.Set<PageSystem>().Add(pageSystem);
+
+
+                Url url = new Url()
+                {
+                    Id = Guid.NewGuid(),
+                    FullPath = "/kurumsal",
+                    LanguageId = language.Id,
+                    Path = "/kurumsal",
+                    State = 1,
+                    CreateDate = DateTime.Now
+                };
+                db.Set<Url>().Add(url);
+
+                Page page = new Page()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Kurumsal",
+                    Url = url,
+                    LanguageId = language.Id,
+                    CreateDate = DateTime.Now,
+                    PageSystem = pageSystem,
+                    State = 1,
+                };
+                db.Set<Page>().Add(page);
+            }
+            
+
+
+            db.SaveChanges();
+        }
+
+        public static void InsertDbPage(IndivisContext db)
+        {
+            Language language = db.Set<Language>().FirstOrDefault(x => x.CountryCode == "TR");
+            PageSystem pageSystemEmpty = db.Set<PageSystem>().FirstOrDefault(x => x.Controller == "EmptyPageController");
+            Url parentUrl = db.Set<Url>().FirstOrDefault(x=>x.FullPath == "/kurumsal");
+
+            Url url = new Url()
+            {
+                Id = Guid.NewGuid(),
+                FullPath = "/kurumsal/hakkimizda",
+                LanguageId = language.Id,
+                Path = "/hakkimizda",
+                ParentUrl = parentUrl,
+                State = 1,
+                CreateDate = DateTime.Now
+            };
+            db.Set<Url>().Add(url);
+
+            Page page = new Page()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Hakkimizda",
+                Url = url,
+                LanguageId = language.Id,
+                CreateDate = DateTime.Now,
+                PageSystem = pageSystemEmpty,
+                State = 1,
+            };
+            db.Set<Page>().Add(page);
+            db.SaveChanges();
+        }
     }
 }
