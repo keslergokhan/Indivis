@@ -1,4 +1,5 @@
-﻿using Indivis.Core.Application.Interfaces.Data.Presentation;
+﻿using Indivis.Core.Application.Attributes.Systems;
+using Indivis.Core.Application.Interfaces.Data.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Common.Data.Presentation
 {
+    [DependencyRegister(typeof(ICurrentRequest),DependencyTypes.Singleton)]
     public class CurrentRequest : ICurrentRequest
     {
         public string Schema {get; set;}

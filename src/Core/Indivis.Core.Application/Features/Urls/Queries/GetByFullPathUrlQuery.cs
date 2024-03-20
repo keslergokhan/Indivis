@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads;
+using Indivis.Core.Application.Enums.Systems;
 using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Application.Interfaces.Features.FeatureFactories;
 using Indivis.Core.Application.Interfaces.Results;
@@ -20,6 +21,7 @@ namespace Indivis.Core.Application.Features.Urls.Queries
         IFeatureQueryFactory<GetByFullPathUrlQuery>
     {
         public string FullPath { get; set; }
+        public StateEnum State { get; set; }
     }
 
 

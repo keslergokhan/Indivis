@@ -1,4 +1,5 @@
-﻿using Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfigurations;
+﻿using Indivis.Core.Application.Attributes.Systems;
+using Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfigurations;
 using Indivis.Core.Application.EntityFeatureConfigurations;
 using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Domain.Entities.CoreEntities;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Common.Data
 {
+    [DependencyRegister(typeof(IEntityFeatureContext),DependencyTypes.Scopet)]
     public class EntityFeatureContext : BaseEntityFeatureContext, IEntityFeatureContext
     {
         private IServiceProvider _serviceProvider;

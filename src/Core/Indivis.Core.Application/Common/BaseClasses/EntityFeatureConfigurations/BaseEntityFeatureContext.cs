@@ -23,7 +23,11 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
             where TConfigure : BaseEntityFeatureConfiguration<TEntity>
         {
             BaseEntityFeatureConfiguration<TEntity> entityFeatureConfiguration = (BaseEntityFeatureConfiguration<TEntity>)this._serviceProvider.GetService(typeof(TConfigure));
-            this.EntityFeatures.Add(typeof(TEntity).Name, entityFeatureConfiguration.Features);
+            if(!this.EntityFeatures.Any(x=>x.Key == typeof(TEntity).Name))
+            {
+                this.EntityFeatures.Add(typeof(TEntity).Name, entityFeatureConfiguration.Features);
+            }
+            
             return entityFeatureConfiguration;
         }
     }

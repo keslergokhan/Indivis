@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Interfaces.Data.Presentation
 {
+
     public interface ICurrentRequest
     {
         public string Schema { get; set; }

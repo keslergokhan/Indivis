@@ -1,5 +1,13 @@
-﻿using Indivis.Core.Application.Interfaces.Data.Presentation;
+﻿using Indivis.Core.Application.Dtos.CoreEntityDtos.Pages.Reads;
+using Indivis.Core.Application.Enums.Systems;
+using Indivis.Core.Application.Features.Systems.Queries.Pages;
+using Indivis.Core.Application.Features.Urls.Queries;
+using Indivis.Core.Application.Interfaces.Data;
+using Indivis.Core.Application.Interfaces.Data.Presentation;
+using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Presentation.WebUI.System.Interfaces.Workers;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,26 +18,28 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
 {
     public abstract class BaseUrlSystemTypes : IUrlSystemTypes
     {
-        private ICurrentRequest CurrentRequest;
+        protected IMediator Mediator { get { return this.ServiceProvider.GetRequiredService<IMediator>(); } }
+        protected IEntityFeatureContext EntityFeatureContext { get { return this.ServiceProvider.GetRequiredService<IEntityFeatureContext>(); } }
+        protected IApplicationDbContext ApplicationDbContext { get { return this.ServiceProvider.GetRequiredService<IApplicationDbContext>(); } } 
+        protected ICurrentRequest CurrentRequest { get { return this.ServiceProvider.GetRequiredService<ICurrentRequest>(); } } 
         protected IServiceProvider ServiceProvider;
         public List<IUrlSystemTypes> UrlSystemTypes => new List<IUrlSystemTypes>();
 
-        protected BaseUrlSystemTypes(IServiceProvider serviceProvider)
+        public BaseUrlSystemTypes(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
         }
 
+        public abstract Task ExecuteAsync();
 
-        public void AddRequestWorker(IUrlSystemTypes baseRequestWorker)
+
+        public Task<IResultDataControl<ReadPageDto>> GetByUrlIdPageAsync(Guid UrlId)
         {
-            this.UrlSystemTypes.Add(baseRequestWorker);
+            return this.Mediator.Send(this.EntityFeatureContext.Url.GetDependencyMediatRQuery<GetByUrlIdPageQuery>(x =>
+            {
+                x.UrlId = UrlId;
+                x.State = StateEnum.Online;
+            }));
         }
-
-        public List<IUrlSystemTypes> GetRequest()
-        {
-            return this.UrlSystemTypes;
-        }
-
-        public abstract ICurrentRequest ExecuteAsync();
     }
 }

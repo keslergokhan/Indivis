@@ -48,7 +48,6 @@ namespace Indivis.Core.Application.Common.SystemInitializers
             {
                 serviceCollection.AddScoped(type);
             }
-            serviceCollection.AddScoped<IEntityFeatureContext, EntityFeatureContext>();
         }
 
         public void AddAssemblyFeatureQueryFactory(Assembly assembly,IServiceCollection serviceCollection)

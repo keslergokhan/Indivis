@@ -11,16 +11,17 @@ using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUI.System.Services.UrlSystemTypes
 {
-    [DependencyRegister(typeof(IEntityListUrlSystemType),DependencyTypes.Singleton)]
+    [DependencyRegister(typeof(IEntityListUrlSystemType),DependencyTypes.Transient)]
     public class EntityListUrlSystemType : BaseUrlSystemTypes, IEntityListUrlSystemType
     {
         public EntityListUrlSystemType(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             
         }
-        public override ICurrentRequest ExecuteAsync()
+        public override async Task ExecuteAsync()
         {
-            throw new NotImplementedException();
+            var sss = await this.GetByUrlIdPageAsync(Guid.Parse("84AF1EF5-73F6-4C4E-84AB-43DFAD02C755"));
+            string sssafa = "";
         }
     }
 }

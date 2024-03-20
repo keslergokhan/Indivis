@@ -13,7 +13,6 @@ namespace Indivis.Presentation.WebUI.System
         public static IServiceCollection AddWebUISystem(this IServiceCollection service)
         {
             service.AddSystemsDependencyRegister(Assembly.GetExecutingAssembly());
-            service.AddSingleton<ICurrentRequest, CurrentRequest>();    
             service.AddTransient<SystemRequestAboutMiddleware>();
             return service;
         }
