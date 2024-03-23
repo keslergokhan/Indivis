@@ -1,9 +1,11 @@
-﻿using Indivis.Core.Application.Dtos.CoreEntityDtos.ManyToMany;
+﻿using Indivis.Core.Application.Common.Constants.Systems;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.ManyToMany;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads;
 using Indivis.Core.Application.Helpers.Systems;
 using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Application.Interfaces.Data.Presentation;
 using Indivis.Core.Application.Interfaces.Results;
+using Indivis.Core.Application.Interfaces.UrlSystemTypes;
 using Indivis.Core.Domain.Entities.CoreEntities;
 using Indivis.Presentation.WebUI.System.Interfaces.Services.Requests;
 using Indivis.Presentation.WebUI.System.Interfaces.Workers;
@@ -38,11 +40,21 @@ namespace Indivis.Presentation.WebUI.System.Middlawares
 
             if (requestAboutResult.IsSuccess)
             {
-                foreach (ReadUrl_UrlSystemTypeDto urlySystem in requestAboutResult.Data.Url_UrlSystemTypes)
+                this._currentRequest.CurrentUrl = requestAboutResult.Data;
+                if (requestAboutResult.Data.Url_UrlSystemTypes.Any())
                 {
-                    IUrlSystemTypes urlSystemType = SystemDependencyInjection.Instance.GetByNameApplicationInjectionType<IUrlSystemTypes>(context.RequestServices,urlySystem.UrlSystemType.InterfaceType);
+					foreach (ReadUrl_UrlSystemTypeDto urlySystem in requestAboutResult.Data.Url_UrlSystemTypes)
+					{
+						IUrlSystemTypes urlSystemType = SystemDependencyInjection.Instance.GetByNameApplicationInjectionType<IUrlSystemTypes>(context.RequestServices, urlySystem.UrlSystemType.InterfaceType);
+						await urlSystemType.ExecuteAsync();
+					}
+				}
+                else
+                {
+					IUrlSystemTypes urlSystemType = SystemDependencyInjection.Instance.GetByNameApplicationInjectionType<IUrlSystemTypes>(context.RequestServices, SystemClassTypeConstant.Instance.IEntityDetailUrlSystemType.Name);
                     await urlSystemType.ExecuteAsync();
-                }
+				}
+                
             }
             
             await next.Invoke(context);

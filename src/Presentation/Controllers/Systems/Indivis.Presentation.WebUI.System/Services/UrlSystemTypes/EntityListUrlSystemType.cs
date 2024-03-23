@@ -1,5 +1,8 @@
 ﻿using Indivis.Core.Application.Attributes.Systems;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.Pages.Reads;
+using Indivis.Core.Application.Exceptions.Systems;
 using Indivis.Core.Application.Interfaces.Data.Presentation;
+using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Interfaces.UrlSystemTypes;
 using Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers;
 using Indivis.Presentation.WebUI.System.Interfaces.Workers;
@@ -20,8 +23,16 @@ namespace Indivis.Presentation.WebUI.System.Services.UrlSystemTypes
         }
         public override async Task ExecuteAsync()
         {
-            var sss = await this.GetByUrlIdPageAsync(Guid.Parse("84AF1EF5-73F6-4C4E-84AB-43DFAD02C755"));
-            string sssafa = "";
-        }
+            IResultDataControl<ReadPageDto> getUrlIdResult = await this.GetByUrlIdPageAsync(this.CurrentRequest.CurrentUrl.Id);
+            if (getUrlIdResult.IsSuccess)
+            {
+                this.CurrentResponse.CurrentPage = getUrlIdResult.Data;
+            }
+            else
+            {
+                throw new RequestNotFoundPageException(base.CurrentRequest.FullPath);
+            }
+
+		}
     }
 }

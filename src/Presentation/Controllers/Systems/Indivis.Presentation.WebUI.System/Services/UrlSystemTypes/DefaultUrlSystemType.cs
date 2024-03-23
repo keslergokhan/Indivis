@@ -1,5 +1,8 @@
 ﻿using Indivis.Core.Application.Attributes.Systems;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.Pages.Reads;
+using Indivis.Core.Application.Exceptions.Systems;
 using Indivis.Core.Application.Interfaces.Data.Presentation;
+using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Interfaces.UrlSystemTypes;
 using Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers;
 using System;
@@ -11,16 +14,25 @@ using System.Threading.Tasks;
 namespace Indivis.Presentation.WebUI.System.Services.UrlSystemTypes
 {
     //[DependencyRegister(typeof(IEntityListUrlSystemType), DependencyTypes.Singleton)]
-    public class DefaultUrlSystemType : BaseUrlSystemTypes
-    {
+    public class DefaultUrlSystemType : BaseUrlSystemTypes, IEntityDetailUrlSystemType
+	{
         public DefaultUrlSystemType(IServiceProvider serviceProvider):base(serviceProvider)
         {
             
         }
 
-        public override Task ExecuteAsync()
-        {
-            throw new NotImplementedException();
-        }
-    }
+		public override async Task ExecuteAsync()
+		{
+			IResultDataControl<ReadPageDto> getUrlIdResult = await this.GetByUrlIdPageAsync(this.CurrentRequest.CurrentUrl.Id);
+			if (getUrlIdResult.IsSuccess)
+			{
+				this.CurrentResponse.CurrentPage = getUrlIdResult.Data;
+			}
+			else
+			{
+				throw new RequestNotFoundPageException(base.CurrentRequest.FullPath);
+			}
+
+		}
+	}
 }

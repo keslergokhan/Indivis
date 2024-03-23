@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,6 @@ namespace Indivis.Core.Application.Interfaces.Data.Presentation
         public string FullPath { get; set; }
         public string BaseUrl { get; set; }
         public bool EditMode { get; set; }
+        public ReadUrlDto CurrentUrl { get; set; }
     }
 }

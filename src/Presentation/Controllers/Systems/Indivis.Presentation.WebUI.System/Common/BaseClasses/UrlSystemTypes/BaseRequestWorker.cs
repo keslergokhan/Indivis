@@ -22,6 +22,7 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
         protected IEntityFeatureContext EntityFeatureContext { get { return this.ServiceProvider.GetRequiredService<IEntityFeatureContext>(); } }
         protected IApplicationDbContext ApplicationDbContext { get { return this.ServiceProvider.GetRequiredService<IApplicationDbContext>(); } } 
         protected ICurrentRequest CurrentRequest { get { return this.ServiceProvider.GetRequiredService<ICurrentRequest>(); } } 
+        protected ICurrentResponse CurrentResponse { get { return this.ServiceProvider.GetRequiredService<ICurrentResponse>(); } }
         protected IServiceProvider ServiceProvider;
         public List<IUrlSystemTypes> UrlSystemTypes => new List<IUrlSystemTypes>();
 
@@ -31,7 +32,6 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
         }
 
         public abstract Task ExecuteAsync();
-
 
         public Task<IResultDataControl<ReadPageDto>> GetByUrlIdPageAsync(Guid UrlId)
         {

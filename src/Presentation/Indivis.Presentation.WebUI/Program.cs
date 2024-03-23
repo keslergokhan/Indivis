@@ -3,6 +3,7 @@ using Indivis.Core.Application;
 using Serilog;
 using Microsoft.Extensions.Configuration;
 using Indivis.Presentation.WebUI.System;
+using Indivis.Presentation.WebUI.System.Services.DynamicRoutes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,5 +36,11 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseEndpoints(endpoints =>
+{
+	endpoints.MapDynamicControllerRoute<DefaultDynamicRouteValueTransformer>("{**slug}");
+
+});
 
 app.Run();

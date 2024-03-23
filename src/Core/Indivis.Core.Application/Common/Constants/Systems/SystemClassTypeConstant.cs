@@ -4,6 +4,7 @@ using Indivis.Core.Application.Common.SystemInitializers;
 using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Application.Interfaces.Features.FeatureFactories;
 using Indivis.Core.Application.Interfaces.Features.Systems;
+using Indivis.Core.Application.Interfaces.UrlSystemTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,5 +84,14 @@ namespace Indivis.Core.Application.Common.Constants.Systems
             }
         }
 
-    }
+        public Type IEntityDetailUrlSystemType
+        {
+            get
+            {
+                return typeof(IEntityDetailUrlSystemType);
+            }
+        }
+
+
+	}
 }
