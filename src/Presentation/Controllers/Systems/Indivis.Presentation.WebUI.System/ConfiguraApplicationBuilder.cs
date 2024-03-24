@@ -1,4 +1,5 @@
 ﻿using Indivis.Presentation.WebUI.System.Middlawares;
+using Indivis.Presentation.WebUI.System.Services.DynamicRoutes;
 using Microsoft.AspNetCore.Builder;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,8 @@ namespace Indivis.Presentation.WebUI.System
             app.UseMiddleware<SystemRequestAboutMiddleware>();
             return app;
         }
-    }
+
+        
+
+	}
 }

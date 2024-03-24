@@ -4,6 +4,7 @@ using Serilog;
 using Microsoft.Extensions.Configuration;
 using Indivis.Presentation.WebUI.System;
 using Indivis.Presentation.WebUI.System.Services.DynamicRoutes;
+using Indivis.Presentation.WebUI.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ builder.Services.AddControllersWithViews();
 builder.Services
     .AddPersistence(builder.Configuration)
     .AddApplication(builder.Configuration)
-    .AddWebUISystem();
+    .AddWebUIController();
 
 
 var app = builder.Build();
@@ -37,10 +38,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.UseEndpoints(endpoints =>
-{
-	endpoints.MapDynamicControllerRoute<DefaultDynamicRouteValueTransformer>("{**slug}");
+app.WebUIDynamicUseEndpoints();
 
-});
 
 app.Run();

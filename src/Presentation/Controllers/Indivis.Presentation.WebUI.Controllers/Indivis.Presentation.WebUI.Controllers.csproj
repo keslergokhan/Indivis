@@ -6,4 +6,23 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Views\Announcements\AnnouncementList.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Views\Announcements\AnnouncementList.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Systems\Indivis.Presentation.WebUI.System\Indivis.Presentation.WebUI.System.csproj" />
+  </ItemGroup>
+  
 </Project>

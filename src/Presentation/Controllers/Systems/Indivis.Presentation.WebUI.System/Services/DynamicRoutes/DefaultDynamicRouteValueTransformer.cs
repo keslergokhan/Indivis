@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,9 @@ namespace Indivis.Presentation.WebUI.System.Services.DynamicRoutes
 
 		public override async ValueTask<RouteValueDictionary> TransformAsync(HttpContext httpContext, RouteValueDictionary values)
 		{
+			values["controller"] = this._currentResponse.CurrentPage.PageSystem.Controller.Replace("Controller","");
+			values["action"] = this._currentResponse.CurrentPage.PageSystem.Action;
+
 			return values;
 		}
 	}

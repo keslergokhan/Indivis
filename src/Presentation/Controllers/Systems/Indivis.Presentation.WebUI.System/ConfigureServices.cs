@@ -6,6 +6,7 @@ using System.Reflection;
 using Indivis.Core.Application.Common.SystemInitializers;
 using Indivis.Core.Application.Attributes.Systems;
 using Indivis.Presentation.WebUI.System.Services.DynamicRoutes;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace Indivis.Presentation.WebUI.System
 {
@@ -15,7 +16,7 @@ namespace Indivis.Presentation.WebUI.System
         {
             service.AddSystemsDependencyRegister(Assembly.GetExecutingAssembly());
             service.AddTransient<SystemRequestAboutMiddleware>();
-            service.AddTransient<DefaultDynamicRouteValueTransformer>();
+            service.AddSingleton<DefaultDynamicRouteValueTransformer>();
             return service;
         }
     }
