@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUI.System.Interfaces.Workers
 {
-    public interface IUrlSystemTypes
+    public interface IUrlSystemType
     {
         public Task ExecuteAsync();
     }

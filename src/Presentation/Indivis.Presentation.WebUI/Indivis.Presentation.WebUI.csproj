@@ -17,6 +17,7 @@
     <ProjectReference Include="..\..\Core\Indivis.Core.Application\Indivis.Core.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Indivis.Infrastructure.Persistence\Indivis.Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\Controllers\Indivis.Presentation.WebUI.Controllers\Indivis.Presentation.WebUI.Controllers.csproj" />
+    <ProjectReference Include="..\Controllers\Indivis.Presentation.WebUI.Views\Indivis.Presentation.WebUI.Views.csproj" />
   </ItemGroup>
 
 </Project>

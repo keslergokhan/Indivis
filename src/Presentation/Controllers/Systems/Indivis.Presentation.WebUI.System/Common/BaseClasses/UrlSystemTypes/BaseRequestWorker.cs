@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
 {
-    public abstract class BaseUrlSystemTypes : IUrlSystemTypes
+    public abstract class BaseUrlSystemTypes : IUrlSystemType
     {
         protected IMediator Mediator { get { return this.ServiceProvider.GetRequiredService<IMediator>(); } }
         protected IEntityFeatureContext EntityFeatureContext { get { return this.ServiceProvider.GetRequiredService<IEntityFeatureContext>(); } }
@@ -24,7 +24,7 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
         protected ICurrentRequest CurrentRequest { get { return this.ServiceProvider.GetRequiredService<ICurrentRequest>(); } } 
         protected ICurrentResponse CurrentResponse { get { return this.ServiceProvider.GetRequiredService<ICurrentResponse>(); } }
         protected IServiceProvider ServiceProvider;
-        public List<IUrlSystemTypes> UrlSystemTypes => new List<IUrlSystemTypes>();
+        public List<IUrlSystemType> UrlSystemTypes => new List<IUrlSystemType>();
 
         public BaseUrlSystemTypes(IServiceProvider serviceProvider)
         {

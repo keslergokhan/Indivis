@@ -14,5 +14,10 @@ namespace Indivis.Presentation.WebUI.Controllers.Controllers
 			return View("~/Views/Announcements/AnnouncementList.cshtml");
 		}
 
+		public async Task<IActionResult> Detail()
+		{
+            return View("~/Views/Announcements/AnnouncementDetail.cshtml");
+        }
+
 	}
 }

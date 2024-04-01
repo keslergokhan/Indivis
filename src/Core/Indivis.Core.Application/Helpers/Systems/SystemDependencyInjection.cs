@@ -26,12 +26,12 @@ namespace Indivis.Core.Application.Helpers.Systems
 
 
 
-        public T GetByNameApplicationInjectionType<T>(IServiceProvider serviceProvider, string objectName) where T : class, IUrlSystemTypes
+        public T GetByNameApplicationInjectionType<T>(IServiceProvider serviceProvider, string objectName) where T : class, IUrlSystemType
         {
             return this.GetByNameInjectionType<T>(Assembly.GetExecutingAssembly(),serviceProvider,objectName);
         }
 
-        public T GetByNameInjectionType<T>(Assembly assembly, IServiceProvider serviceProvider, string objectName) where T : class, IUrlSystemTypes
+        public T GetByNameInjectionType<T>(Assembly assembly, IServiceProvider serviceProvider, string objectName) where T : class, IUrlSystemType
         {
             Type objectType = assembly.GetTypes().FirstOrDefault(x => x.Name == objectName);
             if (objectType!=null)

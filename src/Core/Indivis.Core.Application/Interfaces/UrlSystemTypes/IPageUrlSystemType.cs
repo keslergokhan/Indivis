@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Interfaces.UrlSystemTypes
 {
-    public interface IEntityDetailUrlSystemType : IUrlSystemType
+    public interface IPageUrlSystemType : IUrlSystemType
     {
     }
 }

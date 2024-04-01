@@ -45,13 +45,13 @@ namespace Indivis.Presentation.WebUI.System.Middlawares
                 {
 					foreach (ReadUrl_UrlSystemTypeDto urlySystem in requestAboutResult.Data.Url_UrlSystemTypes)
 					{
-						IUrlSystemTypes urlSystemType = SystemDependencyInjection.Instance.GetByNameApplicationInjectionType<IUrlSystemTypes>(context.RequestServices, urlySystem.UrlSystemType.InterfaceType);
+						IUrlSystemType urlSystemType = SystemDependencyInjection.Instance.GetByNameApplicationInjectionType<IUrlSystemType>(context.RequestServices, urlySystem.UrlSystemType.InterfaceType);
 						await urlSystemType.ExecuteAsync();
 					}
 				}
                 else
                 {
-					IUrlSystemTypes urlSystemType = SystemDependencyInjection.Instance.GetByNameApplicationInjectionType<IUrlSystemTypes>(context.RequestServices, SystemClassTypeConstant.Instance.IEntityDetailUrlSystemType.Name);
+					IUrlSystemType urlSystemType = SystemDependencyInjection.Instance.GetByNameApplicationInjectionType<IUrlSystemType>(context.RequestServices, SystemClassTypeConstant.Instance.IEntityDetailUrlSystemType.Name);
                     await urlSystemType.ExecuteAsync();
 				}
                 

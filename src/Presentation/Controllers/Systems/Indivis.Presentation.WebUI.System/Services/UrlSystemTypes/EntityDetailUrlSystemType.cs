@@ -5,7 +5,6 @@ using Indivis.Core.Application.Interfaces.Data.Presentation;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Interfaces.UrlSystemTypes;
 using Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers;
-using Indivis.Presentation.WebUI.System.Interfaces.Workers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +13,17 @@ using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUI.System.Services.UrlSystemTypes
 {
-    [DependencyRegister(typeof(IEntityListUrlSystemType),DependencyTypes.Scopet)]
-    public class EntityListUrlSystemType : BaseUrlSystemTypes, IEntityListUrlSystemType
+    [DependencyRegister(typeof(IEntityDetailUrlSystemType), DependencyTypes.Scopet)]
+    public class EntityDetailUrlSystemType : BaseUrlSystemTypes, IEntityDetailUrlSystemType
     {
-        public EntityListUrlSystemType(IServiceProvider serviceProvider) : base(serviceProvider)
+        public EntityDetailUrlSystemType(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            
+
         }
+
         public override async Task ExecuteAsync()
         {
-            IResultDataControl<ReadPageDto> getUrlIdResult = await this.GetByUrlIdPageAsync(this.CurrentRequest.CurrentUrl.Id);
+            IResultDataControl<ReadPageDto> getUrlIdResult = await this.GetByUrlIdPageAsync(this.CurrentRequest.CurrentUrl.ParentUrl.Id);
             if (getUrlIdResult.IsSuccess)
             {
                 this.CurrentResponse.CurrentPage = getUrlIdResult.Data;
@@ -32,6 +32,6 @@ namespace Indivis.Presentation.WebUI.System.Services.UrlSystemTypes
             {
                 throw new RequestNotFoundPageException(base.CurrentRequest.FullPath);
             }
-		}
+        }
     }
 }

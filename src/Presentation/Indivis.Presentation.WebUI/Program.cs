@@ -29,6 +29,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseStaticFiles("");
 
 app.AddSystemWebUIApplication();
 app.UseRouting();
