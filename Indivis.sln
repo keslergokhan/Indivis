@@ -34,7 +34,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Systems", "Systems", "{A81E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indivis.Presentation.WebUI.System", "..\indivis\src\Presentation\Controllers\Systems\Indivis.Presentation.WebUI.System\Indivis.Presentation.WebUI.System.csproj", "{E945AF7E-A1E7-4679-AC45-6A3537CBA64B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Indivis.Presentation.WebUI.Views", "src\Presentation\Controllers\Indivis.Presentation.WebUI.Views\Indivis.Presentation.WebUI.Views.csproj", "{670E6DE9-7D72-402C-8E85-040B98EBBC3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indivis.Presentation.WebUI.Views", "..\indivis\src\Presentation\Controllers\Indivis.Presentation.WebUI.Views\Indivis.Presentation.WebUI.Views.csproj", "{670E6DE9-7D72-402C-8E85-040B98EBBC3A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{00C13F48-6B43-403D-A244-177DADC3D3DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

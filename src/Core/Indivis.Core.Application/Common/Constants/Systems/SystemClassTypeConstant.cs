@@ -35,10 +35,7 @@ namespace Indivis.Core.Application.Common.Constants.Systems
         }
 
 
-
-
-
-
+        
         public Type IGetByIdEntityQuery { get
             {
                 return typeof(IGetByIdEntityQuery<>);

@@ -11,12 +11,12 @@ namespace Indivis.Presentation.WebUI.Controllers.Controllers
 	{
 		public async Task<IActionResult> List()
 		{
-			return View("~/Views/Announcements/AnnouncementList.cshtml");
+			return View("~/Areas/WebUI/Announcements/AnnouncementList.cshtml");
 		}
 
 		public async Task<IActionResult> Detail()
 		{
-            return View("~/Views/Announcements/AnnouncementDetail.cshtml");
+            return View("~/Areas/WebUI/Announcements/AnnouncementDetail.cshtml");
         }
 
 	}
