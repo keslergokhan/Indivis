@@ -7,22 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Views\Announcements\AnnouncementDetail.cshtml" />
-    <None Remove="Views\Announcements\AnnouncementList.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Views\Announcements\AnnouncementDetail.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="Views\Announcements\AnnouncementList.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
