@@ -36,8 +36,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indivis.Presentation.WebUI.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indivis.Presentation.WebUI.Views", "..\indivis\src\Presentation\Controllers\Indivis.Presentation.WebUI.Views\Indivis.Presentation.WebUI.Views.csproj", "{670E6DE9-7D72-402C-8E85-040B98EBBC3A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{00C13F48-6B43-403D-A244-177DADC3D3DF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
