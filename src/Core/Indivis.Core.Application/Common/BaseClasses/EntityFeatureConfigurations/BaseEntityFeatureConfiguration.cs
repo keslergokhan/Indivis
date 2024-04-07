@@ -64,6 +64,7 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
         }
     }
 
+   
     public class EntityFeatureBuilder<TEntity> where TEntity : class, IEntity
     {
         private EntityFeature _features;

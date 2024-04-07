@@ -22,12 +22,13 @@ namespace Indivis.Core.Application.Common.SystemInitializers
             } 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="assembly"></param>
-        /// <param name="serviceCollection"></param>
-        public void AddAssemblySystemCoreQueries(Assembly assembly,IServiceCollection serviceCollection)
+		/// <summary>
+		/// IGetByIdEntityQuery arayüzünü implemente etmiş olan MediatR query sınıflarını DI içerisine
+        /// kayıt eder.
+		/// </summary>
+		/// <param name="assembly"></param>
+		/// <param name="serviceCollection"></param>
+		public void AddAssemblySystemCoreQueries(Assembly assembly,IServiceCollection serviceCollection)
         {
            
             foreach (Type classType in assembly.GetTypes().Where(x => x.GetInterface(SystemClassTypeConstant.Instance.IGetByIdEntityQuery.Name) is not null))
@@ -39,7 +40,13 @@ namespace Indivis.Core.Application.Common.SystemInitializers
             }
         }
 
-        public void AddAssemblySystemEntityFeatures(Assembly assembly,IServiceCollection serviceCollection)
+		/// <summary>
+		/// namespace Indivis.Core.Application.EntityFeatureConfigurations altında bulunan BaseEntityFeatureConfiguration<>
+        /// tanımlamlarını tespit eder ve DI kayıtlarını gerçekleştirir.
+		/// </summary>
+		/// <param name="assembly"></param>
+		/// <param name="serviceCollection"></param>
+		public void AddAssemblySystemEntityFeatures(Assembly assembly,IServiceCollection serviceCollection)
         {
             foreach (Type type in 
                 assembly.GetTypes()?
@@ -50,7 +57,12 @@ namespace Indivis.Core.Application.Common.SystemInitializers
             }
         }
 
-        public void AddAssemblyFeatureQueryFactory(Assembly assembly,IServiceCollection serviceCollection)
+		/// <summary>
+		/// IFeatureQueryFactory arayüzünü implemente etmiş olan MediatR query sınıflarının DI kayıt sürecini yürütür.
+		/// </summary>
+		/// <param name="assembly"></param>
+		/// <param name="serviceCollection"></param>
+		public void AddAssemblyFeatureQueryFactory(Assembly assembly,IServiceCollection serviceCollection)
         {
             assembly.GetTypes()?
                 .ToList()

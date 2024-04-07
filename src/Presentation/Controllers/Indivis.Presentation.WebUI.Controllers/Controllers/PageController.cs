@@ -12,7 +12,6 @@ namespace Indivis.Presentation.WebUI.Controllers.Controllers
     {
         public async Task<IActionResult> PageContent()
         {
-            
             return View("~/Areas/WebUI/Pages/PageContent.cshtml");
         }
     }

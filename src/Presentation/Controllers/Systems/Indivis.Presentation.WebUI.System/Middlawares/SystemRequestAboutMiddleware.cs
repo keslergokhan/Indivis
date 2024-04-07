@@ -2,17 +2,11 @@
 using Indivis.Core.Application.Dtos.CoreEntityDtos.ManyToMany;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads;
 using Indivis.Core.Application.Helpers.Systems;
-using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Application.Interfaces.Data.Presentation;
 using Indivis.Core.Application.Interfaces.Results;
-using Indivis.Core.Application.Interfaces.UrlSystemTypes;
-using Indivis.Core.Domain.Entities.CoreEntities;
 using Indivis.Presentation.WebUI.System.Interfaces.Services.Requests;
 using Indivis.Presentation.WebUI.System.Interfaces.Workers;
-using Indivis.Presentation.WebUI.System.Services.UrlSystemTypes;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace Indivis.Presentation.WebUI.System.Middlawares
 {

@@ -1,7 +1,7 @@
 ﻿
 ### Görevi
 Sınıf CreateMap attributes tanımlanmış sınıflara ulaşır.
-Attributes değeri içerisine girilen type değerlerini CreateMap(class,DType) şeklinde IMapperConfiguration aracılığı ile tip dönüşüm tanımlamalarını yapar.
+Attributes değeri içerisine girilen type değerlerini CreateMap(class,DType) şeklinde IMapperConfiguration arayüzü aracılığı ile tanımlamalarını yapar.
 
 
 
@@ -24,4 +24,6 @@ Attributes değeri içerisine girilen type değerlerini CreateMap(class,DType) �
     });
 
 ### NOT
-CreateMapAttributes hakkında daha fazla bilgi almak için: **README_SSTEMS_ATTRIBUTE.md** göz atınız
+CreateMapAttributes kaynağı
+namespace Indivis.Core.Application.Common.SystemInitializers
+[Kod Detayları](https://github.com/keslergokhan/Indivis/blob/master/src/Core/Indivis.Core.Application/Common/SystemInitializers/AssemblyMapperInitializer.cs "Kod Detayları")
