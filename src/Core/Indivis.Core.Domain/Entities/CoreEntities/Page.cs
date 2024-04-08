@@ -23,6 +23,9 @@ namespace Indivis.Core.Domain.Entities.CoreEntities
     public partial class Page {
         public Guid PageSystemId { get; set; }
         public PageSystem PageSystem { get; set; }
+
+        public ICollection<PageZone> PageZones { get; set; }
     }
 
+   
 }
