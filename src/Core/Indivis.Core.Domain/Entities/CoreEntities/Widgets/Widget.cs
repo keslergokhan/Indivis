@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Core.Domain.Entities.CoreEntities
+namespace Indivis.Core.Domain.Entities.CoreEntities.Widgets
 {
     public partial class Widget : BaseEntity, IEntity
     {

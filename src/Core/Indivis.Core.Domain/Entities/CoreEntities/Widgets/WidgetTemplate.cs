@@ -1,4 +1,5 @@
 ﻿using Indivis.Core.Domain.Commons.CoreEntities;
+using Indivis.Core.Domain.Entities.CoreEntities.Widgets;
 using Indivis.Core.Domain.Interfaces.Entities;
 using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Core.Domain.Entities.CoreEntities
+namespace Indivis.Core.Domain.Entities.CoreEntities.Widgets
 {
     public partial class WidgetTemplate : BaseEntity, IEntity
     {

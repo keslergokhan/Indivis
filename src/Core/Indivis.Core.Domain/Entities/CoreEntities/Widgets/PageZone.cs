@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Core.Domain.Entities.CoreEntities
+namespace Indivis.Core.Domain.Entities.CoreEntities.Widgets
 {
     public partial class PageZone : BaseEntity, IEntity
     {
@@ -22,6 +22,6 @@ namespace Indivis.Core.Domain.Entities.CoreEntities
 
     public partial class PageZone
     {
-        public ICollection<PageZone> PageZones { get; set; }
+        public ICollection<PageWidget> PageWidgets { get; set; }
     }
 }

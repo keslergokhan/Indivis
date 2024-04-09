@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Core.Domain.Entities.CoreEntities
+namespace Indivis.Core.Domain.Entities.CoreEntities.Widgets
 {
-    public partial class WidgetService : BaseEntity,IEntity 
+    public partial class WidgetService : BaseEntity, IEntity
     {
         public string WidgetServiceClassName { get; set; }
         public string MethodName { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Indivis.Core.Domain.Commons.CoreEntities;
+using Indivis.Core.Domain.Entities.CoreEntities.Widgets;
 using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
 using System;
 using System.Collections.Generic;
