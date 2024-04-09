@@ -8,20 +8,18 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Domain.Entities.CoreEntities
 {
-    public partial class PageZone : BaseEntity, IEntity
+    public partial class PageWidget : BaseEntity, IEntity
     {
-        public string Key { get; set; }
-        public Page Page { get; set; }
-        public Guid PageId { get; set; }
     }
 
-    public partial class PageZone : IEntityLanguage
+    public partial class PageWidget : IEntityLanguage
     {
         public Guid LanguageId { get; set; }
     }
 
-    public partial class PageZone
+    public partial class PageWidget
     {
-        public ICollection<PageZone> PageZones { get; set; }
+        public PageZone PageZone { get; set; }
+        public Guid PageZoneId { get; set; }
     }
 }

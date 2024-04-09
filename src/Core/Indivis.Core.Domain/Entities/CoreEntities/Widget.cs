@@ -29,4 +29,9 @@ namespace Indivis.Core.Domain.Entities.CoreEntities
     {
         public Guid LanguageId { get; set; }
     }
+
+    public partial class Widget
+    {
+        public ICollection<WidgetTemplate> WidgetTemplates { get; set; }
+    }
 }
