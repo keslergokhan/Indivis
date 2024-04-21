@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Domain.Entities.CoreEntities
 {
+    /// <summary>
+    /// Indivis.Core.Domain katmanında system için önemli olan nesne kayıtları
+    /// </summary>
     public class Entity : BaseEntity, IEntity
     {
         public string TypeName { get; set; }

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Domain.Entities.CoreEntities
 {
+    /// <summary>
+    /// Sayfanın çalıştırılacağı Controller ve method değerleri
+    /// </summary>
     public class PageSystem : BaseEntity, IEntity
     {
         public string Name { get; set; }

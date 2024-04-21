@@ -24,8 +24,17 @@ namespace Indivis.Presentation.WebUI.System.Services.DynamicRoutes
 
 		public override async ValueTask<RouteValueDictionary> TransformAsync(HttpContext httpContext, RouteValueDictionary values)
 		{
-			values["controller"] = this._currentResponse.CurrentPage.PageSystem.Controller.Replace("Controller","");
-			values["action"] = this._currentResponse.CurrentPage.PageSystem.Action;
+			if (this._currentResponse.CurrentPage != null)
+			{
+                values["controller"] = this._currentResponse.CurrentPage.PageSystem.Controller.Replace("Controller", "");
+                values["action"] = this._currentResponse.CurrentPage.PageSystem.Action;
+			}
+			else
+			{
+                values["controller"] = "Home";
+                values["action"] = "Index";
+            }
+			
 
 			return values;
 		}

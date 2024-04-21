@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Domain.Entities.CoreEntities
 {
+    /// <summary>
+    /// Url yapısının hangi sınıflar aracılığı ile çalıştırılacağını belirtir.
+    /// </summary>
     public class UrlSystemType : BaseEntity
     {
         public string InterfaceType { get; set; }

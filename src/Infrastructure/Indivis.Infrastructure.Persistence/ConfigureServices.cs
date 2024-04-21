@@ -16,6 +16,11 @@ using Indivis.Core.Domain.Entities;
 using System.IO.Enumeration;
 using System.Security.Cryptography;
 using System.Collections.ObjectModel;
+using System.Reflection;
+using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
+using Indivis.Core.Application.Common.Constants.Systems;
+using Indivis.Presentation.WebUI.System.Interfaces.Workers;
+using System.Runtime.CompilerServices;
 
 namespace Indivis.Infrastructure.Persistence
 {
@@ -32,13 +37,237 @@ namespace Indivis.Infrastructure.Persistence
                 .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<IndivisContext>();
 
-            IndivisContext db = services.BuildServiceProvider().GetService<IndivisContext>();
-            //ConfigureServices.InsertDbData(db);
-            //InsertDbDataParentUrl(db);
-            //InsertDbPage(db);
+            using IndivisContext db = services.BuildServiceProvider().GetService<IndivisContext>();
+
+            //AddLanguage(db);
+
+            //AddEntity(db);
+
+            //AddUrlSystemType(db);
+
+            //AddPageSystem(db);
+
+            //AddPage(db);
 
             return services;
         }
+
+        public static void AddLanguage(IndivisContext db)
+        {
+            if (!db.Set<Language>().Any(x => x.FLag == "TR"))
+            {
+                //Dil-Türkçe
+                Language language = new Language()
+                {
+                    Id = Guid.NewGuid(),
+                    CountryCode = "TR",
+                    Culture = "tr-TR",
+                    Currency = "TL",
+                    FLag = "TR",
+                    Name = "Türkçe",
+                    Sort = 1,
+                    CreateDate = DateTime.Now,
+                    State = 1
+                };
+                db.Set<Language>().Add(language);
+            }
+            db.SaveChanges();
+
+        }
+        public static void AddEntity(IndivisContext db)
+        {
+            Assembly domainAssembly = Assembly.Load("Indivis.Core.Domain");
+
+            IQueryable<Entity> entityTable = db.Set<Entity>().AsNoTracking().AsQueryable();
+
+            domainAssembly.GetTypes()
+                .Where(x => x.GetInterface(SystemClassTypeConstant.Instance.IEntity.Name) != null)
+                .ToList()
+                .ForEach(x =>
+                {
+                    bool isEntity = entityTable.Any(a => a.TypeName == x.Name);
+
+                    if (!isEntity)
+                    {
+                        db.Add(new Entity()
+                        {
+                            Id = Guid.NewGuid(),
+                            CreateDate = DateTime.Now,
+                            IsUrlData = false,
+                            State = 1,
+                            TypeName = x.Name
+                        });
+                    }
+                });
+
+            db.SaveChanges();
+
+        }
+        public static void AddUrlSystemType(IndivisContext db)
+        {
+            IQueryable<UrlSystemType> urlSystemType = db.Set<UrlSystemType>().AsNoTracking();
+
+            if (!db.Set<UrlSystemType>().Any(x => x.InterfaceType == "IUrlSystemType"))
+            {
+                db.Add(new UrlSystemType()
+                {
+                    Id = Guid.NewGuid(),
+                    CreateDate = DateTime.Now,
+                    InterfaceType = "IUrlSystemType",
+                    State = 1,
+                });
+            }
+
+
+            if (!db.Set<UrlSystemType>().Any(x => x.InterfaceType == "IPageUrlSystemType"))
+            {
+                db.Add(new UrlSystemType()
+                {
+                    Id = Guid.NewGuid(),
+                    CreateDate = DateTime.Now,
+                    InterfaceType = "IPageUrlSystemType",
+                    State = 1,
+                });
+            }
+
+            if (!db.Set<UrlSystemType>().Any(x => x.InterfaceType == "IEntityUrlSystemType"))
+            {
+                db.Add(new UrlSystemType()
+                {
+                    Id = Guid.NewGuid(),
+                    CreateDate = DateTime.Now,
+                    InterfaceType = "IEntityUrlSystemType",
+                    State = 1,
+                });
+            }
+
+
+            if (!db.Set<UrlSystemType>().Any(x => x.InterfaceType == "IEntityListUrlSystemType"))
+            {
+                db.Add(new UrlSystemType()
+                {
+                    Id = Guid.NewGuid(),
+                    CreateDate = DateTime.Now,
+                    InterfaceType = "IEntityListUrlSystemType",
+                    State = 1,
+                });
+            }
+
+
+
+            if (!db.Set<UrlSystemType>().Any(x => x.InterfaceType == "IEntityDetailUrlSystemType"))
+            {
+                db.Add(new UrlSystemType()
+                {
+                    Id = Guid.NewGuid(),
+                    CreateDate = DateTime.Now,
+                    InterfaceType = "IEntityDetailUrlSystemType",
+                    State = 1,
+                });
+            }
+
+
+            db.SaveChanges();
+
+        }
+        public static void AddPageSystem(IndivisContext db)
+        {
+            PageSystem pageSystem = new PageSystem()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Announcement Liste",
+                Controller = "AnnouncementController",
+                Action = "List",
+                Description = "Duyurular Liste Sayfa Sistemi",
+                Pages = new Collection<Page>(),
+                State = 1,
+                CreateDate = DateTime.Now
+            };
+
+            if (!db.Set<PageSystem>().Any(x => x.Controller == "AnnouncementController"))
+            {
+                db.Set<PageSystem>().Add(pageSystem);
+            }
+
+            PageSystem pageSystem2 = new PageSystem()
+            {
+                Id = Guid.NewGuid(),
+                Name = "PageContent",
+                Controller = "PageController",
+                Action = "PageContent",
+                Description = "Boş sayfa taslağı",
+                Pages = new Collection<Page>(),
+                State = 1,
+                CreateDate = DateTime.Now
+            };
+
+            if (!db.Set<PageSystem>().Any(x => x.Controller == "PageController"))
+            {
+                db.Set<PageSystem>().Add(pageSystem2);
+            }
+
+            db.SaveChanges();
+        }
+        public static void AddPage(IndivisContext db)
+        {
+            Language language = db.Set<Language>().FirstOrDefault(x => x.FLag == "TR");
+            UrlSystemType urlSystemTypePageDefault = db.Set<UrlSystemType>().FirstOrDefault(x => x.InterfaceType == "IPageUrlSystemType");
+            PageSystem pageSystem = db.Set<PageSystem>().FirstOrDefault(x => x.Controller == "PageController" && x.Action == "PageContent");
+
+            Page pageAbout = new Page()
+            {
+                Id = Guid.NewGuid(),
+                LanguageId = language.Id,
+                CreateDate = DateTime.Now,
+                Name = "Hakkimizda",
+                PageSystem = pageSystem,
+                State = 1,
+            };
+
+            Url pageAboutUrl = new Url()
+            {
+                Id = Guid.NewGuid(),
+                CreateDate = DateTime.Now,
+                FullPath = "/hakkimizda",
+                LanguageId = language.Id,
+                ParentUrlId = null,
+                Path = "/hakkimizda",
+                Url_UrlSystemTypes = new List<Url_UrlSystemType>(),
+                State = 1
+            };
+
+            pageAbout.Url = pageAboutUrl;
+
+            pageAboutUrl.Url_UrlSystemTypes.Add(new Url_UrlSystemType()
+            {
+                Url = pageAboutUrl,
+                UrlSystemType = urlSystemTypePageDefault
+            });
+
+            IQueryable<Page> page = db.Set<Page>().AsNoTracking();
+
+            if (!page.Any(x => x.Name == "Hakkimizda"))
+            {
+                db.Set<Page>().Add(pageAbout);
+            }
+
+            db.SaveChanges();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public static void InsertDbData(IndivisContext db)
         {
@@ -226,5 +455,8 @@ namespace Indivis.Infrastructure.Persistence
             db.Set<Page>().Add(page);
             db.SaveChanges();
         }
+
+
+        
     }
 }

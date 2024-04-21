@@ -8,6 +8,14 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Domain.Entities.CoreEntities
 {
+    /// <summary>
+    /// Url kayıtının entity ile eşleştiği değerler
+    /// 
+    /// Announcement List Sayfası    : /duyurular -> Indivis.Core.Domain.Url kayıtının -> Announcement -> Indivis.Core.Domain.Entity ile eşleşmesi
+    /// <br></br>
+    /// Announbcement Detail Sayfası : /duyurular/hava-durumu -> Indivis.Core.Domain.Url kayıtının 
+    /// -> Announcement -> Indivis.Core.Domain.Entity ile eşleşmesi 
+    /// </summary>
     public class EntityUrl : BaseEntity, IEntity
     {
         public Guid UrlId { get; set; }

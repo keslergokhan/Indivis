@@ -29,7 +29,7 @@ namespace Indivis.Presentation.WebUI.Controllers
         public async Task<IActionResult> Index()
         {
             
-            return View();
+            return View("~/Areas/WebUI/Pages/PageContent.cshtml");
         }
 
         public IActionResult Privacy()
