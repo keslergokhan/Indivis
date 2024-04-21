@@ -23,6 +23,7 @@ namespace Indivis.Core.Domain.Entities.CoreEntities.Widgets
         public string Image { get; set; }
     }
 
+
     public partial class WidgetTemplate : IEntityLanguage
     {
         public Guid LanguageId { get; set; }

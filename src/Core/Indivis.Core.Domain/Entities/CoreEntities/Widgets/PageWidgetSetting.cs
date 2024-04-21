@@ -1,4 +1,6 @@
-﻿using Indivis.Core.Domain.Interfaces.Entities;
+﻿using Indivis.Core.Domain.Commons.CoreEntities;
+using Indivis.Core.Domain.Interfaces.Entities;
+using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Domain.Entities.CoreEntities.Widgets
 {
-    public partial class PageWidgetSetting
+    public partial class PageWidgetSetting : BaseEntity, IEntity
     {
         public string ClassCustom { get; set; }
         public string Grid { get; set; }

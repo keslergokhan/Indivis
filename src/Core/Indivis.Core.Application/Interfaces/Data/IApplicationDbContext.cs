@@ -1,5 +1,6 @@
 ﻿using Indivis.Core.Domain.Entities.CoreEntities;
 using Indivis.Core.Domain.Entities.CoreEntities.ManyToMany;
+using Indivis.Core.Domain.Entities.CoreEntities.Widgets;
 using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,6 +20,16 @@ namespace Indivis.Core.Application.Interfaces.Data
         public DbSet<EntityUrl> EntityUrls { get; }
         public DbSet<Entity> Entitys { get; }
         public DbSet<Page> Pages { get; }
+
+        public DbSet<Widget> Widgets { get; }
+        public DbSet<PageZone> PageZones { get; }
+        public DbSet<PageWidget> PageWidgets { get; }
+        public DbSet<PageWidgetSetting> PageWidgetSettings { get; }
+        public DbSet<WidgetService> WidgetServices { get; }
+        public DbSet<WidgetTemplate> WidgetTemplates { get; }
+
+
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+
     }
 }
