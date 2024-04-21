@@ -44,7 +44,7 @@ namespace Indivis.Infrastructure.Persistence.Commons.EntityFramework.EntityConfi
         protected void OrderConfigure<T>(EntityTypeBuilder<T> builder) where T : class, IEntity, IEntityOrder
         {
             builder.Property(x => x.Order)
-                .IsRequired(false)
+                .IsRequired(true)
                 .HasDefaultValue<int>(1)
                 .HasColumnOrder(100);
         }

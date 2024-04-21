@@ -23,7 +23,7 @@ namespace Indivis.Infrastructure.Persistence
     {
         public static IServiceCollection AddPersistence(this IServiceCollection services,IConfiguration configuration)
         {
-            services.AddDbContext<IndivisContext>(x=>x.UseSqlServer(configuration.GetConnectionString("default")));
+            services.AddDbContext<IndivisContext>(x=>x.UseSqlServer(configuration.GetConnectionString("default2")));
 
             services.AddScoped<IApplicationDbContext>(sp =>
             sp.GetRequiredService<IndivisContext>());

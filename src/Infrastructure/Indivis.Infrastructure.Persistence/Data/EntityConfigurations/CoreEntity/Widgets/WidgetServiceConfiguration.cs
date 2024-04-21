@@ -20,12 +20,12 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
             builder.Property(x => x.WidgetServiceClassName)
                 .HasMaxLength(EntityConfigurationConstants.MaxStringLv4)
                 .IsRequired(true)
-                .HasColumnOrder(0);
+                .HasColumnOrder(1);
 
             builder.Property(x=>x.MethodName)
                 .IsRequired(true)
                 .HasMaxLength (EntityConfigurationConstants.MaxStringLv4)
-                .HasColumnOrder(1);
+                .HasColumnOrder(2);
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntity.Widgets
 {
-    public class PageWidgetConfiguration : BaseEntityConfiguration<PageWidget>
+    public class PageWidgetConfiguration : BaseEntityLanguageConfiguration<PageWidget>
     {
         public override void Configure(EntityTypeBuilder<PageWidget> builder)
         {

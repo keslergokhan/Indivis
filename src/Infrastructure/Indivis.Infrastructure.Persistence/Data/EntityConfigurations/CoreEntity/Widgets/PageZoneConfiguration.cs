@@ -20,7 +20,7 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
             builder.Property(x => x.Key)
                 .HasMaxLength(EntityConfigurationConstants.MaxStringLv4)
                 .IsRequired(true)
-                .HasColumnOrder(0);
+                .HasColumnOrder(1);
 
             builder.HasOne(x=>x.Page)
                 .WithMany(x=>x.PageZones)

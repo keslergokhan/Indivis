@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntity.Widgets
 {
-    public class WidgetTemplateConfiguration : BaseEntityConfiguration<WidgetTemplate>
+    public class WidgetTemplateConfiguration : BaseEntityLanguageConfiguration<WidgetTemplate>
     {
         public override void Configure(EntityTypeBuilder<WidgetTemplate> builder)
         {
@@ -21,21 +21,21 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
             builder.Property(x => x.Title)
                 .IsRequired(true)
                 .HasMaxLength(Constans.EntityConfigurationConstants.MaxStringLv5)
-                .HasColumnOrder(0);
+                .HasColumnOrder(1);
 
             builder.Property(x => x.Template)
                 .IsRequired(true)
                 .HasMaxLength(Constans.EntityConfigurationConstants.MaxStringLv5)
-                .HasColumnOrder(1);
+                .HasColumnOrder(2);
 
             builder.Property(x => x.Description)
                 .IsRequired(false)
                 .HasMaxLength(Constans.EntityConfigurationConstants.MaxStringLv5)
-                .HasColumnOrder(2);
+                .HasColumnOrder(3);
 
             builder.Property(x => x.IsDefault)
                 .IsRequired(true)
-                .HasColumnOrder(3)
+                .HasColumnOrder(4)
                 .HasDefaultValue<bool>(true);
 
             base.ImageConfigure(builder);

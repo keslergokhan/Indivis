@@ -18,18 +18,22 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
 
             builder.Property(x => x.ClassCustom)
                 .HasMaxLength(Constans.EntityConfigurationConstants.MaxStringLv5)
+                .HasColumnOrder(1)
                 .IsRequired(false);
 
             builder.Property(x => x.Grid)
                 .HasMaxLength(Constans.EntityConfigurationConstants.MaxStringLv4)
+                .HasColumnOrder(2)
                 .IsRequired(true)
                 .HasDefaultValue<string>("col-12");
 
             builder.Property(x => x.IsAsync)
+                .HasColumnOrder(4)
                 .IsRequired(true)
                 .HasDefaultValue(false);
 
             builder.Property(x=>x.IsShow)
+                .HasColumnOrder(5)
                 .IsRequired(true)
                 .HasDefaultValue<bool>(false);
 
