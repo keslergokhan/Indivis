@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads
 {
     [CreateMap(typeof(Url))]
-    public partial class ReadUrlDto : BaseReadEntityDto, ILanguageDto
+    public partial class ReadUrlDto : BaseReadEntityDto, IEntityLanguageDto
     {
         public string Path { get; set; }
         public string FullPath { get; set; }
@@ -21,7 +21,7 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads
         public ReadUrlDto ParentUrl { get; set; }
     }
 
-    public partial class ReadUrlDto : ILanguageDto
+    public partial class ReadUrlDto : IEntityLanguageDto
     {
         public Guid LanguageId { get; set; }
     }

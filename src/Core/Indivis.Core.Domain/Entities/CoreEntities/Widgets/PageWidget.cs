@@ -24,5 +24,8 @@ namespace Indivis.Core.Domain.Entities.CoreEntities.Widgets
 
         public Widget Widget { get; set; }
         public Guid WidgetId { get; set; }
+
+        public PageWidgetSetting PageWidgetSetting { get; set; }
+        public Guid PageWidgetSettingId { get; set; }
     }
 }

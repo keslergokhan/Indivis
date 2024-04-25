@@ -21,6 +21,7 @@ using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
 using Indivis.Core.Application.Common.Constants.Systems;
 using Indivis.Presentation.WebUI.System.Interfaces.Workers;
 using System.Runtime.CompilerServices;
+using Indivis.Core.Domain.Entities.CoreEntities.Widgets;
 
 namespace Indivis.Infrastructure.Persistence
 {
@@ -49,8 +50,19 @@ namespace Indivis.Infrastructure.Persistence
 
             //AddPage(db);
 
+            //AddWidget(db);
+
+            //AddPageZone(db);
+
             return services;
         }
+
+        public static Language GetLanguageTr(IndivisContext db)
+        {
+            return db.Set<Language>().FirstOrDefault(x => x.CountryCode == "TR");
+        }
+
+
 
         public static void AddLanguage(IndivisContext db)
         {
@@ -255,8 +267,101 @@ namespace Indivis.Infrastructure.Persistence
         }
 
 
+        public static void AddWidget(IndivisContext db)
+        {
+
+            if (!db.Set<Widget>().Any(x=>x.Name == "TestWidget"))
+            {
+                db.Set<Widget>().Add(new Core.Domain.Entities.CoreEntities.Widgets.Widget()
+                {
+                    Id = Guid.NewGuid(),
+                    CreateDate = DateTime.Now,
+                    Description = "TestWidget",
+                    Image = "TestWidget",
+                    LanguageId = GetLanguageTr(db).Id,
+                    Name = "TestWidget",
+                    Order = 1,
+                    State = 1,
+                    WidgetTemplates = new List<WidgetTemplate>()
+                {
+                    new WidgetTemplate()
+                    {
+                        Id = Guid.NewGuid(),
+                        CreateDate = DateTime.Now,
+                        IsDefault = true,
+                        State = 1,
+                        Template = "/TestWidget/TestDefault.cshtml",
+                        Title = "Test Default",
+                        Description = "Test Default",
+                        Image = "Test Default",
+                        LanguageId = GetLanguageTr(db).Id,
+                        WidgetService = new WidgetService()
+                        {
+                            Id = Guid.NewGuid(),
+                            CreateDate = DateTime.Now,
+                            WidgetServiceClassName = "TestWidgetService",
+                            State = 1,
+                        }
+                    }
+                }
+                });
+
+                db.SaveChanges();
+            }
+            
+        }
+
+        public static void AddPageZone(IndivisContext db)
+        {
+            Page page1 = db.Set<Page>().FirstOrDefault(x=>x.Name == "Hakkimizda");
+
+            Widget widget = db.Set<Widget>().FirstOrDefault(x => x.Name == "TestWidget");
+
+            if (!db.Set<PageZone>().Any(x=>x.Key == "about-page-top-zone"))
+            {
+                db.Set<PageZone>().Add(new PageZone()
+                {
+                    Id = Guid.NewGuid(),
+                    Key = "about-page-top-zone",
+                    CreateDate = DateTime.Now,
+                    LanguageId = GetLanguageTr(db).Id,
+                    PageId = page1.Id,
+                    State = 1,
+                    PageWidgets = new List<PageWidget>()
+                    {
+                        new PageWidget()
+                        {
+                            Id = Guid.NewGuid(),
+                            CreateDate = DateTime.Now,
+                            LanguageId= GetLanguageTr(db).Id,
+                            State = 1,
+                            Widget = widget,
+                            PageWidgetSetting = new PageWidgetSetting()
+                            {
+                                Id = Guid.NewGuid(),
+                                ClassCustom = "",
+                                CreateDate= DateTime.Now,
+                                Grid = "col-12",
+                                IsAsync = false,
+                                IsShow = false,
+                                Order = 1,
+                                State = 1,
+                            }
+                        }
+                    }
+
+                });
+
+                db.SaveChanges();
+            }
+
+            
 
 
+
+        }
+
+        
 
 
 

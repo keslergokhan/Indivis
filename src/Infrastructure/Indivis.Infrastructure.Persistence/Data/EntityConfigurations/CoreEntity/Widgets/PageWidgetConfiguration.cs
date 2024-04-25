@@ -24,6 +24,10 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
                 .HasForeignKey<PageWidget>(x => x.WidgetId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.HasOne(x => x.PageWidgetSetting)
+                .WithOne()
+                .HasForeignKey<PageWidget>(x => x.PageWidgetSettingId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

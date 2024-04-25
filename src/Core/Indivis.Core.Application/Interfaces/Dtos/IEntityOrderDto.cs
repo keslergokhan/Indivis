@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Interfaces.Dtos
 {
-    public interface ILanguageDto
+    public interface IEntityOrderDto
     {
-        public Guid LanguageId { get; set; }
+        public int Order { get; set; }
     }
 }

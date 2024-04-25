@@ -21,11 +21,6 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
                 .HasMaxLength(EntityConfigurationConstants.MaxStringLv4)
                 .IsRequired(true)
                 .HasColumnOrder(1);
-
-            builder.Property(x=>x.MethodName)
-                .IsRequired(true)
-                .HasMaxLength (EntityConfigurationConstants.MaxStringLv4)
-                .HasColumnOrder(2);
         }
     }
 }
