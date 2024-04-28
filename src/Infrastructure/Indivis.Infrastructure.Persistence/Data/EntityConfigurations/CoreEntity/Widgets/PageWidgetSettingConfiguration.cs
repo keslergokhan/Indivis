@@ -37,6 +37,11 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
                 .IsRequired(true)
                 .HasDefaultValue<bool>(false);
 
+            builder.HasOne(x => x.WidgetTemplate)
+                .WithOne()
+                .HasForeignKey<PageWidgetSetting>(x => x.WidgetTemplateId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             base.OrderConfigure(builder);
 
         }

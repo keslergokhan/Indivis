@@ -15,10 +15,17 @@ namespace Indivis.Core.Domain.Entities.CoreEntities.Widgets
         public string Grid { get; set; }
         public bool IsAsync { get; set; }
         public bool IsShow { get; set; }
+
     }
 
     public partial class PageWidgetSetting : IEntityOrder
     {
         public int Order { get; set; }
+    }
+
+    public partial class PageWidgetSetting
+    {
+        public Guid WidgetTemplateId { get; set; }
+        public WidgetTemplate WidgetTemplate { get; set; }
     }
 }

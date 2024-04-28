@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUI.Widgets.Common.Models
 {
-    public abstract class BaseWidgetServiceOutModel
+    public class BaseWidgetServiceOutModel
     {
 
     }

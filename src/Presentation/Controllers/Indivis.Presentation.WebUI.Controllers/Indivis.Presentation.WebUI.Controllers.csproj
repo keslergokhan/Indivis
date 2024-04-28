@@ -11,11 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Indivis.Presentation.WebUI.Widgets\Indivis.Presentation.WebUI.Widgets.csproj" />
     <ProjectReference Include="..\Systems\Indivis.Presentation.WebUI.System\Indivis.Presentation.WebUI.System.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewComponents\Widgets\" />
+    <Folder Include="Common\" />
   </ItemGroup>
   
 </Project>

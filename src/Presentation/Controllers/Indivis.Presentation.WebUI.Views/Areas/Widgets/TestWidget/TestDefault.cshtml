@@ -1,1 +1,10 @@
-﻿test widget
+﻿@using Indivis.Core.Application.Interfaces.Results
+@using Indivis.Presentation.WebUI.Widgets.Models.TestWidget
+@model IResultDataControl<TestWidgetOutModel>
+
+@if (Model.IsSuccess)
+{
+    @Model.Data.Title
+}
+
+test widget

@@ -54,6 +54,8 @@ namespace Indivis.Infrastructure.Persistence
 
             //AddPageZone(db);
 
+            //AddPageAnnouncement(db);
+
             return services;
         }
 
@@ -361,9 +363,53 @@ namespace Indivis.Infrastructure.Persistence
 
         }
 
-        
 
 
+        public static void AddPageAnnouncement(IndivisContext db)
+        {
+            Language language = db.Set<Language>().FirstOrDefault(x => x.FLag == "TR");
+            UrlSystemType urlSystemTypePageDefault = db.Set<UrlSystemType>().FirstOrDefault(x => x.InterfaceType == "IPageUrlSystemType");
+            PageSystem pageSystem = db.Set<PageSystem>().FirstOrDefault(x => x.Controller == "AnnouncementController" && x.Action == "List");
+
+            Page pageAbout = new Page()
+            {
+                Id = Guid.NewGuid(),
+                LanguageId = language.Id,
+                CreateDate = DateTime.Now,
+                Name = "Duyurular",
+                PageSystem = pageSystem,
+                State = 1,
+            };
+
+            Url pageAboutUrl = new Url()
+            {
+                Id = Guid.NewGuid(),
+                CreateDate = DateTime.Now,
+                FullPath = "/duyurular",
+                LanguageId = language.Id,
+                ParentUrlId = null,
+                Path = "/duyurular",
+                Url_UrlSystemTypes = new List<Url_UrlSystemType>(),
+                State = 1
+            };
+
+            pageAbout.Url = pageAboutUrl;
+
+            pageAboutUrl.Url_UrlSystemTypes.Add(new Url_UrlSystemType()
+            {
+                Url = pageAboutUrl,
+                UrlSystemType = urlSystemTypePageDefault
+            });
+
+            IQueryable<Page> page = db.Set<Page>().AsNoTracking();
+
+            if (!page.Any(x => x.Name == "Duyurular"))
+            {
+                db.Set<Page>().Add(pageAbout);
+            }
+
+            db.SaveChanges();
+        }
 
 
 

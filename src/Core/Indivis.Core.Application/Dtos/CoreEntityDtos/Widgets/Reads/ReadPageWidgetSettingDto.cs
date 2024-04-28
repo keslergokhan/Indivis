@@ -24,4 +24,9 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads
     {
         public int Order { get; set; }
     }
+    public partial class ReadPageWidgetSettingDto
+    {
+        public Guid WidgetTemplateId { get; set; }
+        public ReadWidgetTemplateDto WidgetTemplate { get; set; }
+    }
 }

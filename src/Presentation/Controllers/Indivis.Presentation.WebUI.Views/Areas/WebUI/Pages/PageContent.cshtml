@@ -1,10 +1,13 @@
 ﻿@using Indivis.Core.Application.Interfaces.Data.Presentation
+@using System.Reflection
+@using Indivis.Presentation.WebUI.Widgets.Extensions;
 @inject ICurrentResponse res;
 
 <section>
     @res.CurrentPage.Name
 </section>
 
+@await Component.Zone("about-page-top-zone",res);
 
 @section Head{
     <link rel="stylesheet" href="~/css/Stylesheet1.css" />

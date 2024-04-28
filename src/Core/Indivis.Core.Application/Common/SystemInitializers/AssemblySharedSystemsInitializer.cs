@@ -40,28 +40,29 @@ namespace Indivis.Core.Application.Common.SystemInitializers
                 //öznitelik içerisindeki property değerlerine erişmek için özniteliğe eriştik
                 DependencyRegisterAttribute dependencyRegisterAttribute = classType.GetCustomAttribute<DependencyRegisterAttribute>();
                 //öznitelik de tanımlanan interface tipi sayesinde mevcut class içerisinde uygulanan arabirimlerden ihtiyacımız olanın tipine eriştik
-                Type interfaceType = classType.GetInterface(dependencyRegisterAttribute.InterfaceType.Name);
+                Type serviceType = classType.GetInterface(dependencyRegisterAttribute.InterfaceType.Name);
 
                 //eğer arabirim bulunamadıysa anlaşılabilmesi için özel bir exception tanımladık.
-                if (interfaceType == null)
-                    throw new InterfaceNotFoundException(classType.Name, dependencyRegisterAttribute.InterfaceType.Name);
+                if (serviceType == null) {
+                    serviceType = classType;
+                }
 
                 //ihtiyacımıza göre kayıt işlemi yaptık.
                 if (dependencyRegisterAttribute.DependencyTypes == DependencyTypes.Scopet)
                 {
-                    services.AddScoped(interfaceType, classType);
+                    services.AddScoped(serviceType, classType);
                 }
                 else if (dependencyRegisterAttribute.DependencyTypes == DependencyTypes.Transient)
                 {
-                    services.AddTransient(interfaceType, classType);
+                    services.AddTransient(serviceType, classType);
                 }
                 else if (dependencyRegisterAttribute.DependencyTypes == DependencyTypes.Singleton)
                 {
-                    services.AddSingleton(interfaceType, classType);
+                    services.AddSingleton(serviceType, classType);
                 }
                 else
                 {
-                    services.AddScoped(interfaceType, classType);
+                    services.AddScoped(serviceType, classType);
                 }
 
             });
