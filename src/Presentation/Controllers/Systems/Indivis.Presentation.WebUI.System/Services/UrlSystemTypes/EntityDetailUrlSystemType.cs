@@ -23,15 +23,7 @@ namespace Indivis.Presentation.WebUI.System.Services.UrlSystemTypes
 
         public override async Task ExecuteAsync()
         {
-            IResultDataControl<ReadPageDto> getUrlIdResult = await this.GetByUrlIdPageAsync(this.CurrentRequest.CurrentUrl.ParentUrl.Id);
-            if (getUrlIdResult.IsSuccess)
-            {
-                this.CurrentResponse.CurrentPage = getUrlIdResult.Data;
-            }
-            else
-            {
-                throw new RequestNotFoundPageException(base.CurrentRequest.FullPath);
-            }
+            await base.ExecuteAsync();
         }
     }
 }

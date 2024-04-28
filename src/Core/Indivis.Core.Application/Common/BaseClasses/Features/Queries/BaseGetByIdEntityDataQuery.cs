@@ -24,7 +24,8 @@ namespace Indivis.Core.Application.Common.BaseClasses.Features.Queries
         public Guid Id { get; set; }
     }
 
-    public abstract class BaseGetByIdEntityDataHandlerQuery<TEntity, TResult> : IRequestHandler<BaseGetByIdEntityDataQuery<TEntity, TResult>, IResultDataControl<TResult>>
+    public abstract class BaseGetByIdEntityDataHandlerQuery<TEntity, TResult> : 
+        IRequestHandler<BaseGetByIdEntityDataQuery<TEntity, TResult>, IResultDataControl<TResult>>
         where TResult : BaseReadEntityDto, new()
         where TEntity : class, IEntity
     {
@@ -46,9 +47,6 @@ namespace Indivis.Core.Application.Common.BaseClasses.Features.Queries
             IResultDataControl<TResult> outModel = new ResultDataControl<TResult>();
 
             TEntity result = await _applicationDbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == request.Id);
-
-
-            var sss = _mapper.Map<TResult>(result);
 
             return outModel.SuccessSetData(new TResult() { Id = request.Id });
         }

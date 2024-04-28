@@ -1,20 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\Indivis.Core.Application\Indivis.Core.Application.csproj" />
   </ItemGroup>
-
-
 
 </Project>

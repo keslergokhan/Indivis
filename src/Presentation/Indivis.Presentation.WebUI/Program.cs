@@ -1,10 +1,8 @@
 using Indivis.Infrastructure.Persistence;
 using Indivis.Core.Application;
-using Serilog;
-using Microsoft.Extensions.Configuration;
 using Indivis.Presentation.WebUI.System;
-using Indivis.Presentation.WebUI.System.Services.DynamicRoutes;
 using Indivis.Presentation.WebUI.Controllers;
+using Indivis.Presentation.WebUI.Widgets;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +12,8 @@ builder.Services
     .AddPersistence(builder.Configuration)
     .AddApplication(builder.Configuration)
     .AddWebUIController();
+builder.Services.AddWebUIWidgets();
+
 
 
 var app = builder.Build();

@@ -13,5 +13,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Systems\Indivis.Presentation.WebUI.System\Indivis.Presentation.WebUI.System.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewComponents\Widgets\" />
+  </ItemGroup>
   
 </Project>

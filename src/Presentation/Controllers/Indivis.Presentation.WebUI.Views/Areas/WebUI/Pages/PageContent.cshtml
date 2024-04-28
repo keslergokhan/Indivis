@@ -1,13 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Indivis.Core.Application.Interfaces.Data.Presentation
+@inject ICurrentResponse res;
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Page1</title>
+<section>
+    @res.CurrentPage.Name
+</section>
+
+
+@section Head{
     <link rel="stylesheet" href="~/css/Stylesheet1.css" />
     <link href="_content/Indivis.Presentation.WebUI.Views/css/Stylesheet1.css" rel="stylesheet" />
-</head>
-<body>  
-    deneme
-</body>
-</html>
+}

@@ -1,6 +1,9 @@
 ﻿using Indivis.Core.Application.Dtos.CoreEntityDtos.Pages.Reads;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads;
 using Indivis.Core.Application.Enums.Systems;
+using Indivis.Core.Application.Exceptions.Systems;
 using Indivis.Core.Application.Features.Systems.Queries.Pages;
+using Indivis.Core.Application.Features.Systems.Queries.Widgets;
 using Indivis.Core.Application.Features.Urls.Queries;
 using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Application.Interfaces.Data.Presentation;
@@ -31,13 +34,45 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
             ServiceProvider = serviceProvider;
         }
 
-        public abstract Task ExecuteAsync();
+        /// <summary>
+        /// 1. CurrentUrlId değerine sahip sayfayı bulma
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="RequestNotFoundPageException"></exception>
+        public virtual async Task ExecuteAsync()
+        {
+            IResultDataControl<ReadPageDto> getUrlIdResult = await this.GetByUrlIdPageAsync(this.CurrentRequest.CurrentUrl.Id);
+            
+            if (getUrlIdResult.IsSuccess)
+            {
+                this.CurrentResponse.CurrentPage = getUrlIdResult.Data;
 
-        public Task<IResultDataControl<ReadPageDto>> GetByUrlIdPageAsync(Guid UrlId)
+                IResultDataControl<List<ReadPageZoneDto>> pageZones = await this.Mediator.Send(new GetAllPageIdPageZonesQuery
+                {
+                    PageId = getUrlIdResult.Data.Id,
+                });
+
+                if (pageZones.IsSuccess)
+                {
+                    this.CurrentResponse.CurrentPage.PageZones = pageZones.Data;
+                }
+            }
+            else
+            {
+                throw new RequestNotFoundPageException(this.CurrentRequest.FullPath);
+            }
+        }
+
+        /// <summary>
+        /// UrlId değerine bağlı sayfayı döndürür.
+        /// </summary>
+        /// <param name="UrlId"></param>
+        /// <returns></returns>
+        public Task<IResultDataControl<ReadPageDto>> GetByUrlIdPageAsync(Guid urlId)
         {
             return this.Mediator.Send(this.EntityFeatureContext.Url.GetDependencyMediatRQuery<GetByUrlIdPageQuery>(x =>
             {
-                x.UrlId = UrlId;
+                x.UrlId = urlId;
                 x.State = StateEnum.Online;
             }));
         }
