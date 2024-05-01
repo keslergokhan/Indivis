@@ -19,8 +19,17 @@ namespace Indivis.Presentation.WebUI.Widgets.ViewComponents.Widgets
 
         public async Task<IViewComponentResult> InvokeAsync(DefaultViewComponentInModel inModel)
         {
-            object serviceResult = await base.GetWidgetServiceExecuteAsync(inModel.PageWidget);
-            return View("~/Areas/Widgets/TestWidget/TestDefault.cshtml",serviceResult);
+            try
+            {
+				object serviceResult = await base.GetWidgetServiceExecuteAsync(inModel.PageWidget);
+				string template = inModel.PageWidget.PageWidgetSetting.WidgetTemplate.Template;
+				return View($"~/Areas/Widgets{template}", serviceResult);
+			}
+            catch
+            {
+                return View($"~/Areas/Widgets/ErrorWidget/ErrorWidget.cshtml", inModel);
+            }
+            
         }
     }
 }

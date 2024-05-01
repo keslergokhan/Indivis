@@ -1,5 +1,7 @@
-﻿using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads;
+﻿using Indivis.Core.Application.Common.Data.Presentation;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads;
 using Indivis.Core.Application.Interfaces.Data.Presentation;
+using Indivis.Core.Domain.Entities.CoreEntities.Widgets;
 using Indivis.Presentation.WebUI.Widgets.Models.ViewComponents;
 using Indivis.Presentation.WebUI.Widgets.ViewComponents.Widgets;
 using Microsoft.AspNetCore.Html;
@@ -9,13 +11,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUI.Widgets.Extensions
 {
     public static class WidgetExtension
     {
-        public static Task<IHtmlContent> Zone(this IViewComponentHelper viewComponent, string key,ICurrentResponse currentResposne)
+        public static async Task<IHtmlContent> Zone(this IViewComponentHelper viewComponent, string key,ICurrentResponse currentResposne)
         {
             ReadPageZoneDto pageZone = currentResposne.CurrentPage.PageZones.FirstOrDefault(x => x.Key == key);
 
@@ -24,16 +27,41 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
                 return null;
             }
 
-            foreach (ReadPageWidgetDto item in pageZone.PageWidgets)
+            using StringWriter writer = new StringWriter();
+
+            TagBuilder zone = new TagBuilder("section");
+            zone.AddCssClass("row");
+            zone.AddCssClass("zone-section");
+            zone.MergeAttribute("data-zone-id", pageZone.Id.ToString());
+            zone.MergeAttribute("data-zone-key", pageZone.Key);
+            zone.MergeAttribute("data-zone-type", "widget");
+            zone.MergeAttribute("data-zone-page-id", pageZone.Page.Id.ToString());
+
+            if (pageZone.PageWidgets.Count <= 0)
             {
-                return viewComponent.InvokeAsync(nameof(DefaultWidgetComponent), new DefaultViewComponentInModel
-                {
-                    PageWidget = item
-                });
+                return null;
             }
 
-            return null;
-            
+            foreach (ReadPageWidgetDto pageWidget in pageZone.PageWidgets.Where(x=>x.PageWidgetSetting.IsShow == true).OrderBy(x=>x.PageWidgetSetting.Order))
+            {
+                TagBuilder div = new TagBuilder("div");
+                div.AddCssClass(pageWidget.PageWidgetSetting.Grid);
+                div.AddCssClass(pageWidget.PageWidgetSetting.ClassCustom);
+                div.MergeAttribute("data-page-widget-id", pageWidget.Id.ToString());
+
+                IHtmlContent result = null;
+
+                result = await viewComponent.InvokeAsync(nameof(DefaultWidgetComponent), new DefaultViewComponentInModel
+                {
+                    PageWidget = pageWidget
+                });
+
+                div.InnerHtml.AppendHtml(result);
+                zone.InnerHtml.AppendHtml(div);
+            }
+
+            zone.WriteTo(writer, HtmlEncoder.Default);
+            return new HtmlString(writer.ToString());
         }
     }
 }
