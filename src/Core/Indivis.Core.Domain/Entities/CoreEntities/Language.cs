@@ -16,5 +16,6 @@ namespace Indivis.Core.Domain.Entities.CoreEntities
         public string FLag { get; set; }
         public byte Sort { get; set; }
         public string Currency { get; set; }
+
     }
 }

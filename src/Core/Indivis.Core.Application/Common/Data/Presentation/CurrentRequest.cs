@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Common.Data.Presentation
 {
-    [DependencyRegister(typeof(ICurrentRequest),DependencyTypes.Singleton)]
+    [DependencyRegister(typeof(ICurrentRequest),DependencyTypes.Scopet)]
     public class CurrentRequest : ICurrentRequest
     {
         public string Schema {get; set;}

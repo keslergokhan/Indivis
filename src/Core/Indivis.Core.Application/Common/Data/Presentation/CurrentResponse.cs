@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Common.Data.Presentation
 {
-	[DependencyRegister(typeof(ICurrentResponse),DependencyTypes.Singleton)]
+	[DependencyRegister(typeof(ICurrentResponse),DependencyTypes.Scopet)]
 	public class CurrentResponse : ICurrentResponse
 	{
 		public ReadPageDto CurrentPage { get; set; }

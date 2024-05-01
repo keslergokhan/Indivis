@@ -56,6 +56,7 @@ namespace Indivis.Infrastructure.Persistence
 
             //AddPageAnnouncement(db);
 
+            //AddPageAnnouncementDetail(db);
             return services;
         }
 
@@ -411,7 +412,69 @@ namespace Indivis.Infrastructure.Persistence
             db.SaveChanges();
         }
 
+        public static void AddPageAnnouncementDetail(IndivisContext db)
+        {
+            Language language = db.Set<Language>().FirstOrDefault(x => x.FLag == "TR");
+            UrlSystemType urlSystemTypePageDefault = db.Set<UrlSystemType>().FirstOrDefault(x => x.InterfaceType == "IEntityDetailUrlSystemType");
+            PageSystem pageSystem = db.Set<PageSystem>().FirstOrDefault(x => x.Controller == "AnnouncementController" && x.Action == "Detail");
 
+            Page pageAbout = new Page()
+            {
+                Id = Guid.NewGuid(),
+                LanguageId = language.Id,
+                CreateDate = DateTime.Now,
+                Name = "Duyurular Detay",
+                PageSystem = pageSystem,
+                State = 1,
+            };
+
+            Url pageAboutUrl = new Url()
+            {
+                Id = Guid.NewGuid(),
+                CreateDate = DateTime.Now,
+                FullPath = "/duyurular",
+                LanguageId = language.Id,
+                ParentUrlId = null,
+                Path = "/duyurular",
+                Url_UrlSystemTypes = new List<Url_UrlSystemType>(),
+                State = 1
+            };
+
+            pageAbout.Url = pageAboutUrl;
+
+            pageAboutUrl.Url_UrlSystemTypes.Add(new Url_UrlSystemType()
+            {
+                Url = pageAboutUrl,
+                UrlSystemType = urlSystemTypePageDefault
+            });
+
+            IQueryable<Page> page = db.Set<Page>().AsNoTracking();
+
+            if (!page.Any(x => x.Name == "Duyurular Detay"))
+            {
+                db.Set<Page>().Add(pageAbout);
+            }
+
+            db.SaveChanges();
+        }
+
+        public static void AnnouncementEntity(IndivisContext db)
+        {
+            Language language = db.Set<Language>().FirstOrDefault(x => x.FLag == "TR");
+
+            List<Announcement> announcements = new List<Announcement>()
+            {
+                new Announcement()
+                {
+                    Id = Guid.NewGuid(),
+                    CreateDate= DateTime.Now,
+                    LanguageId = language.Id,
+                    Title = "Örnek Duyuru 1",
+                    Description = "Örnek Duyuru 2",
+                    State = 1,
+                }
+            };
+        }
 
 
 

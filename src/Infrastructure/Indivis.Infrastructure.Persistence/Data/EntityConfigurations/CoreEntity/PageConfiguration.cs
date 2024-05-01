@@ -21,8 +21,8 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
                 .IsRequired(true);
 
             builder.HasOne(x => x.Url)
-                .WithOne()
-                .HasForeignKey<Page>(x => x.UrlId)
+                .WithMany()
+                .HasForeignKey(x => x.UrlId)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.NoAction);
 

@@ -1,4 +1,6 @@
-﻿using Indivis.Core.Domain.Interfaces.Entities;
+﻿using Indivis.Core.Domain.Entities;
+using Indivis.Core.Domain.Entities.CoreEntities;
+using Indivis.Core.Domain.Interfaces.Entities;
 using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -48,6 +50,49 @@ namespace Indivis.Infrastructure.Persistence.Commons.EntityFramework.EntityConfi
                 .HasDefaultValue<int>(1)
                 .HasColumnOrder(100);
         }
+
+
+        protected void SeoConfigure<T>(EntityTypeBuilder<T> builder) where T: class, IEntity, IEntitySeo
+        {
+            builder.Property(x => x.SeoTitle)
+                .IsRequired(false)
+                .HasColumnOrder(101)
+                .HasMaxLength(Constans.EntityConfigurationConstants.MaxStringLv5);
+
+            builder.Property(x => x.SeoBreadcrumbTitle)
+                .IsRequired(false)
+                .HasColumnOrder(102)
+                .HasMaxLength(Constans.EntityConfigurationConstants.MaxStringLv6);
+
+            builder.Property(x => x.SeoBreadcrumbTitle)
+                .IsRequired(false)
+                .HasColumnOrder(103)
+                .HasMaxLength(Constans.EntityConfigurationConstants.MaxStringLv4);
+        }
+
+        protected void SitemapConfigure<T>(EntityTypeBuilder<T> builder) where T : class, IEntity, IEntitySitemap
+        {
+            builder.Property(x => x.sitemapNoIndex)
+                .IsRequired(true)
+                .HasDefaultValue<bool>(false);
+
+            builder.Property(x => x.SitemapNoWrite)
+                .IsRequired(true)
+                .HasDefaultValue<bool>(false);
+
+        }
+
+
+        protected void UrlConfigure<T>(EntityTypeBuilder<T> builder) 
+            where T : class, IEntity, IEntityUrl
+        {
+            builder.HasOne(x => x.Url)
+                .WithMany()
+                .HasForeignKey(x => x.UrlId)
+                .OnDelete(DeleteBehavior.NoAction);
+        }
+
+
 
 
 

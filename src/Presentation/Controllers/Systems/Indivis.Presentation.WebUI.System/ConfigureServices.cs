@@ -15,8 +15,8 @@ namespace Indivis.Presentation.WebUI.System
         public static IServiceCollection AddWebUISystem(this IServiceCollection service)
         {
             service.AddSystemsDependencyRegister(Assembly.GetExecutingAssembly());
-            service.AddTransient<SystemRequestAboutMiddleware>();
-            service.AddSingleton<DefaultDynamicRouteValueTransformer>();
+            service.AddScoped<SystemRequestAboutMiddleware>();
+            service.AddScoped<DefaultDynamicRouteValueTransformer>();
             return service;
         }
     }

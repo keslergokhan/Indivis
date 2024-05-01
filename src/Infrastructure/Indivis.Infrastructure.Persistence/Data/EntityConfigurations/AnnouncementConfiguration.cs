@@ -15,6 +15,9 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations
         {
             base.Configure(builder);
             builder.Property(x => x.Title).HasMaxLength(Persistence.Constans.EntityConfigurationConstants.MaxStringLv5);
+            base.SeoConfigure(builder);
+            base.SitemapConfigure(builder);
+            base.UrlConfigure(builder);
         }
     }
 }

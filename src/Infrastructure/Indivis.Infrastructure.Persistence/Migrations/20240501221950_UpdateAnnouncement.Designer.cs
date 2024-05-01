@@ -4,6 +4,7 @@ using Indivis.Infrastructure.Persistence.Data.IndivisContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Indivis.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IndivisContext))]
-    partial class IndivisContextModelSnapshot : ModelSnapshot
+    [Migration("20240501221950_UpdateAnnouncement")]
+    partial class UpdateAnnouncement
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,8 +84,6 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         .HasDefaultValue(false);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UrlId");
 
                     b.ToTable("Announcement", (string)null);
                 });
@@ -267,7 +268,8 @@ namespace Indivis.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PageSystemId");
 
-                    b.HasIndex("UrlId");
+                    b.HasIndex("UrlId")
+                        .IsUnique();
 
                     b.ToTable("Page", (string)null);
                 });
@@ -887,17 +889,6 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Indivis.Core.Domain.Entities.Announcement", b =>
-                {
-                    b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Url", "Url")
-                        .WithMany()
-                        .HasForeignKey("UrlId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Url");
-                });
-
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.EntityUrl", b =>
                 {
                     b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Entity", "Entity")
@@ -951,8 +942,8 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Url", "Url")
-                        .WithMany()
-                        .HasForeignKey("UrlId")
+                        .WithOne()
+                        .HasForeignKey("Indivis.Core.Domain.Entities.CoreEntities.Page", "UrlId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 

@@ -29,11 +29,6 @@ namespace Indivis.Presentation.WebUI.System.Services.DynamicRoutes
                 values["controller"] = this._currentResponse.CurrentPage.PageSystem.Controller.Replace("Controller", "");
                 values["action"] = this._currentResponse.CurrentPage.PageSystem.Action;
 			}
-			else
-			{
-                values["controller"] = "Home";
-                values["action"] = "Index";
-            }
 			
 
 			return values;

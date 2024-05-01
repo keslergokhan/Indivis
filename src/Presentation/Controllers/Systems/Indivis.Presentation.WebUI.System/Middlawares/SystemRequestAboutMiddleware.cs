@@ -4,6 +4,7 @@ using Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads;
 using Indivis.Core.Application.Helpers.Systems;
 using Indivis.Core.Application.Interfaces.Data.Presentation;
 using Indivis.Core.Application.Interfaces.Results;
+using Indivis.Core.Domain.Entities.CoreEntities;
 using Indivis.Presentation.WebUI.System.Interfaces.Services.Requests;
 using Indivis.Presentation.WebUI.System.Interfaces.Workers;
 using Microsoft.AspNetCore.Http;
@@ -24,6 +25,12 @@ namespace Indivis.Presentation.WebUI.System.Middlawares
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
+            string isExtension = Path.GetExtension(context.Request.Path);
+            if (string.IsNullOrEmpty(isExtension))
+            {
+                await next.Invoke(context);
+            }
+
             
             this._currentRequest.Path = context.Request.Path;
             this._currentRequest.Schema = context.Request.Scheme;
@@ -51,7 +58,7 @@ namespace Indivis.Presentation.WebUI.System.Middlawares
                 
             }
             
-            await next.Invoke(context);
+           await next.Invoke(context);
         }
     }
 
