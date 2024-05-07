@@ -23,7 +23,6 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
     {
         protected IMediator Mediator { get { return this.ServiceProvider.GetRequiredService<IMediator>(); } }
         protected IEntityFeatureContext EntityFeatureContext { get { return this.ServiceProvider.GetRequiredService<IEntityFeatureContext>(); } }
-        protected IApplicationDbContext ApplicationDbContext { get { return this.ServiceProvider.GetRequiredService<IApplicationDbContext>(); } } 
         protected ICurrentRequest CurrentRequest { get { return this.ServiceProvider.GetRequiredService<ICurrentRequest>(); } } 
         protected ICurrentResponse CurrentResponse { get { return this.ServiceProvider.GetRequiredService<ICurrentResponse>(); } }
         protected IServiceProvider ServiceProvider;
@@ -41,16 +40,20 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
         /// <exception cref="RequestNotFoundPageException"></exception>
         public virtual async Task ExecuteAsync()
         {
+
+            var query = this.EntityFeatureContext.GetByNameEntityFeature("Page").GetMediatRByIdEntityQuery(x=>x.Id = Guid.Parse("A544D3D9-8F60-4257-BD11-8BDE6328DA6F"));
+
+
+            var data = await this.Mediator.Send(query);
+
+
             IResultDataControl<ReadPageDto> getUrlIdResult = await this.GetByUrlIdPageAsync(this.CurrentRequest.CurrentUrl.Id);
             
             if (getUrlIdResult.IsSuccess)
             {
                 this.CurrentResponse.CurrentPage = getUrlIdResult.Data;
 
-                IResultDataControl<List<ReadPageZoneDto>> pageZones = await this.Mediator.Send(new GetAllPageIdPageZonesQuery
-                {
-                    PageId = getUrlIdResult.Data.Id,
-                });
+                IResultDataControl<List<ReadPageZoneDto>> pageZones = await this.GetByPageIdZoneAsync(getUrlIdResult.Data.Id);
 
                 if (pageZones.IsSuccess)
                 {
@@ -75,6 +78,14 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
                 x.UrlId = urlId;
                 x.State = StateEnum.Online;
             }));
+        }
+
+        public Task<IResultDataControl<List<ReadPageZoneDto>>> GetByPageIdZoneAsync(Guid pageId)
+        {
+            return this.Mediator.Send(new GetAllPageIdPageZonesQuery
+            {
+                PageId = pageId,
+            });
         }
     }
 }

@@ -45,10 +45,17 @@ namespace Indivis.Core.Application.Common.BaseClasses.Features.Queries
         public async Task<IResultDataControl<TResult>> Handle(BaseGetByIdEntityDataQuery<TEntity, TResult> request, CancellationToken cancellationToken)
         {
             IResultDataControl<TResult> outModel = new ResultDataControl<TResult>();
+            try
+            {
+                TEntity result = await _applicationDbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == request.Id);
+                outModel.SuccessSetData(this._mapper.Map<TResult>(result));
+            }
+            catch (Exception ex)
+            {
+                outModel.Fail(ex);
+            }
 
-            TEntity result = await _applicationDbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == request.Id);
-
-            return outModel.SuccessSetData(new TResult() { Id = request.Id });
+            return outModel;
         }
     }
 }

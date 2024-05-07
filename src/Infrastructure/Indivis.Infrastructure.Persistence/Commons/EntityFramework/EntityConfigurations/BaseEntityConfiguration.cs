@@ -68,6 +68,11 @@ namespace Indivis.Infrastructure.Persistence.Commons.EntityFramework.EntityConfi
                 .IsRequired(false)
                 .HasColumnOrder(103)
                 .HasMaxLength(Constans.EntityConfigurationConstants.MaxStringLv4);
+
+            builder.Property(x => x.SeoDescription)
+                .IsRequired(false)
+                .HasColumnOrder(103)
+                .HasMaxLength(Constans.EntityConfigurationConstants.MaxStringLv6);
         }
 
         protected void SitemapConfigure<T>(EntityTypeBuilder<T> builder) where T : class, IEntity, IEntitySitemap

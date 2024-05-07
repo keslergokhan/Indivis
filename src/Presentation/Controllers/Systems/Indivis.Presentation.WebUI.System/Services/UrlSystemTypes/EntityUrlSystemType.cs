@@ -1,5 +1,6 @@
 ﻿using Indivis.Core.Application.Attributes.Systems;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Pages.Reads;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads;
 using Indivis.Core.Application.Exceptions.Systems;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Interfaces.UrlSystemTypes;
@@ -23,7 +24,29 @@ namespace Indivis.Presentation.WebUI.System.Services.UrlSystemTypes
 
         public override async Task ExecuteAsync()
         {
-            await base.ExecuteAsync();
+            if (this.CurrentRequest.CurrentUrl.ParentUrlId == null || this.CurrentRequest.CurrentUrl.ParentUrlId == default)
+            {
+                throw new ParentUrlIdNotFoundException(this);
+            }
+
+            IResultDataControl<ReadPageDto> getUrlIdResult = await this.GetByUrlIdPageAsync(this.CurrentRequest.CurrentUrl.ParentUrlId);
+
+            if (getUrlIdResult.IsSuccess)
+            {
+                
+                this.CurrentResponse.CurrentPage = getUrlIdResult.Data;
+
+                IResultDataControl<List<ReadPageZoneDto>> pageZones = await this.GetByPageIdZoneAsync(this.CurrentRequest.CurrentUrl.ParentUrlId);
+
+                if (pageZones.IsSuccess)
+                {
+                    this.CurrentResponse.CurrentPage.PageZones = pageZones?.Data;
+                }
+            }
+            else
+            {
+                throw new RequestNotFoundPageException(this.CurrentRequest.FullPath);
+            }
         }
     }
 }

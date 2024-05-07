@@ -26,7 +26,7 @@ namespace Indivis.Presentation.WebUI.System.Middlawares
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             string isExtension = Path.GetExtension(context.Request.Path);
-            if (string.IsNullOrEmpty(isExtension))
+            if (!string.IsNullOrEmpty(isExtension))
             {
                 await next.Invoke(context);
             }

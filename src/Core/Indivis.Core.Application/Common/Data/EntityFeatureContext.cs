@@ -6,6 +6,7 @@ using Indivis.Core.Domain.Entities.CoreEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,23 +23,9 @@ namespace Indivis.Core.Application.Common.Data
         }
 
 
-        public EntityFeature Page
-        {
-            get
-            {
-                return SetConfigure<Page, PageEntityConfiguration>().Features;
-            }
-        }
+        public EntityFeature Page => SetConfigure<Page, PageEntityConfiguration>();
 
-        public EntityFeature Url
-        {
-            get
-            {
-                return SetConfigure<Url, UrlEntityConfiguration>().Features;
-            }
-        }
-
-
+        public EntityFeature Url => SetConfigure<Url, UrlEntityConfiguration>();
 
 
 
@@ -48,6 +35,11 @@ namespace Indivis.Core.Application.Common.Data
             EntityFeature feature = base.EntityFeatures.GetValueOrDefault(entityName);
             if(feature is null)
             {
+                PropertyInfo propertyInfo = this.GetType().GetProperty(entityName);
+                if (propertyInfo != null)
+                {
+                    return (EntityFeature)propertyInfo.GetValue(this);
+                }
                 throw new Exception($"{entityName} bulunamadı !");
             }
             return feature;

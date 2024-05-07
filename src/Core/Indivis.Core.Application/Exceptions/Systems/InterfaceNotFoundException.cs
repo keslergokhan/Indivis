@@ -8,14 +8,12 @@ namespace Indivis.Core.Application.Exceptions.Systems
 {
     public class InterfaceNotFoundException : Exception
     {
-        public string Message { get; set; }
-        public InterfaceNotFoundException()
+        public InterfaceNotFoundException():base("Interface bulunamadı !")
         {
-            this.Message = "Interface bulunamadı !";
+
         }
-        public InterfaceNotFoundException(string className, string interfaceName)
+        public InterfaceNotFoundException(string className, string interfaceName):base($"{className} içerisinde {interfaceName} bulunamadı !")
         {
-            this.Message = $"{className} içerisinde {interfaceName} bulunamadı !";
         }
     }
 }

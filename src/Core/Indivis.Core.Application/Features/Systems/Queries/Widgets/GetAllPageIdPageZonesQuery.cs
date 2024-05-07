@@ -34,6 +34,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Widgets
         public async Task<IResultDataControl<List<ReadPageZoneDto>>> Handle(GetAllPageIdPageZonesQuery request, CancellationToken cancellationToken)
         {
             IResultDataControl<List<ReadPageZoneDto>> model = new ResultDataControl<List<ReadPageZoneDto>>();
+            model.SetData(new List<ReadPageZoneDto>());
 
             try
             {

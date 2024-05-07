@@ -18,17 +18,22 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
             _serviceProvider = serviceProvider;
         }
 
-        public BaseEntityFeatureConfiguration<TEntity> SetConfigure<TEntity,TConfigure>() 
+        public EntityFeature SetConfigure<TEntity,TConfigure>() 
             where TEntity : class,IEntity
             where TConfigure : BaseEntityFeatureConfiguration<TEntity>
         {
-            BaseEntityFeatureConfiguration<TEntity> entityFeatureConfiguration = (BaseEntityFeatureConfiguration<TEntity>)this._serviceProvider.GetService(typeof(TConfigure));
+
             if(!this.EntityFeatures.Any(x=>x.Key == typeof(TEntity).Name))
             {
+                BaseEntityFeatureConfiguration<TEntity> entityFeatureConfiguration = (BaseEntityFeatureConfiguration<TEntity>)this._serviceProvider.GetService(typeof(TConfigure));
                 this.EntityFeatures.Add(typeof(TEntity).Name, entityFeatureConfiguration.Features);
+                return entityFeatureConfiguration.Features;
+            }
+            else
+            {
+                return this.EntityFeatures.FirstOrDefault(x => x.Key == typeof(TEntity).Name).Value;
             }
             
-            return entityFeatureConfiguration;
         }
     }
 }

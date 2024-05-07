@@ -57,6 +57,8 @@ namespace Indivis.Infrastructure.Persistence
             //AddPageAnnouncement(db);
 
             //AddPageAnnouncementDetail(db);
+
+            //AnnouncementEntity(db);
             return services;
         }
 
@@ -472,8 +474,28 @@ namespace Indivis.Infrastructure.Persistence
                     Title = "Örnek Duyuru 1",
                     Description = "Örnek Duyuru 2",
                     State = 1,
+                    Url = new Url
+                    {
+                        Id = Guid.NewGuid(),
+                        CreateDate = DateTime.Now,
+                        FullPath = "/duyurular/ornek-duyuru-2",
+                        Path = "/ornek-duyuru-2",
+                        LanguageId= language.Id,
+                        ParentUrl = null,
+                        State = 1,
+                        Url_UrlSystemTypes = new List<Url_UrlSystemType>()
+                        {
+                            new Url_UrlSystemType()
+                            {
+                                UrlSystemTypeId = Guid.Parse("A097DA16-F169-40A9-B337-EDECC7F1C3CB")
+                            }
+                        },
+                    }
                 }
             };
+
+            db.AddRangeAsync(announcements);
+            db.SaveChanges();
         }
 
 
