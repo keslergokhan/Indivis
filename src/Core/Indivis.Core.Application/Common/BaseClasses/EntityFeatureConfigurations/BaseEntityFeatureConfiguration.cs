@@ -35,14 +35,7 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
             return MediatRGeyByIdEntityQuery;
         }
 
-        public TQuery GetDependencyMediatRQuery<TQuery>(Action<TQuery> action)
-		where TQuery : class, IBaseRequest, IFeatureQueryFactory<TQuery>, new()
-		{
-            TQuery tQuery = (TQuery)this._serverProvider.GetService(typeof(TQuery));
-            action.Invoke(tQuery);
-
-            return tQuery;
-		}
+        
     }
 
     public abstract class BaseEntityFeatureConfiguration<TEntity> where TEntity : class, IEntity

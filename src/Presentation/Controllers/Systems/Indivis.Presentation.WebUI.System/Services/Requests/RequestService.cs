@@ -29,7 +29,7 @@ namespace Indivis.Presentation.WebUI.System.Services.Requests
         public Task<IResultDataControl<ReadUrlDto>> GetRequestUrlAsync(ICurrentRequest currentRequest)
         {
             return this._mediator
-                .Send(this._entityFeatureContext.Url.GetDependencyMediatRQuery<GetByFullPathUrlQuery>(x => x.FullPath = currentRequest.Path));
+                .Send(this._entityFeatureContext.CustomContext.GetDependencyMediatRQuery<GetByFullPathUrlQuery>(x => x.FullPath = currentRequest.Path));
         }
 
         public bool UrlSecurityVerification(ICurrentRequest currentRequest)

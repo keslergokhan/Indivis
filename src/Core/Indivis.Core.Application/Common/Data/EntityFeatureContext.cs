@@ -1,8 +1,12 @@
 ﻿using Indivis.Core.Application.Attributes.Systems;
 using Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfigurations;
+using Indivis.Core.Application.Common.BaseClasses.Features.Queries;
 using Indivis.Core.Application.EntityFeatureConfigurations;
 using Indivis.Core.Application.Interfaces.Data;
+using Indivis.Core.Application.Interfaces.Features.FeatureFactories;
 using Indivis.Core.Domain.Entities.CoreEntities;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,13 +33,27 @@ namespace Indivis.Core.Application.Common.Data
 
         public EntityFeature EntityUrl => SetConfigure<EntityUrl, EntityUrlConfiguration>();
 
+        public IEntityFeatureCustomContext CustomContext => this._serviceProvider.GetService<IEntityFeatureCustomContext>();
 
+
+        
+    }
+
+    [DependencyRegister(typeof(IEntityFeatureCustomContext), DependencyTypes.Scopet)]
+    public class EntityFeatureCustomContext : IEntityFeatureCustomContext
+    {
+        private IServiceProvider _serviceProvider;
+
+        public EntityFeatureCustomContext(IServiceProvider serviceProvider)
+        {
+            this._serviceProvider = serviceProvider;
+        }
 
 
         public EntityFeature GetByNameEntityFeature(string entityName)
         {
-            EntityFeature feature = base.EntityFeatures.GetValueOrDefault(entityName);
-            if(feature is null)
+            EntityFeature feature = BaseEntityFeatureContext.EntityFeatures.GetValueOrDefault(entityName);
+            if (feature is null)
             {
                 PropertyInfo propertyInfo = this.GetType().GetProperty(entityName);
                 if (propertyInfo != null)
@@ -45,6 +63,15 @@ namespace Indivis.Core.Application.Common.Data
                 throw new Exception($"{entityName} bulunamadı !");
             }
             return feature;
+        }
+
+        public TQuery GetDependencyMediatRQuery<TQuery>(Action<TQuery> action)
+        where TQuery : class, IBaseRequest, IFeatureQueryFactory<TQuery>, new()
+        {
+            TQuery tQuery = (TQuery)this._serviceProvider.GetService(typeof(TQuery));
+            action.Invoke(tQuery);
+
+            return tQuery;
         }
     }
 }

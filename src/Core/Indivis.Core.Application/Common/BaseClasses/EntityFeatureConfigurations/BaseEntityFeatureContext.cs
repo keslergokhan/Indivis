@@ -11,7 +11,9 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
     {
         private IServiceProvider _serviceProvider;
 
-        protected Dictionary<string, EntityFeature> EntityFeatures = new Dictionary<string, EntityFeature>();
+        protected static Dictionary<string, EntityFeature> _EntityFeatures = new Dictionary<string, EntityFeature>();
+
+        public static IReadOnlyDictionary<string, EntityFeature> EntityFeatures => _EntityFeatures;
 
         public BaseEntityFeatureContext(IServiceProvider serviceProvider)
         {
@@ -23,15 +25,15 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
             where TConfigure : BaseEntityFeatureConfiguration<TEntity>
         {
 
-            if(!this.EntityFeatures.Any(x=>x.Key == typeof(TEntity).Name))
+            if(!BaseEntityFeatureContext._EntityFeatures.Any(x=>x.Key == typeof(TEntity).Name))
             {
                 BaseEntityFeatureConfiguration<TEntity> entityFeatureConfiguration = (BaseEntityFeatureConfiguration<TEntity>)this._serviceProvider.GetService(typeof(TConfigure));
-                this.EntityFeatures.Add(typeof(TEntity).Name, entityFeatureConfiguration.Features);
+                BaseEntityFeatureContext._EntityFeatures.Add(typeof(TEntity).Name, entityFeatureConfiguration.Features);
                 return entityFeatureConfiguration.Features;
             }
             else
             {
-                return this.EntityFeatures.FirstOrDefault(x => x.Key == typeof(TEntity).Name).Value;
+                return BaseEntityFeatureContext._EntityFeatures.FirstOrDefault(x => x.Key == typeof(TEntity).Name).Value;
             }
             
         }
