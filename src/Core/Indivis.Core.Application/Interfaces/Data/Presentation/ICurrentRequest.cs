@@ -1,4 +1,5 @@
-﻿using Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads;
+﻿using Indivis.Core.Application.Dtos.CoreEntityDtos.EntityUrl.Reads;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,7 @@ namespace Indivis.Core.Application.Interfaces.Data.Presentation
         public string BaseUrl { get; set; }
         public bool EditMode { get; set; }
         public ReadUrlDto CurrentUrl { get; set; }
+        public ReadEntityUrlDto CurrentEntityUrl { get; set; }
+
     }
 }

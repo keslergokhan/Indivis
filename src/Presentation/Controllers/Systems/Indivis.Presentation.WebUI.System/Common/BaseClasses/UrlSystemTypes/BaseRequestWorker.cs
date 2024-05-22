@@ -41,12 +41,6 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
         public virtual async Task ExecuteAsync()
         {
 
-            var query = this.EntityFeatureContext.GetByNameEntityFeature("Page").GetMediatRByIdEntityQuery(x=>x.Id = Guid.Parse("A544D3D9-8F60-4257-BD11-8BDE6328DA6F"));
-
-
-            var data = await this.Mediator.Send(query);
-
-
             IResultDataControl<ReadPageDto> getUrlIdResult = await this.GetByUrlIdPageAsync(this.CurrentRequest.CurrentUrl.Id);
             
             if (getUrlIdResult.IsSuccess)

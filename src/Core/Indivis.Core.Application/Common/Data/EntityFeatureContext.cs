@@ -27,6 +27,8 @@ namespace Indivis.Core.Application.Common.Data
 
         public EntityFeature Url => SetConfigure<Url, UrlEntityConfiguration>();
 
+        public EntityFeature EntityUrl => SetConfigure<EntityUrl, EntityUrlConfiguration>();
+
 
 
 
