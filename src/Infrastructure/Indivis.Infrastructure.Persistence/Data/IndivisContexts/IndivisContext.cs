@@ -5,6 +5,7 @@ using Indivis.Core.Domain.Entities.CoreEntities.ManyToMany;
 using Indivis.Core.Domain.Entities.CoreEntities.Widgets;
 using Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntity;
 using Indivis.Infrastructure.Persistence.Identities;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Infrastructure.Persistence.Data.IndivisContexts
 {
-    public class IndivisContext : IdentityDbContext<ApplicationUser,ApplicationRole,Guid>, IApplicationDbContext
+    public class IndivisContext : IdentityDbContext<ApplicationUser,ApplicationRole,Guid>, IApplicationDbContext, IDataProtectionKeyContext
     {
         public IndivisContext(DbContextOptions<IndivisContext> dbContextOptions) : base(dbContextOptions)
         {
@@ -49,6 +50,7 @@ namespace Indivis.Infrastructure.Persistence.Data.IndivisContexts
         public DbSet<PageWidgetSetting> PageWidgetSettings => Set<PageWidgetSetting>();
         public DbSet<WidgetService> WidgetServices => Set<WidgetService>();
         public DbSet<WidgetTemplate> WidgetTemplates => Set<WidgetTemplate>();
+        public DbSet<DataProtectionKey> DataProtectionKeys => Set<DataProtectionKey>();
 
         #endregion EndCoreWidgetEntity
 

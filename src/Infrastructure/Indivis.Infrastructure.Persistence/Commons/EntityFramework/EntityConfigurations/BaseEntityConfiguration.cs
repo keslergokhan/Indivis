@@ -71,7 +71,7 @@ namespace Indivis.Infrastructure.Persistence.Commons.EntityFramework.EntityConfi
 
             builder.Property(x => x.SeoDescription)
                 .IsRequired(false)
-                .HasColumnOrder(103)
+                .HasColumnOrder(104)
                 .HasMaxLength(Constans.EntityConfigurationConstants.MaxStringLv6);
         }
 

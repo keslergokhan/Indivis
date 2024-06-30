@@ -22,6 +22,12 @@ using Indivis.Core.Application.Common.Constants.Systems;
 using Indivis.Presentation.WebUI.System.Interfaces.Workers;
 using System.Runtime.CompilerServices;
 using Indivis.Core.Domain.Entities.CoreEntities.Widgets;
+using Microsoft.AspNetCore.Identity;
+using Indivis.Core.Application.Common.SystemInitializers;
+using Indivis.Core.Application.Interfaces.Services;
+using Indivis.Infrastructure.Persistence.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace Indivis.Infrastructure.Persistence
 {
@@ -29,16 +35,79 @@ namespace Indivis.Infrastructure.Persistence
     {
         public static IServiceCollection AddPersistence(this IServiceCollection services,IConfiguration configuration)
         {
+            
             services.AddDbContext<IndivisContext>(x=>x.UseSqlServer(configuration.GetConnectionString("default2")));
 
             services.AddScoped<IApplicationDbContext>(sp =>
             sp.GetRequiredService<IndivisContext>());
 
-            services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddRoles<ApplicationRole>()
-                .AddEntityFrameworkStores<IndivisContext>();
+            services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<IndivisContext>().AddDefaultTokenProviders();
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.Cookie.Name = "indivis.Auth";
+                options.LoginPath = "/Account/Login";
+                options.Cookie.HttpOnly = true;
+                options.AccessDeniedPath = "/Account/AccessDenied";
+
+            });
+
+
+
+            services.AddDataProtection().SetApplicationName("Indivis").PersistKeysToDbContext<IndivisContext>();
+
+
+            services.AddSystemsDependencyRegister(Assembly.GetExecutingAssembly());
+
+
+            
+            return services;
+        }
+
+
+
+
+        public static void Run()
+        {
+            //SignInManager<ApplicationUser> userManager = services.BuildServiceProvider().GetService<SignInManager<ApplicationUser>>();
+            //UserManager<ApplicationUser> userManager = services.BuildServiceProvider().GetService<UserManager<ApplicationUser>>();
+            /*
             using IndivisContext db = services.BuildServiceProvider().GetService<IndivisContext>();
+
+            
+
+            UserManager<IApplicationUser> userManager = services.BuildServiceProvider().GetService<UserManager<IApplicationUser>>();
+
+            var sss = userManager.FindByIdAsync("36F94388-F3EA-4414-79A7-08DC987928DF").Result;
+
+            /*
+            ApplicationUser user = new ApplicationUser()
+            {
+                Email = "gokhan@gmail.com",
+                UserName = "gokhankesler",
+                NormalizedUserName = "Gökhan Kesler"
+            };
+
+            UserManager<ApplicationUser> userManager = services.BuildServiceProvider().GetService<UserManager<ApplicationUser>>();
+            RoleManager<ApplicationRole> roleManager = services.BuildServiceProvider().GetService<RoleManager<ApplicationRole>>();
+
+            var sss = userManager.CreateAsync(user, "Gokhan.123").Result;
+
+            ApplicationRole role = new ApplicationRole()
+            {
+                Name = "BaseAdmin",
+                NormalizedName = "BASEADMIN",
+            };
+
+            var userResult = userManager.FindByIdAsync("36F94388-F3EA-4414-79A7-08DC987928DF").Result;
+
+            var roleResult = userManager.AddToRoleAsync(userResult, "BaseAdmin").Result;
+
+            */
+
+
+
 
             //AddLanguage(db);
 
@@ -59,8 +128,8 @@ namespace Indivis.Infrastructure.Persistence
             //AddPageAnnouncementDetail(db);
 
             //AnnouncementEntity(db);
-            return services;
         }
+
 
         public static Language GetLanguageTr(IndivisContext db)
         {

@@ -1,22 +1,11 @@
-using Indivis.Infrastructure.Persistence;
 using Indivis.Core.Application;
-using Indivis.Presentation.WebUI.System;
-using Indivis.Presentation.WebUI.Controllers;
-using Indivis.Presentation.WebUI.Widgets;
+using Indivis.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddPersistence(builder.Configuration).AddApplication(builder.Configuration);
 builder.Services.AddControllersWithViews();
-
-builder.Services
-    .AddPersistence(builder.Configuration)
-    .AddApplication(builder.Configuration)
-    .AddWebUIController();
-
-builder.Services.AddWebUIWidgets();
-
-
 
 var app = builder.Build();
 
@@ -28,19 +17,18 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
-app.AddSystemWebUIApplication();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
-app.WebUIDynamicUseEndpoints();
-
+app.MapDefaultControllerRoute();
 
 app.Run();
