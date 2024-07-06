@@ -10,5 +10,7 @@ namespace Indivis.Infrastructure.Persistence.Identities
 {
     public class ApplicationUser : IdentityUser<Guid>, IApplicationUser
     {
+        public string Name { get; set; }
+        public string Surname { get; set; }
     }
 }

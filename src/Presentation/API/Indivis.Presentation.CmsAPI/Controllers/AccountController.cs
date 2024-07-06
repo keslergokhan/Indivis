@@ -1,9 +1,12 @@
-﻿using Indivis.Core.Application.Interfaces.Services;
+﻿using Indivis.Core.Application.Dtos.AccountDtos.Reads;
+using Indivis.Core.Application.Interfaces.Results;
+using Indivis.Core.Application.Interfaces.Services;
 using Indivis.Presentation.CmsAPI.Models.AccountModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Indivis.Presentation.CmsAPI.Controllers
 {
@@ -12,24 +15,25 @@ namespace Indivis.Presentation.CmsAPI.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IIdentityService _ıdentityService;
+        private readonly IIdentityService _identityService;
 
-        public AccountController(IIdentityService ıdentityService)
+        public AccountController(IIdentityService identityService)
         {
-            _ıdentityService = ıdentityService;
+            _identityService = identityService;
         }
 
-        [Authorize(Roles = "BaseAdmin")]
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
-            return Ok("{}");
+            IResultDataControl<ReadUsersDto> result = await _identityService.PasswordSignInAsync(loginRequest.Email, loginRequest.Password);
+
+            return Ok(result);
         }
 
         [HttpGet]
         public async Task<IActionResult> Test()
         {
-            await _ıdentityService.PasswordSignInAsync("gokhan@gmail.com", "Gokhan.123");
+            await _identityService.PasswordSignInAsync("gokhan@gmail.com", "Gokhan.123");
             return Ok("");
         }
     }

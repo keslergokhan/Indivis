@@ -13,4 +13,5 @@ namespace Indivis.Core.Domain.Interfaces.Entities.CoreEntities
         public DateTime CreateDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
     }
+
 }

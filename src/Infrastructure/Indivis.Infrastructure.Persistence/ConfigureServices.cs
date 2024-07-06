@@ -52,7 +52,7 @@ namespace Indivis.Infrastructure.Persistence
                 options.AccessDeniedPath = "/Account/AccessDenied";
 
             });
-
+            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomUserClaimsPrincipalFactory>();
 
 
             services.AddDataProtection().SetApplicationName("Indivis").PersistKeysToDbContext<IndivisContext>();
