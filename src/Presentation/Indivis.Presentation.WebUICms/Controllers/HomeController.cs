@@ -8,7 +8,7 @@ namespace Indivis.Presentation.WebUICms.Controllers
     {
         public IActionResult Index()
         {
-            return Ok("{}");
+            return View("HomeView");
         }
     }
 }

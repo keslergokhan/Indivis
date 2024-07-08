@@ -32,11 +32,11 @@ export default class LoginService extends BaseService {
      * 
      * @param {Event} e
      */
-    submitHandler(e) {
+    async submitHandlerAsync(e) {
 
         const formData = HelperFunctions.formDataToJsonObject(new FormData(e.target));
 
-        fetch(this.Path, {
+        await fetch(this.Path, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -46,6 +46,13 @@ export default class LoginService extends BaseService {
         }).then(res => {
             return res.json();
         }).then(json => {
+
+            if (json.isSuccess == true) {
+
+                window.location.pathname = "/home/index";
+            } else {
+                alert("Kullanıcı adı veya şifre yanlış");
+            }
             console.log(json);
         })
     }

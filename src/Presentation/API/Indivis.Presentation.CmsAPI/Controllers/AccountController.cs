@@ -10,7 +10,6 @@ using System.Security.Claims;
 
 namespace Indivis.Presentation.CmsAPI.Controllers
 {
-    
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -26,15 +25,8 @@ namespace Indivis.Presentation.CmsAPI.Controllers
         public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
             IResultDataControl<ReadUsersDto> result = await _identityService.PasswordSignInAsync(loginRequest.Email, loginRequest.Password);
-
             return Ok(result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Test()
-        {
-            await _identityService.PasswordSignInAsync("gokhan@gmail.com", "Gokhan.123");
-            return Ok("");
-        }
     }
 }

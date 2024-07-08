@@ -25,7 +25,7 @@ namespace Indivis.Presentation.WebUICms.Controllers
         {
             //await _ıdentityService.PasswordSignInAsync("gokhan@gmail.com","Gokhan.123");
             ViewBag.Title = "Indivis Giriş";
-            return View();
+            return View("LoginView");
         }
 
         public async Task<IActionResult> Giris()

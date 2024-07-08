@@ -22,17 +22,18 @@
      * Form gönderimi
      * @param {Event} e
      */
-    submitHandler(e) {
+    async submitHandlerAsync(e) {
         throw new Error("Lütfen submitHandler override ediniz !");
     }
 
 
-    execute() {
-        document.querySelector(this.FormClassName).addEventListener('submit', (e) => {
+    async executeAsync() {
+        const $this = this;
+        document.querySelector(this.FormClassName).addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            this.validation(e);
-            this.submitHandler(e);
+            $this.validation(e);
+            await $this.submitHandlerAsync(e);
         });
     }
 }

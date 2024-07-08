@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Indivis.Infrastructure.Persistence.Identities
 {
-    public class CustomUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<ApplicationUser>
+    public class CustomUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<ApplicationUser,ApplicationRole>
     {
-        public CustomUserClaimsPrincipalFactory(UserManager<ApplicationUser> userManager, IOptions<IdentityOptions> optionsAccessor) : base(userManager, optionsAccessor)
+        public CustomUserClaimsPrincipalFactory(UserManager<ApplicationUser> userManager,RoleManager<ApplicationRole> roleManager, IOptions<IdentityOptions> optionsAccessor) : base(userManager, roleManager, optionsAccessor)
         {
         }
 
@@ -19,6 +19,7 @@ namespace Indivis.Infrastructure.Persistence.Identities
         {
             ClaimsIdentity claimsIdentity = await base.GenerateClaimsAsync(user);
             claimsIdentity.AddClaim(new Claim(ClaimTypes.GivenName,user.Name + " " + user.Surname));
+
             return claimsIdentity;
 
         }

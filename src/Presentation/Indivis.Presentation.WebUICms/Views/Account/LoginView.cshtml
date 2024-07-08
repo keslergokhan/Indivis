@@ -1,0 +1,16 @@
+﻿
+<form class="login-form">
+    <input type="email" name="Email" />
+    <input type="password" name="Password" />
+    <button type="submit">Gönder</button>
+</form>
+
+
+
+<script type="module">
+    import LoginService from './js/cms/Account/Login.js?v=1';
+
+    const loginService = new LoginService(".login-form", "https://localhost:7008/api/account/login");
+    loginService.executeAsync();
+
+</script>
