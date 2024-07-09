@@ -17,8 +17,7 @@ namespace Indivis.Core.Application.Interfaces.Data
         public EntityFeature Page { get; }
         public EntityFeature Url { get; }
         public EntityFeature EntityUrl { get; }
-
-        public IEntityFeatureCustomContext CustomContext {get;}
+        public EntityFeature PageSystems { get; }
 
 
     }

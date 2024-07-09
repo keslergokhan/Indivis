@@ -33,10 +33,7 @@ namespace Indivis.Core.Application.Common.Data
 
         public EntityFeature EntityUrl => SetConfigure<EntityUrl, EntityUrlConfiguration>();
 
-        public IEntityFeatureCustomContext CustomContext => this._serviceProvider.GetService<IEntityFeatureCustomContext>();
-
-
-        
+        public EntityFeature PageSystems => SetConfigure<PageSystem, PageSystemsEntityConfiguration>();
     }
 
     [DependencyRegister(typeof(IEntityFeatureCustomContext), DependencyTypes.Scopet)]
@@ -55,10 +52,11 @@ namespace Indivis.Core.Application.Common.Data
             EntityFeature feature = BaseEntityFeatureContext.EntityFeatures.GetValueOrDefault(entityName);
             if (feature is null)
             {
-                PropertyInfo propertyInfo = this.GetType().GetProperty(entityName);
+                IEntityFeatureContext entityFeatureContextInstance = this._serviceProvider.GetService<IEntityFeatureContext>();
+                PropertyInfo propertyInfo = entityFeatureContextInstance.GetType().GetProperty(entityName);
                 if (propertyInfo != null)
                 {
-                    return (EntityFeature)propertyInfo.GetValue(this);
+                    return (EntityFeature)propertyInfo.GetValue(entityFeatureContextInstance);
                 }
                 throw new Exception($"{entityName} bulunamadı !");
             }

@@ -35,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Exceptions\Systems\" />
+    <Folder Include="Common\Exceptions\" />
     <Folder Include="Dtos\CoreEntityDtos\PageSystems\Writes\" />
   </ItemGroup>
 

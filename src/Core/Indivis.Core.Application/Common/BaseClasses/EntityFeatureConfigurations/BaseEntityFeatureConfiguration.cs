@@ -27,6 +27,7 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
 
         public Type EntityType { get; set; }
         public BaseGetByIdEntityDataQuery MediatRGeyByIdEntityQuery { get; set; }
+        public BaseGetAllEntityDataQuery MediatRGetAllEntityDataQuery { get; set; }
 
 
         public BaseGetByIdEntityDataQuery GetMediatRByIdEntityQuery(Action<BaseGetByIdEntityDataQuery> action)
@@ -35,7 +36,13 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
             return MediatRGeyByIdEntityQuery;
         }
 
-        
+        public BaseGetAllEntityDataQuery GetMeditRGetAllEntityQuery(Action<BaseGetAllEntityDataQuery> action)
+        {
+            action.Invoke(MediatRGetAllEntityDataQuery);
+            return MediatRGetAllEntityDataQuery;
+        }
+
+
     }
 
     public abstract class BaseEntityFeatureConfiguration<TEntity> where TEntity : class, IEntity
@@ -69,13 +76,18 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
         }
 
         public EntityFeatureBuilder<TEntity> SetMediatRGetByIdEntityQuery<TQuery>()
-            where TQuery : class, IGetByIdEntityQuery<TEntity>, new()
+            where TQuery : class, IGetByIdEntityRequest<TEntity>, new()
         {
-            _features.MediatRGeyByIdEntityQuery = (BaseGetByIdEntityDataQuery)_serviceProvider.GetService(typeof(IGetByIdEntityQuery<TEntity>));
+            _features.MediatRGeyByIdEntityQuery = (BaseGetByIdEntityDataQuery)_serviceProvider.GetService(typeof(IGetByIdEntityRequest<TEntity>));
             return this;
         }
 
-
+        public EntityFeatureBuilder<TEntity> SetMediatRGetAllEntityQuery<TQuery>()
+            where TQuery : class, IGetAllEntityRequest<TEntity>
+        {
+            _features.MediatRGetAllEntityDataQuery = (BaseGetAllEntityDataQuery)_serviceProvider.GetService(typeof(IGetAllEntityRequest<TEntity>));
+            return this;
+        }
         
     }
 

@@ -11,7 +11,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Languages
     public class GetByIdLanguageQuery :
         BaseGetByIdEntityDataQuery<Language, ReadLanguageDto>,
         IRequest<IResultDataControl<ReadLanguageDto>>,
-        IGetByIdEntityQuery<Language>
+        IGetByIdEntityRequest<Language>
     {
 
     }

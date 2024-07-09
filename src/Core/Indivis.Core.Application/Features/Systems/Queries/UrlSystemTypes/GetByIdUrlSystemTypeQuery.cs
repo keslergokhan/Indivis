@@ -10,7 +10,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.UrlSystemTypes
     public class GetByIdUrlSystemTypeQuery :
          BaseGetByIdEntityDataQuery<UrlSystemType, ReadUrlSystemTypeDto>,
          IRequest<IResultDataControl<ReadUrlSystemTypeDto>>,
-         IGetByIdEntityQuery<UrlSystemType>
+         IGetByIdEntityRequest<UrlSystemType>
     {
 
     }

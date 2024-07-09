@@ -40,10 +40,18 @@ namespace Indivis.Core.Application.Common.Constants.Systems
             get { return typeof(IEntity); }
         }
         
-        public Type IGetByIdEntityQuery { get
+        public Type IGetByIdEntityRequest { get
             {
-                return typeof(IGetByIdEntityQuery<>);
+                return typeof(IGetByIdEntityRequest<>);
             } 
+        }
+
+        public Type IGetAllEntityRequest
+        {
+            get
+            {
+                return typeof(IGetAllEntityRequest<>);
+            }
         }
 
         public Type DependenctyRegisterAttribute

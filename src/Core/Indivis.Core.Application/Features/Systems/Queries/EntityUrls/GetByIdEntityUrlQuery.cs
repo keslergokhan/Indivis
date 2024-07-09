@@ -10,7 +10,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.EntityUrls
     public class GetByIdEntityUrlQuery : 
         BaseGetByIdEntityDataQuery<EntityUrl,ReadEntityUrlDto>
         ,IRequest<IResultDataControl<ReadEntityUrlDto>>
-        ,IGetByIdEntityQuery<EntityUrl>
+        ,IGetByIdEntityRequest<EntityUrl>
     {
 
     }

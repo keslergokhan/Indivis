@@ -23,6 +23,8 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
     {
         protected IMediator Mediator { get { return this.ServiceProvider.GetRequiredService<IMediator>(); } }
         protected IEntityFeatureContext EntityFeatureContext { get { return this.ServiceProvider.GetRequiredService<IEntityFeatureContext>(); } }
+        protected IEntityFeatureCustomContext EntityFeatureCustomContext { get { return this.ServiceProvider.GetRequiredService<IEntityFeatureCustomContext>(); }
+}
         protected ICurrentRequest CurrentRequest { get { return this.ServiceProvider.GetRequiredService<ICurrentRequest>(); } } 
         protected ICurrentResponse CurrentResponse { get { return this.ServiceProvider.GetRequiredService<ICurrentResponse>(); } }
         protected IServiceProvider ServiceProvider;
@@ -67,7 +69,7 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
         /// <returns></returns>
         public Task<IResultDataControl<ReadPageDto>> GetByUrlIdPageAsync(Guid urlId)
         {
-            return this.Mediator.Send(this.EntityFeatureContext.CustomContext.GetDependencyMediatRQuery<GetByUrlIdPageQuery>(x =>
+            return this.Mediator.Send(this.EntityFeatureCustomContext.GetDependencyMediatRQuery<GetByUrlIdPageQuery>(x =>
             {
                 x.UrlId = urlId;
                 x.State = StateEnum.Online;

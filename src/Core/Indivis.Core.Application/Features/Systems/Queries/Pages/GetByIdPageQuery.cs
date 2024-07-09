@@ -12,7 +12,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Pages
     public class GetByIdPageQuery :
         BaseGetByIdEntityDataQuery<Page, ReadPageDto>,
         IRequest<IResultDataControl<ReadPageDto>>,
-        IGetByIdEntityQuery<Page>
+        IGetByIdEntityRequest<Page>
     {
     }
 

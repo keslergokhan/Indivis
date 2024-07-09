@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Interfaces.Features.Systems
 {
-    public interface IGetByIdEntityQuery<T> where T : class, IEntity
+    public interface IGetByIdEntityRequest<T> where T : class, IEntity
     {
     }
 }

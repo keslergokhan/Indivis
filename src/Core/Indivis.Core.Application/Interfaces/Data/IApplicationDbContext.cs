@@ -20,7 +20,7 @@ namespace Indivis.Core.Application.Interfaces.Data
         public DbSet<EntityUrl> EntityUrls { get; }
         public DbSet<Entity> Entitys { get; }
         public DbSet<Page> Pages { get; }
-
+        public DbSet<PageSystem> PageSystems { get; }
         public DbSet<Widget> Widgets { get; }
         public DbSet<PageZone> PageZones { get; }
         public DbSet<PageWidget> PageWidgets { get; }

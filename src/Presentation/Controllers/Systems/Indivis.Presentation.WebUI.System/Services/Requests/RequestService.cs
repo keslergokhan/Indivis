@@ -18,18 +18,18 @@ namespace Indivis.Presentation.WebUI.System.Services.Requests
     public class RequestService : IRequestService
     {
         private readonly IMediator _mediator;
-        private readonly IEntityFeatureContext _entityFeatureContext;
+        private readonly IEntityFeatureCustomContext _entityFeatureCustomContext;
 
-        public RequestService(IMediator mediator, IEntityFeatureContext entityFeatureContext)
+        public RequestService(IMediator mediator, IEntityFeatureCustomContext entityFeatureContext)
         {
             _mediator = mediator;
-            _entityFeatureContext = entityFeatureContext;
+            _entityFeatureCustomContext = entityFeatureContext;
         }
 
         public Task<IResultDataControl<ReadUrlDto>> GetRequestUrlAsync(ICurrentRequest currentRequest)
         {
             return this._mediator
-                .Send(this._entityFeatureContext.CustomContext.GetDependencyMediatRQuery<GetByFullPathUrlQuery>(x => x.FullPath = currentRequest.Path));
+                .Send(this._entityFeatureCustomContext.GetDependencyMediatRQuery<GetByFullPathUrlQuery>(x => x.FullPath = currentRequest.Path));
         }
 
         public bool UrlSecurityVerification(ICurrentRequest currentRequest)
