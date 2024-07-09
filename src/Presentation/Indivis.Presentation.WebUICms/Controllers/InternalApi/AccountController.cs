@@ -1,16 +1,13 @@
 ﻿using Indivis.Core.Application.Dtos.AccountDtos.Reads;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Interfaces.Services;
-using Indivis.Presentation.CmsAPI.Models.AccountModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
-namespace Indivis.Presentation.CmsAPI.Controllers
+namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
 {
-    [Authorize(Roles = "BaseAdmin")]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class AccountController : ControllerBase
