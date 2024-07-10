@@ -20,6 +20,7 @@ namespace Indivis.Core.Application.Common.BaseClasses.Features.Queries
 {
     public interface BaseGetAllEntityDataQuery
     {
+        public bool OnlineAndOffline { get ; set; } 
         public StateEnum Status { get; set; }
     }
 
@@ -29,6 +30,8 @@ namespace Indivis.Core.Application.Common.BaseClasses.Features.Queries
         IRequest<IResultDataControl<List<TResult>>>
     {
         public StateEnum Status { get; set; }
+        private bool _onlineAndOffline = false;
+        public bool OnlineAndOffline { get { return this._onlineAndOffline; } set { this._onlineAndOffline = value; } }
     }
 
 
@@ -56,7 +59,7 @@ namespace Indivis.Core.Application.Common.BaseClasses.Features.Queries
             {
                 IQueryable<TEntity> query = this._applicationDbContext.Set<TEntity>().AsQueryable();
                 
-                if (request.Status == null)
+                if (request.OnlineAndOffline)
                 {
                     query = query.Where(x => x.State == (int)StateEnum.Online || x.State == (int)StateEnum.Offline).AsQueryable();
                 }

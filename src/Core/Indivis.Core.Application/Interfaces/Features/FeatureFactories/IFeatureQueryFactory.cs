@@ -10,5 +10,6 @@ namespace Indivis.Core.Application.Interfaces.Features.FeatureFactories
     public interface IFeatureQueryFactory<TQuery> 
         where TQuery : class, IBaseRequest,new()
     {
+
     }
 }

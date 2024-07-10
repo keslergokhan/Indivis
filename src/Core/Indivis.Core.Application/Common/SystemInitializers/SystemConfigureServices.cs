@@ -15,7 +15,7 @@ namespace Indivis.Core.Application.Common.SystemInitializers
 
         public static void AddSystemCoreEntityFeatures(this IServiceCollection services,Assembly assembly)
         {
-            AssemblyCoreEntityFeatureInitializer.Instance.AddAssemblySystemCoreQueries(assembly,services);
+
         }
 
         public static void AddAssemblySystemEntityFeatures(this IServiceCollection services, Assembly assembly)

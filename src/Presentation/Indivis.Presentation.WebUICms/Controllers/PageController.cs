@@ -1,6 +1,7 @@
 ﻿using Indivis.Core.Application.Dtos.CoreEntityDtos.PageSystems.Reads;
 using Indivis.Core.Application.Enums.Systems;
 using Indivis.Core.Application.Features.Pages.Queries;
+using Indivis.Core.Application.Features.Systems.Queries.Pages;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Presentation.WebUICms.Common;
 using Indivis.Presentation.WebUICms.Models.PageModels;
@@ -21,15 +22,23 @@ namespace Indivis.Presentation.WebUICms.Controllers
         }
 
         public async Task<IActionResult> PageSystems()
+        
         {
+            var sss3 = base.EntityFeatureCustomContext.GetByNameEntityFeature("PageSystems").MediatRGetAllEntityDataQuery;
 
-            PageSystemViewOutModel model = new PageSystemViewOutModel();
+            sss3.OnlineAndOffline = true;
+            sss3.Status = StateEnum.Online;
+
+            var xxx = await base.Mediator.Send(sss3);
+
+            IResultDataControl<object> sdf = (IResultDataControl<object>)xxx;
+
+            var sss = base.EntityFeatureCustomContext.GetDependencyMediatRQuery<GetAllPageSystemsQuery>(x=>x.OnlineAndOffline = true);
 
 
-            var aaaa = await base.Mediator.Send(base.EntityFeatureContext.PageSystems.GetMeditRGetAllEntityQuery(x=>x.Status = StateEnum.Online));
+            GetAllPageSystemsQuery pageSystemsGetAllQuery = (GetAllPageSystemsQuery)base.EntityFeatureContext.PageSystems.GetMeditRGetAllEntityQuery(x => x.OnlineAndOffline = true);
 
-            IResultDataControl<List<ReadPageSystemDto>> resultPageSystems =
-                await base.Mediator.Send(base.EntityFeatureCustomContext.GetDependencyMediatRQuery<GetPageSystemsQuery>(x => x.Status = Core.Application.Enums.Systems.StateEnum.Online));
+            var resultPageSystems = await base.Mediator.Send(pageSystemsGetAllQuery);
 
 
 

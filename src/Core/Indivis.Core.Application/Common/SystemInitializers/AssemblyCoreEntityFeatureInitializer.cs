@@ -22,35 +22,6 @@ namespace Indivis.Core.Application.Common.SystemInitializers
             } 
         }
 
-        /// <summary>
-        /// IGetByIdEntityQuery arayüzünü implemente etmiş olan MediatR query sınıflarını DI içerisine
-        /// kayıt eder. <br></br>
-        /// IGetAllEntityQuery arayüzünü implemente etmiş olan MediatR query sınıflarını DI içerisine
-        /// kayıt eder. <br></br>
-        /// </summary>
-        /// <param name="assembly"></param>
-        /// <param name="serviceCollection"></param>
-        public void AddAssemblySystemCoreQueries(Assembly assembly,IServiceCollection serviceCollection)
-        {
-            string IGetByIdEntityRequest = SystemClassTypeConstant.Instance.IGetByIdEntityRequest.Name;
-            string IGetAllEntityRequest = SystemClassTypeConstant.Instance.IGetAllEntityRequest.Name;
-
-            foreach (Type classType in assembly.GetTypes().Where(x => x.GetInterface(IGetByIdEntityRequest) is not null))
-            {
-                Type interfaceType = classType.GetInterface(SystemClassTypeConstant.Instance.IGetByIdEntityRequest.Name);
-                Type genericEntityType = interfaceType.GenericTypeArguments.FirstOrDefault();
-
-                serviceCollection.AddSingleton(interfaceType, classType);
-            }
-
-            foreach (Type classType in assembly.GetTypes().Where(x => x.GetInterface(IGetAllEntityRequest) is not null))
-            {
-                Type interfaceType = classType.GetInterface(IGetAllEntityRequest);
-                Type genericEntityType = interfaceType.GenericTypeArguments.FirstOrDefault();
-
-                serviceCollection.AddSingleton(interfaceType, classType);
-            }
-        }
 
 		/// <summary>
 		/// namespace Indivis.Core.Application.EntityFeatureConfigurations altında bulunan BaseEntityFeatureConfiguration<>

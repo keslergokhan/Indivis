@@ -1,9 +1,7 @@
 ﻿using Indivis.Core.Application.Attributes.Systems;
 using Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfigurations;
-using Indivis.Core.Application.Common.SystemInitializers;
 using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Application.Interfaces.Features.FeatureFactories;
-using Indivis.Core.Application.Interfaces.Features.Systems;
 using Indivis.Core.Application.Interfaces.UrlSystemTypes;
 using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
 using System;
@@ -38,20 +36,6 @@ namespace Indivis.Core.Application.Common.Constants.Systems
         public Type IEntity
         {
             get { return typeof(IEntity); }
-        }
-        
-        public Type IGetByIdEntityRequest { get
-            {
-                return typeof(IGetByIdEntityRequest<>);
-            } 
-        }
-
-        public Type IGetAllEntityRequest
-        {
-            get
-            {
-                return typeof(IGetAllEntityRequest<>);
-            }
         }
 
         public Type DependenctyRegisterAttribute

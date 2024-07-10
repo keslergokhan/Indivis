@@ -2,7 +2,6 @@
 using Indivis.Core.Application.Common.BaseClasses.Features.Queries;
 using Indivis.Core.Application.Features.Systems.Queries;
 using Indivis.Core.Application.Interfaces.Features.FeatureFactories;
-using Indivis.Core.Application.Interfaces.Features.Systems;
 using Indivis.Core.Domain.Entities.CoreEntities;
 using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
 using MediatR;
@@ -76,19 +75,19 @@ namespace Indivis.Core.Application.Common.BaseClasses.EntityFeatureConfiguration
         }
 
         public EntityFeatureBuilder<TEntity> SetMediatRGetByIdEntityQuery<TQuery>()
-            where TQuery : class, IGetByIdEntityRequest<TEntity>, new()
+            where TQuery : class,IBaseRequest, BaseGetByIdEntityDataQuery,IFeatureQueryFactory<TQuery>, new()
         {
-            _features.MediatRGeyByIdEntityQuery = (BaseGetByIdEntityDataQuery)_serviceProvider.GetService(typeof(IGetByIdEntityRequest<TEntity>));
+            _features.MediatRGeyByIdEntityQuery = (BaseGetByIdEntityDataQuery)_serviceProvider.GetService(typeof(TQuery));
             return this;
         }
 
         public EntityFeatureBuilder<TEntity> SetMediatRGetAllEntityQuery<TQuery>()
-            where TQuery : class, IGetAllEntityRequest<TEntity>
+            where TQuery : class, IBaseRequest, BaseGetAllEntityDataQuery, IFeatureQueryFactory<TQuery>, new()
         {
-            _features.MediatRGetAllEntityDataQuery = (BaseGetAllEntityDataQuery)_serviceProvider.GetService(typeof(IGetAllEntityRequest<TEntity>));
+            _features.MediatRGetAllEntityDataQuery = (BaseGetAllEntityDataQuery)_serviceProvider.GetService(typeof(TQuery));
             return this;
         }
-        
+
     }
 
 

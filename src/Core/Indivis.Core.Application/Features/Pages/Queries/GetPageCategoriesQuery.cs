@@ -21,7 +21,8 @@ namespace Indivis.Core.Application.Features.Pages.Queries
         IFeatureQueryFactory<GetPageSystemsQuery>,
         IRequest<IResultDataControl<List<ReadPageSystemDto>>>
     {
-        public StateEnum Status { get; set; }
+
+        public StateEnum? Status { get; set; }
     }
 
 
