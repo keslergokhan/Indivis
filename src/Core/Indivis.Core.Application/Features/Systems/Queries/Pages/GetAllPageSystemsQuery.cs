@@ -16,7 +16,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Pages
     public class GetAllPageSystemsQuery : 
         BaseGetAllEntityDataQuery<PageSystem,ReadPageSystemDto>,
         IRequest<IResultDataControl<List<ReadPageSystemDto>>>,
-        IFeatureQueryFactory<GetAllPageSystemsQuery>
+        IQueryFactory<GetAllPageSystemsQuery>
 
     {
 

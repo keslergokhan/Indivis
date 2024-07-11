@@ -26,6 +26,6 @@ namespace Indivis.Core.Application.Interfaces.Data
     {
         public EntityFeature GetByNameEntityFeature(string entityName);
 
-        public TQuery GetDependencyMediatRQuery<TQuery>(Action<TQuery> action) where TQuery : class, IBaseRequest, IFeatureQueryFactory<TQuery>, new ();
+        public TQuery GetDependencyMediatRQuery<TQuery>(Action<TQuery> action) where TQuery : class, IBaseRequest, IQueryFactory<TQuery>, new ();
     }
 }

@@ -10,7 +10,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Entities
     public class GetByIdEntityQuery :
         BaseGetByIdEntityDataQuery<Entity, ReadEntityDto>,
         IRequest<IResultDataControl<ReadEntityDto>>,
-        IFeatureQueryFactory<GetByIdEntityQuery>
+        IQueryFactory<GetByIdEntityQuery>
     {
 
     }

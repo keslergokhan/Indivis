@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Interfaces.Features.FeatureFactories
 {
-    public interface IFeatureQueryFactory<TQuery> 
+    public interface IQueryFactory<TQuery> 
         where TQuery : class, IBaseRequest,new()
     {
 

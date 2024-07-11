@@ -13,6 +13,11 @@ namespace Indivis.Core.Application.Results
         private T _data;
         public T Data => _data;
 
+        public object GetDataObject()
+        {
+            return this.Data;
+        }
+
         public IResultDataControl<T> SetData(T t)
         {
             _data = t;

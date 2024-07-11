@@ -69,11 +69,11 @@ namespace Indivis.Core.Application.Common.Constants.Systems
             }
         }
 
-        public Type IFeatureQueryFactory
+        public Type IQueryFactory
         {
             get
             {
-                return typeof(IFeatureQueryFactory<>);
+                return typeof(IQueryFactory<>);
             }
         }
 

@@ -69,7 +69,7 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
         /// <returns></returns>
         public Task<IResultDataControl<ReadPageDto>> GetByUrlIdPageAsync(Guid urlId)
         {
-            return this.Mediator.Send(this.EntityFeatureCustomContext.GetDependencyMediatRQuery<GetByUrlIdPageQuery>(x =>
+            return this.Mediator.Send(this.EntityFeatureCustomContext.GetDependencyMediatRQuery<GetPageQueryByUrlId>(x =>
             {
                 x.UrlId = urlId;
                 x.State = StateEnum.Online;

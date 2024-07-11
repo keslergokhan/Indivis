@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 namespace Indivis.Core.Application.Features.Pages.Queries
 {
     public class GetPageSystemsQuery : 
-        IFeatureQueryFactory<GetPageSystemsQuery>,
+        IQueryFactory<GetPageSystemsQuery>,
         IRequest<IResultDataControl<List<ReadPageSystemDto>>>
     {
 

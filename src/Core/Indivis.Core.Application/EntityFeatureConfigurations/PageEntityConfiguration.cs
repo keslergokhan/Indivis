@@ -14,7 +14,7 @@ namespace Indivis.Core.Application.EntityFeatureConfigurations
         public PageEntityConfiguration(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             Entity()
-                .SetMediatRGetByIdEntityQuery<GetByIdPageQuery>();
+                .SetMediatRGetByIdEntityQuery<GetPageByIdQuery>();
         }
     }
 }

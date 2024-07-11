@@ -1,1 +1,47 @@
-﻿kategori lisesi
+﻿@using Indivis.Core.Application.Dtos.CoreEntityDtos.PageSystems.Reads
+@using Indivis.Core.Application.Dtos.CoreEntityDtos.Pages.Reads
+@using Indivis.Presentation.WebUICms.Models.PageModels;
+@model PageSystemViewOutModel;
+
+
+
+<ol class="list-group list-group-numbered">
+    @{
+        ushort row = 1;
+    }
+
+    @foreach (ReadPageSystemDto pageSystems in Model.PageSystems.ToList())
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">@pageSystems.Name <a href="/page/createPage/@pageSystems.Id">+ Yeni Sayfa Ekle</a></div>
+                @pageSystems.Description
+                <br /><br />
+                Siteme bağlı sayfalar
+                @if (pageSystems.Pages.Count > 0)
+                {
+                    <div>
+                        <ol class="list-group list-group-numbered">
+                            @foreach (ReadPageDto pageItem in pageSystems.Pages)
+                            {
+                                <li class="list-group-item">
+                                    @pageItem.Name
+                                    <a href="@pageItem.Url.FullPath">@pageItem.Url.FullPath</a>
+                                </li>
+                            }
+                            
+                        </ol>
+                    </div>
+                }
+                
+            </div>
+            <span class="badge bg-primary rounded-pill">@pageSystems.Pages.Count</span>
+        </li>
+
+        
+        row++;
+    }
+    
+</ol>
+  
+

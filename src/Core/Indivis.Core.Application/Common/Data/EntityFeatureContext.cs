@@ -64,7 +64,7 @@ namespace Indivis.Core.Application.Common.Data
         }
 
         public TQuery GetDependencyMediatRQuery<TQuery>(Action<TQuery> action)
-        where TQuery : class, IBaseRequest, IFeatureQueryFactory<TQuery>, new()
+        where TQuery : class, IBaseRequest, IQueryFactory<TQuery>, new()
         {
             TQuery tQuery = (TQuery)this._serviceProvider.GetService(typeof(TQuery));
             action.Invoke(tQuery);

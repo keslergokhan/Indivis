@@ -47,12 +47,13 @@ namespace Indivis.Core.Application.Common.SystemInitializers
 		/// <param name="serviceCollection"></param>
 		public void AddAssemblyFeatureQueryFactory(Assembly assembly,IServiceCollection serviceCollection)
         {
+            string interfaceName = SystemClassTypeConstant.Instance.IQueryFactory.Name;
             assembly.GetTypes()?
                 .ToList()
-                .Where(type => type.GetInterface(SystemClassTypeConstant.Instance.IFeatureQueryFactory.Name) is not null)
+                .Where(type => type.GetInterface(interfaceName) is not null)
                 ?.ToList().ForEach(type =>
                 {
-                    Type interfaceType = type.GetInterface(SystemClassTypeConstant.Instance.IFeatureQueryFactory.Name);
+                    Type interfaceType = type.GetInterface(interfaceName);
                     Type[] types = interfaceType.GetGenericArguments();
                     Type queryType = types.FirstOrDefault();
                     serviceCollection.AddSingleton(queryType);

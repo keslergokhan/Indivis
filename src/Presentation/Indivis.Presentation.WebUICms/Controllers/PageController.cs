@@ -1,8 +1,10 @@
 ﻿using Indivis.Core.Application.Dtos.CoreEntityDtos.PageSystems.Reads;
 using Indivis.Core.Application.Enums.Systems;
+using Indivis.Core.Application.Exceptions;
 using Indivis.Core.Application.Features.Pages.Queries;
 using Indivis.Core.Application.Features.Systems.Queries.Pages;
 using Indivis.Core.Application.Interfaces.Results;
+using Indivis.Core.Application.Results;
 using Indivis.Presentation.WebUICms.Common;
 using Indivis.Presentation.WebUICms.Models.PageModels;
 using MediatR;
@@ -12,38 +14,46 @@ using Microsoft.AspNetCore.Mvc;
 namespace Indivis.Presentation.WebUICms.Controllers
 {
     [Authorize(Roles = "BaseAdmin")]
+    [Route("[controller]")]
     public class PageController : BaseController
     {
-
-        public async Task<IActionResult> CreatePage()
+        [Route("createpage/{Id:guid}")]
+        public async Task<IActionResult> CreatePage(Guid Id)
         {
+            CreatePageViewOutModel model = new CreatePageViewOutModel();
+
+            var query = base.EntityFeatureCustomContext.GetDependencyMediatRQuery<GetPageSystemByIdQuery>(x=>x.Id = Id);
+
+            IResultDataControl<ReadPageSystemDto> result = await this.Mediator.Send(query);
+            if (!result.IsSuccess)
+            {
+                throw new ViewDataNotFoundException(nameof(ReadPageSystemDto));
+            }
+
+            model.PageSystem = result.Data;
+
             ViewBag.Title = "Yeni bir sayfa oluştur";
-            return View("~/Views/Page/CreatePageView.cshtml");
+            return View("~/Views/Page/CreatePageView.cshtml",model);
         }
 
+        [Route("pagesystems")]
         public async Task<IActionResult> PageSystems()
-        
         {
-            var sss3 = base.EntityFeatureCustomContext.GetByNameEntityFeature("PageSystems").MediatRGetAllEntityDataQuery;
+            PageSystemViewOutModel model = new PageSystemViewOutModel();
 
-            sss3.OnlineAndOffline = true;
-            sss3.Status = StateEnum.Online;
+            IResultDataControl<List<ReadPageSystemDto>> resultPageSystems = await base.Mediator.Send(base.EntityFeatureCustomContext.GetDependencyMediatRQuery<GetPageSystemsAndPageQuery>(x=>x.OnlineAndOffline = true));
 
-            var xxx = await base.Mediator.Send(sss3);
+            if (!resultPageSystems.IsSuccess)
+            {
+                throw new ViewDataNotFoundException(nameof(ReadPageSystemDto));
+            }
 
-            IResultDataControl<object> sdf = (IResultDataControl<object>)xxx;
-
-            var sss = base.EntityFeatureCustomContext.GetDependencyMediatRQuery<GetAllPageSystemsQuery>(x=>x.OnlineAndOffline = true);
-
-
-            GetAllPageSystemsQuery pageSystemsGetAllQuery = (GetAllPageSystemsQuery)base.EntityFeatureContext.PageSystems.GetMeditRGetAllEntityQuery(x => x.OnlineAndOffline = true);
-
-            var resultPageSystems = await base.Mediator.Send(pageSystemsGetAllQuery);
-
-
+            model.PageSystems = resultPageSystems.Data;
 
             ViewBag.Title = "Sayfa Sistemleri";
-            return View("~/Views/Page/PageSystemsView.cshtml");
+            return View("~/Views/Page/PageSystemsView.cshtml",model);
         }
+
+      
     }
 }

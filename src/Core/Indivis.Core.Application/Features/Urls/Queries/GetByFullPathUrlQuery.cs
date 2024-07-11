@@ -18,7 +18,7 @@ namespace Indivis.Core.Application.Features.Urls.Queries
 {
     public class GetByFullPathUrlQuery : 
         IRequest<IResultDataControl<ReadUrlDto>>,
-        IFeatureQueryFactory<GetByFullPathUrlQuery>
+        IQueryFactory<GetByFullPathUrlQuery>
     {
         public string FullPath { get; set; }
         public StateEnum State { get; set; }
