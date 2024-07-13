@@ -34,7 +34,7 @@ namespace Indivis.Infrastructure.Persistence.Data.IndivisContexts
         #region CoreEntity
         public DbSet<Language> Languages => Set<Language>();
         public DbSet<Url> Urls => Set<Url>();
-        public DbSet<Url_UrlSystemType> Url_UrlSystemTypes => Set<Url_UrlSystemType>();
+        public DbSet<UrlSystemType> UrlSystemTypes => Set<UrlSystemType>();
         public DbSet<EntityUrl> EntityUrls => Set<EntityUrl>();
         public DbSet<Entity> Entitys => Set<Entity>();
         public DbSet<Page> Pages => Set<Page>();

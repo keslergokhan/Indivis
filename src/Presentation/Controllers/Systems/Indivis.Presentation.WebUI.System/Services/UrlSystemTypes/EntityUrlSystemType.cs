@@ -35,7 +35,7 @@ namespace Indivis.Presentation.WebUI.System.Services.UrlSystemTypes
             {
                 
                 this.CurrentResponse.CurrentPage = getUrlIdResult.Data;
-                //this.CurrentRequest.CurrentEntityUrl = base.EntityFeatureContext.EntityUrl.GetMediatRByIdEntityQuery(x => x.Id = getUrlIdResult.Data.Id);
+                
 
                 IResultDataControl<List<ReadPageZoneDto>> pageZones = await this.GetByPageIdZoneAsync(this.CurrentRequest.CurrentUrl.ParentUrlId);
 

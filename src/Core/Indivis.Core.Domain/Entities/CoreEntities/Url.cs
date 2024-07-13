@@ -13,6 +13,7 @@ namespace Indivis.Core.Domain.Entities.CoreEntities
     {
         public string Path { get; set; }
         public string FullPath { get; set; }
+        public bool IsEntity { get; set; }
 
         public Guid? ParentUrlId { get; set; }
         public Url ParentUrl { get; set; }
@@ -26,6 +27,7 @@ namespace Indivis.Core.Domain.Entities.CoreEntities
     public partial class Url
     {
         public ICollection<Url> SubUrls { get; set; }
-        public ICollection<Url_UrlSystemType> Url_UrlSystemTypes { get; set; }
+        public UrlSystemType UrlSystemType { get; set; }
+        public Guid UrlSystemTypeId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Indivis.Core.Domain.Commons.CoreEntities;
+using Indivis.Core.Domain.Entities.CoreEntities.ManyToMany;
 using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,9 @@ namespace Indivis.Core.Domain.Entities.CoreEntities
         public string Description { get; set; }
         public string Controller { get; set; }
         public string Action { get; set; }
-
+        public bool IsEntity { get; set; }
+        public UrlSystemType UrlSystemType { get; set; }
+        public Guid UrlSystemTypeId { get; set; }
         public ICollection<Page> Pages { get; set; }
     }
 }

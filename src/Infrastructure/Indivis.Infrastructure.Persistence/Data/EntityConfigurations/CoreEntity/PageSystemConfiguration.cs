@@ -35,11 +35,16 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
                 .HasColumnOrder(4)
                 .HasMaxLength(Constans.EntityConfigurationConstants.MaxStringLv3);
 
+            builder.Property(x => x.IsEntity).IsRequired(true).HasDefaultValue<bool>(false);
+
             builder.HasMany(x => x.Pages)
                 .WithOne(x => x.PageSystem)
                 .HasForeignKey(x=>x.PageSystemId)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.NoAction);
+
+
+            builder.HasOne(x=>x.UrlSystemType).WithMany().HasForeignKey(x=>x.UrlSystemTypeId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

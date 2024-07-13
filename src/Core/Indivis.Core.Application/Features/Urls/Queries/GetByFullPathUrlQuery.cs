@@ -41,9 +41,9 @@ namespace Indivis.Core.Application.Features.Urls.Queries
             IResultDataControl<ReadUrlDto> model = new ResultDataControl<ReadUrlDto>();
 
             Url firstUrl = this._applicaitonDbContext.Urls
-                .Include(x=>x.ParentUrl).ThenInclude(x=>x.Url_UrlSystemTypes)
-                .Include(x=>x.Url_UrlSystemTypes).ThenInclude(x=>x.UrlSystemType)
-                .FirstOrDefault(x => x.FullPath == request.FullPath);
+                .Include(x=>x.ParentUrl)
+                .Include(x=>x.UrlSystemType)
+                .FirstOrDefault(x => x.FullPath == request.FullPath && x.IsEntity == false);
 
             if (firstUrl==null)
             {

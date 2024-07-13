@@ -12,5 +12,6 @@ namespace Indivis.Core.Domain.Entities.CoreEntities.ManyToMany
         public Url Url { get; set; }
         public Guid UrlSystemTypeId { get; set; }
         public UrlSystemType UrlSystemType { get; set; }
+        public int Order { get; set; }
     }
 }

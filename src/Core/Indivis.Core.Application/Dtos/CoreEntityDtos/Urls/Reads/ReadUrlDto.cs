@@ -1,6 +1,8 @@
 ﻿using Indivis.Core.Application.Attributes.Systems;
 using Indivis.Core.Application.Common.BaseClasses.Dtos.CoreEntities;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.ManyToMany;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.PageSystems.Reads;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.UrlSystemType.Reads;
 using Indivis.Core.Application.Interfaces.Dtos;
 using Indivis.Core.Domain.Entities.CoreEntities;
 using Indivis.Core.Domain.Entities.CoreEntities.ManyToMany;
@@ -29,6 +31,6 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads
     public partial class ReadUrlDto
     {
         public ICollection<ReadUrlDto> SubUrls { get; set; }
-        public ICollection<ReadUrl_UrlSystemTypeDto> Url_UrlSystemTypes { get; set; }
+        public ReadUrlSystemTypeDto UrlSystemType { get; set; }
     }
 }

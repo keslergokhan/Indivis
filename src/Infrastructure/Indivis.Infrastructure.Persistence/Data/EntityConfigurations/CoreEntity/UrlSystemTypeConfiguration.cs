@@ -1,6 +1,7 @@
 ﻿using Indivis.Core.Domain.Entities.CoreEntities;
 using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
 using Indivis.Infrastructure.Persistence.Commons.EntityFramework.EntityConfigurations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
             builder.Property(x => x.InterfaceType)
                 .HasMaxLength(250)
                 .IsRequired(true);
+
         }
     }
 }

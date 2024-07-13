@@ -30,7 +30,7 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
                 .HasForeignKey(x => x.ParentUrlId)
                 .IsRequired(false).OnDelete(DeleteBehavior.NoAction);
 
-
+            builder.Property(x=>x.IsEntity).IsRequired(true).HasDefaultValue<bool>(false);
 
         }
     }

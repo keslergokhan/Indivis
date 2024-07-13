@@ -26,39 +26,33 @@ namespace Indivis.Presentation.WebUI.System.Middlawares
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             string isExtension = Path.GetExtension(context.Request.Path);
-            if (!string.IsNullOrEmpty(isExtension))
+            if (string.IsNullOrEmpty(isExtension))
             {
-                await next.Invoke(context);
-            }
+                this._currentRequest.Path = context.Request.Path;
+                this._currentRequest.Schema = context.Request.Scheme;
+                this._currentRequest.FullPath = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.Path}";
+                this._currentRequest.BaseUrl = $"{context.Request.Scheme}://{context.Request.Host}";
 
-            
-            this._currentRequest.Path = context.Request.Path;
-            this._currentRequest.Schema = context.Request.Scheme;
-            this._currentRequest.FullPath = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.Path}";
-            this._currentRequest.BaseUrl = $"{context.Request.Scheme}://{context.Request.Host}";
-            
-            IResultDataControl<ReadUrlDto> requestAboutResult = await this._requestService.GetRequestUrlAsync(this._currentRequest);
+                IResultDataControl<ReadUrlDto> requestAboutResult = await this._requestService.GetRequestUrlAsync(this._currentRequest);
 
-            if (requestAboutResult.IsSuccess)
-            {
-                this._currentRequest.CurrentUrl = requestAboutResult.Data;
-                if (requestAboutResult.Data.Url_UrlSystemTypes.Any())
+                if (requestAboutResult.IsSuccess)
                 {
-					foreach (ReadUrl_UrlSystemTypeDto urlySystem in requestAboutResult.Data.Url_UrlSystemTypes)
-					{
-						IUrlSystemType urlSystemType = SystemDependencyInjection.Instance.GetByNameApplicationInjectionType<IUrlSystemType>(context.RequestServices, urlySystem.UrlSystemType.InterfaceType);
-						await urlSystemType.ExecuteAsync();
-					}
-				}
-                else
-                {
-					IUrlSystemType urlSystemType = SystemDependencyInjection.Instance.GetByNameApplicationInjectionType<IUrlSystemType>(context.RequestServices, SystemClassTypeConstant.Instance.IEntityDetailUrlSystemType.Name);
-                    await urlSystemType.ExecuteAsync();
-				}
-                
+                    this._currentRequest.CurrentUrl = requestAboutResult.Data;
+                    if (requestAboutResult.Data.UrlSystemType != null)
+                    {
+                        IUrlSystemType urlSystemType = SystemDependencyInjection.Instance.GetByNameApplicationInjectionType<IUrlSystemType>(context.RequestServices, requestAboutResult.Data.UrlSystemType.InterfaceType);
+                        await urlSystemType.ExecuteAsync();
+                    }
+                    else
+                    {
+                        IUrlSystemType urlSystemType = SystemDependencyInjection.Instance.GetByNameApplicationInjectionType<IUrlSystemType>(context.RequestServices, SystemClassTypeConstant.Instance.IEntityDetailUrlSystemType.Name);
+                        await urlSystemType.ExecuteAsync();
+                    }
+
+                }
             }
             
-           await next.Invoke(context);
+           await next(context);
         }
     }
 

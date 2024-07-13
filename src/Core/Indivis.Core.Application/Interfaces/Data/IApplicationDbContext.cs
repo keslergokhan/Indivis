@@ -16,7 +16,7 @@ namespace Indivis.Core.Application.Interfaces.Data
         new DbSet<TEntity> Set<TEntity>() where TEntity : class;
         public DbSet<Language> Languages { get; }
         public DbSet<Url> Urls { get; }
-        public DbSet<Url_UrlSystemType> Url_UrlSystemTypes { get; }
+        //public DbSet<Url_UrlSystemType> Url_UrlSystemTypes { get; }
         public DbSet<EntityUrl> EntityUrls { get; }
         public DbSet<Entity> Entitys { get; }
         public DbSet<Page> Pages { get; }

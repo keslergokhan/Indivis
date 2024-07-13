@@ -4,6 +4,7 @@ using Indivis.Infrastructure.Persistence.Data.IndivisContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Indivis.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IndivisContext))]
-    partial class IndivisContextModelSnapshot : ModelSnapshot
+    [Migration("20240712232148_UrlSystemFixData")]
+    partial class UrlSystemFixData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -214,6 +217,21 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     b.ToTable("Language", (string)null);
                 });
 
+            modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.ManyToMany.Url_UrlSystemType", b =>
+                {
+                    b.Property<Guid>("UrlId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UrlSystemTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UrlId", "UrlSystemTypeId");
+
+                    b.HasIndex("UrlSystemTypeId");
+
+                    b.ToTable("Url_UrlSystemType", (string)null);
+                });
+
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Page", b =>
                 {
                     b.Property<Guid>("Id")
@@ -355,16 +373,11 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         .HasColumnType("tinyint")
                         .HasColumnOrder(9999);
 
-                    b.Property<Guid>("UrlSystemTypeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("LanguageId");
 
                     b.HasIndex("ParentUrlId");
-
-                    b.HasIndex("UrlSystemTypeId");
 
                     b.ToTable("Url", (string)null);
                 });
@@ -380,6 +393,9 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnOrder(998);
 
+                    b.Property<Guid?>("EntityId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("InterfaceType")
                         .IsRequired()
                         .HasMaxLength(250)
@@ -389,11 +405,16 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnOrder(999);
 
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
                     b.Property<byte>("State")
                         .HasColumnType("tinyint")
                         .HasColumnOrder(9999);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EntityId");
 
                     b.ToTable("UrlSystemType", (string)null);
                 });
@@ -952,6 +973,25 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     b.Navigation("Url");
                 });
 
+            modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.ManyToMany.Url_UrlSystemType", b =>
+                {
+                    b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Url", "Url")
+                        .WithMany("Url_UrlSystemTypes")
+                        .HasForeignKey("UrlId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.UrlSystemType", "UrlSystemType")
+                        .WithMany("Url_UrlSystemTypes")
+                        .HasForeignKey("UrlSystemTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Url");
+
+                    b.Navigation("UrlSystemType");
+                });
+
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Page", b =>
                 {
                     b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Language", null)
@@ -1001,15 +1041,17 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         .HasForeignKey("ParentUrlId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.UrlSystemType", "UrlSystemType")
-                        .WithMany()
-                        .HasForeignKey("UrlSystemTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("ParentUrl");
+                });
 
-                    b.Navigation("UrlSystemType");
+            modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.UrlSystemType", b =>
+                {
+                    b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Entity", "Entity")
+                        .WithMany()
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Entity");
                 });
 
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Widgets.PageWidget", b =>
@@ -1171,6 +1213,13 @@ namespace Indivis.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Url", b =>
                 {
                     b.Navigation("SubUrls");
+
+                    b.Navigation("Url_UrlSystemTypes");
+                });
+
+            modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.UrlSystemType", b =>
+                {
+                    b.Navigation("Url_UrlSystemTypes");
                 });
 
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Widgets.PageZone", b =>
