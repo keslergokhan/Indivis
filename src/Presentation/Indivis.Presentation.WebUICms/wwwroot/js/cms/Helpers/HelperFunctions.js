@@ -1,5 +1,31 @@
 ﻿
-export default {
+export const JustValidateMessage = {
+    /**
+    * Lütfen boş bırakmayınız !
+    * @returns {string}
+    */
+    required: () => "Lütfen boş bırakmayınız !",
+    /**
+     * En az {a} karakter olabilir !
+     * @param {Int32Array} a
+     * @returns {string}
+     */
+    minLenght: (a) => `En az ${a} karakter olabilir !`,
+    /**
+     * En az {a} karakter olabilir !
+     * @param {Int32Array} a
+     * @returns {string}
+     */
+    maxLenght: (a) => `En çok ${a} karakter olabilir !`,
+    /**
+     * Lütfen uygun bir format giriniz !
+     * @returns {string}
+     */
+    email:()=>"Lütfen uygun bir format giriniz !"
+
+}
+
+export const HelperFunction = {
 
     /**
      * 

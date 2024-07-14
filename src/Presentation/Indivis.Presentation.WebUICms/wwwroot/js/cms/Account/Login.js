@@ -1,4 +1,4 @@
-﻿import HelperFunctions from '../Helpers/HelperFunctions.js'
+﻿import { JustValidateMessage, HelperFunction  } from '../Helpers/HelperFunctions.js'
 import { BaseService } from '../Base/BaseService.js'
 
 
@@ -15,16 +15,53 @@ export default class LoginService extends BaseService {
 
     /**
      * 
-     * @param {Event} e
+     * @param {ParentNode} e
      */
-    validation(e) {
-        if (e.target.querySelector(`input[name="Email"]`).value.length <= 4) {
-            throw new Error("Email adresi 4 karakterden az olamaz");
-        }
+    eventHandlerAsync(form) {
+    }
 
-        if (e.target.querySelector(`input[name="Password"]`).value.length < 6) {
-            throw new Error("Şifre en az 6 karakter olamlı");
-        }
+    /**
+     * 
+     * @param {JustValidate} justValidate
+     */
+    justValidate(justValidate) {
+
+        justValidate
+            .addField(`[name="Email"]`, [
+                {
+                    rule: 'required',
+                    errorMessage: JustValidateMessage.required(),
+                },
+                {
+                    rule: "email",
+                    errorMessage: JustValidateMessage.email()
+                },
+                {
+                    rule: 'minLength',
+                    value: 3,
+                    errorMessage: JustValidateMessage.minLenght(3),
+                },
+                {
+                    rule: 'maxLength',
+                    value: 20,
+                    errorMessage: JustValidateMessage.maxLenght(20),
+                },
+            ]).addField(`[name="Password"]`, [
+                {
+                    rule: 'required',
+                    errorMessage: JustValidateMessage.required(),
+                },
+                {
+                    rule: 'minLength',
+                    value: 6,
+                    errorMessage: JustValidateMessage.minLenght(6),
+                },
+                {
+                    rule: 'maxLength',
+                    value: 20,
+                    errorMessage: JustValidateMessage.maxLenght(20),
+                },
+            ])
     }
 
 
@@ -34,7 +71,7 @@ export default class LoginService extends BaseService {
      */
     async submitHandlerAsync(e) {
 
-        const formData = HelperFunctions.formDataToJsonObject(new FormData(e.target));
+        const formData = HelperFunction.formDataToJsonObject(new FormData(e.target));
 
         await fetch(this.Path, {
             method: 'POST',

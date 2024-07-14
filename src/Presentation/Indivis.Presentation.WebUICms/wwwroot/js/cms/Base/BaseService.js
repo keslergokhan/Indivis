@@ -1,4 +1,7 @@
-﻿export class BaseService {
+﻿
+
+
+export class BaseService {
     /**
      * @param {JustValidate}
      * @param {string} formClassName
@@ -8,11 +11,9 @@
         this.FormClassName = formClassName;
         this.Path = path;
         this.JustValidate;
-        
     }
 
-
-
+   
     /**
      * doğrulama süreci
      * @param {JustValidate} justValidate

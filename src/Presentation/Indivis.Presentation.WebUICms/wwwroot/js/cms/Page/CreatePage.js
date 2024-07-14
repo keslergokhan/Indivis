@@ -1,4 +1,4 @@
-﻿import HelperFunctions from '../Helpers/HelperFunctions.js'
+﻿import { HelperFunction, JustValidateMessage } from '../Helpers/HelperFunctions.js'
 import { BaseService } from '../Base/BaseService.js'
 
 export default class CreatePageService extends BaseService {
@@ -23,17 +23,17 @@ export default class CreatePageService extends BaseService {
             .addField(`[name="Name"]`, [
                 {
                     rule: 'required',
-                    errorMessage: 'Kullanıcı adı gereklidir',
+                    errorMessage: JustValidateMessage.required(),
                 },
                 {
                     rule: 'minLength',
                     value: 3,
-                    errorMessage: 'Kullanıcı adı en az 3 karakter olmalıdır',
+                    errorMessage: JustValidateMessage.minLenght(3),
                 },
                 {
                     rule: 'maxLength',
                     value: 20,
-                    errorMessage: 'Kullanıcı adı en fazla 20 karakter olmalıdır',
+                    errorMessage: JustValidateMessage.maxLenght(20),
                 },
             ])
     }
@@ -54,7 +54,7 @@ export default class CreatePageService extends BaseService {
      * @param {Event} e
      */
     async submitHandlerAsync(e) {
-        const formData = HelperFunctions.formDataToJsonObject(new FormData(e.target));
+        const formData = HelperFunction.formDataToJsonObject(new FormData(e.target));
 
         await fetch(this.Path, {
             method: 'POST',
