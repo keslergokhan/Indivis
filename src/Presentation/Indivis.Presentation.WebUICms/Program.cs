@@ -27,7 +27,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Login}");
+    pattern: "{controller=AccountCms}/{action=Login}");
 
 app.MapDefaultControllerRoute();
 

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntity
 {
-    public class UrlConfiguration : BaseEntityLanguageConfiguration<Url>
+    public class UrlConfiguration : BaseEntityLanguageProConfiguration<Url>
     {
         public override void Configure(EntityTypeBuilder<Url> builder)
         {

@@ -38,7 +38,6 @@ export default class LoginService extends BaseService {
 
         await fetch(this.Path, {
             method: 'POST',
-            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },

@@ -15,7 +15,7 @@ namespace Indivis.Presentation.WebUICms.Controllers
 {
     [Authorize(Roles = "BaseAdmin")]
     [Route("[controller]")]
-    public class PageController : BaseController
+    public class PageCmsController : BaseController
     {
         [Route("createpage/{Id:guid}")]
         public async Task<IActionResult> CreatePage(Guid Id)

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Indivis.Presentation.WebUICms.Controllers
 {
     [Authorize(Roles = "BaseAdmin")]
-    public class HomeController : Controller
+    public class HomeCmsController : Controller
     {
         public IActionResult Index()
         {

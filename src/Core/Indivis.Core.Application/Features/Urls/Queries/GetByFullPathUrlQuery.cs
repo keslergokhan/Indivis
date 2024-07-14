@@ -42,6 +42,7 @@ namespace Indivis.Core.Application.Features.Urls.Queries
 
             Url firstUrl = this._applicaitonDbContext.Urls
                 .Include(x=>x.ParentUrl)
+                .Include(x=>x.Language)
                 .Include(x=>x.UrlSystemType)
                 .FirstOrDefault(x => x.FullPath == request.FullPath && x.IsEntity == false);
 

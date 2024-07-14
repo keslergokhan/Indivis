@@ -3,6 +3,7 @@ using Indivis.Core.Domain.Entities.CoreEntities.ManyToMany;
 using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,10 @@ namespace Indivis.Core.Domain.Entities.CoreEntities
         public Url ParentUrl { get; set; }
     }
 
-    public partial class Url : IEntityLanguage
+    public partial class Url : IEntityLanguagePro
     {
         public Guid LanguageId { get; set; }
+        public Language Language { get; set; }
     }
 
     public partial class Url

@@ -10,11 +10,11 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountApiController : ControllerBase
     {
         private readonly IIdentityService _identityService;
 
-        public AccountController(IIdentityService identityService)
+        public AccountApiController(IIdentityService identityService)
         {
             _identityService = identityService;
         }

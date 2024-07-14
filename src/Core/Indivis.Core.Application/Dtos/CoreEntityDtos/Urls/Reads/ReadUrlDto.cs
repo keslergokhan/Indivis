@@ -1,5 +1,6 @@
 ﻿using Indivis.Core.Application.Attributes.Systems;
 using Indivis.Core.Application.Common.BaseClasses.Dtos.CoreEntities;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.Language.Reads;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.ManyToMany;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.PageSystems.Reads;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.UrlSystemType.Reads;
@@ -26,6 +27,7 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads
     public partial class ReadUrlDto : IEntityLanguageDto
     {
         public Guid LanguageId { get; set; }
+        public ReadLanguageDto Language { get; set; }  
     }
 
     public partial class ReadUrlDto

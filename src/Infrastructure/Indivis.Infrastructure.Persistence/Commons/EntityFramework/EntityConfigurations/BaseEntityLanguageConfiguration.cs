@@ -17,4 +17,13 @@ namespace Indivis.Infrastructure.Persistence.Commons.EntityFramework.EntityConfi
             builder.HasOne<Language>().WithMany().HasForeignKey(x => x.LanguageId);
         }
     }
+
+    public abstract class BaseEntityLanguageProConfiguration<T> : BaseEntityConfiguration<T> where T : class, IEntityLanguagePro
+    {
+        public override void Configure(EntityTypeBuilder<T> builder)
+        {
+            base.Configure(builder);
+            builder.HasOne(x=>x.Language).WithMany().HasForeignKey(x => x.LanguageId);
+        }
+    }
 }

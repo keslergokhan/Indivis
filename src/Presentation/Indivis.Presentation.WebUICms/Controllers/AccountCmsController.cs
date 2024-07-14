@@ -10,12 +10,12 @@ namespace Indivis.Presentation.WebUICms.Controllers
     /// 
     /// Giriş / Çıkış / Şifre Yenileme
     /// </summary>
-    public class AccountController : BaseController
+    public class AccountCmsController : BaseController
     {
-        private ILogger<AccountController> _logger;
+        private ILogger<AccountCmsController> _logger;
         private readonly IIdentityService _ıdentityService;
 
-        public AccountController(ILogger<AccountController> logger, IIdentityService ıdentityService)
+        public AccountCmsController(ILogger<AccountCmsController> logger, IIdentityService ıdentityService)
         {
             _logger = logger;
             _ıdentityService = ıdentityService;
@@ -25,7 +25,7 @@ namespace Indivis.Presentation.WebUICms.Controllers
         {
             //await _ıdentityService.PasswordSignInAsync("gokhan@gmail.com","Gokhan.123");
             ViewBag.Title = "Indivis Giriş";
-            return View("LoginView");
+            return View("~/Views/Account/LoginView.cshtml");
         }
 
         public async Task<IActionResult> Giris()

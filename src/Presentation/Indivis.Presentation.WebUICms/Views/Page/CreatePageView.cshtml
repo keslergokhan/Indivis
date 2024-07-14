@@ -7,19 +7,27 @@
     <div class="content">
         <h1>@Model.PageSystem.Name Yeni Sayfa Ekle</h1>
     </div>
-    <form>
+    <form class="create-page-from" id="createPageForm">
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Sayfa Adı</label>
-            <input type="text" class="form-control" id="title" name="title">
+            <input type="text" class="form-control" id="Name" name="Name">
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Sayfa Url Adresi</label>
-            <input type="text" class="form-control" id="url" name="url">
+            <input type="text" class="form-control" id="Slug" name="Slug">
         </div>
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Sayfa Açıklaması</label>
-            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
-        </div>
+        
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+
+
+
+@section FooterScript{
+    <script type="module">
+        import CreatePageService from './js/cms/Page/CreatePage.js?v2=1'
+
+        const createPageService = new CreatePageService(".create-page-from", "/api/PageApi/CreatePage");
+        createPageService.executeAsync();
+    </script>
+}

@@ -1,7 +1,7 @@
 ﻿import HelperFunctions from '../Helpers/HelperFunctions.js'
 import { BaseService } from '../Base/BaseService.js'
 
-export default class CreatepageService extends BaseService {
+export default class CreatePageService extends BaseService {
 
 
     /**
@@ -15,25 +15,45 @@ export default class CreatepageService extends BaseService {
 
     /**
      * 
-     * @param {Event} e
+     * @param {JustValidate} justValidate
      */
-    validation(e) {
-        if (e.target.querySelector(`input[name="Email"]`).value.length <= 4) {
-            throw new Error("Email adresi 4 karakterden az olamaz");
-        }
+    justValidate(justValidate) {
 
-        if (e.target.querySelector(`input[name="Password"]`).value.length < 6) {
-            throw new Error("Şifre en az 6 karakter olamlı");
-        }
+        justValidate
+            .addField(`[name="Name"]`, [
+                {
+                    rule: 'required',
+                    errorMessage: 'Kullanıcı adı gereklidir',
+                },
+                {
+                    rule: 'minLength',
+                    value: 3,
+                    errorMessage: 'Kullanıcı adı en az 3 karakter olmalıdır',
+                },
+                {
+                    rule: 'maxLength',
+                    value: 20,
+                    errorMessage: 'Kullanıcı adı en fazla 20 karakter olmalıdır',
+                },
+            ])
     }
 
+    /**
+     * 
+     * @param {ParentNode} e
+     */
+    eventHandlerAsync(form) {
+        form.querySelector(`[name="Slug"]`).addEventListener('keydown', (e) => {
+            let newKey = HelperFunctions.translateTextToSlug(e.target.value);
+            e.target.value = newKey;
+        });
+    }
 
     /**
      * 
      * @param {Event} e
      */
     async submitHandlerAsync(e) {
-
         const formData = HelperFunctions.formDataToJsonObject(new FormData(e.target));
 
         await fetch(this.Path, {
@@ -44,16 +64,10 @@ export default class CreatepageService extends BaseService {
             },
             body: JSON.stringify(formData)
         }).then(res => {
-            return res.json();
+            //return res.json();
         }).then(json => {
 
-            if (json.isSuccess == true) {
-
-                window.location.pathname = "/home/index";
-            } else {
-                alert("Kullanıcı adı veya şifre yanlış");
-            }
-            console.log(json);
+            
         })
     }
 }
