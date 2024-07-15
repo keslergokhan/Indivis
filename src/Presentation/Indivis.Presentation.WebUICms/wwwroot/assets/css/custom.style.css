@@ -1,0 +1,13 @@
+﻿.indivis {
+    font-size: 3rem;
+    color: #ef305e;
+    font-weight: bold;
+}
+.indivis-min{
+    font-size: 2rem;
+    color: #ef305e;
+    font-weight: bold;
+}
+.indivis-point .svg-icon.svg-icon-muted svg [fill]:not(.permanent):not(g) {
+    fill: #ef305e !important;
+}

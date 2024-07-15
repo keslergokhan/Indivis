@@ -85,9 +85,13 @@ export default class LoginService extends BaseService {
 
             if (json.isSuccess == true) {
 
-                window.location.pathname = "/home/index";
+                window.location.pathname = "/homeCms/index";
             } else {
-                alert("Kullanıcı adı veya şifre yanlış");
+                Swal.fire({
+                    title: "Hata",
+                    text: "Şifre veya kullanıcı adı yanlış !",
+                    icon: "error"
+                });
             }
             console.log(json);
         })
