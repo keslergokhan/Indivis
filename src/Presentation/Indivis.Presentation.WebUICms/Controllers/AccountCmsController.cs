@@ -19,6 +19,7 @@ namespace Indivis.Presentation.WebUICms.Controllers
         {
             _logger = logger;
             _ıdentityService = ıdentityService;
+            
         }
 
         public async Task<IActionResult> Login()

@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "destination": "wwwroot/packets/tabulator",
+      "library": "tabulator-tables@6.2.5"
+
+
+    }
+  ]
+}

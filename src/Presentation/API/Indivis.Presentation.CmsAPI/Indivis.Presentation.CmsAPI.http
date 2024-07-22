@@ -1,6 +1,0 @@
-@Indivis.Presentation.CmsAPI_HostAddress = http://localhost:5126
-
-GET {{Indivis.Presentation.CmsAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
