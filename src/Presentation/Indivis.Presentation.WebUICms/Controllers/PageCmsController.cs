@@ -19,11 +19,10 @@ namespace Indivis.Presentation.WebUICms.Controllers
     {
         public PageCmsController()
         {
-            //base.SetBreadcrumbs("Sayfa", "/pagecms/pagesystems", true);    
         }
 
         [Route("createpage/{Id:guid}")]
-		[CmsAddBreadcrumbAttributes(nameof(PageCmsController.CreatePage), "Yeni Sayfa Ekle", "",nameof(PageCmsController))]
+		[CmsAddBreadcrumbAttributes(nameof(PageCmsController.CreatePage), "Yeni Sayfa Ekle", "",nameof(PageCmsController.PageSystems))]
 		public async Task<IActionResult> CreatePage(Guid Id)
         {
 
