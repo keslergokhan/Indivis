@@ -53,12 +53,8 @@ export default class CreatePageService extends BaseService {
      * 
      * @param {ParentNode} e
      */
-    async eventHandlerAsync(form) {
-        console.log(form.querySelector(`[name="Slug"]`));
-        form.querySelector(`[name="Slug"]`).addEventListener('keydown', (e) => {
-            let newKey = HelperFunction.translateTextToSlug(e.target.value);
-            e.target.value = newKey;
-        });
+    eventHandlerAsync(form) {
+        
     }
 
     /**
@@ -79,7 +75,7 @@ export default class CreatePageService extends BaseService {
             //return res.json();
         }).then(json => {
 
-            
+
         })
     }
 }

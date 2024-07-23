@@ -11,3 +11,21 @@
 .indivis-point .svg-icon.svg-icon-muted svg [fill]:not(.permanent):not(g) {
     fill: #ef305e !important;
 }
+.just-validate-error-label{
+    color:red !important;
+}
+
+.c-btn-sm {
+    padding: 5px 5px 5px 5px !important;
+    display: flex;
+    justify-content: center;
+    height: 30px;
+    align-items: center;
+    color:white
+}
+
+.page-systems-card .card-body ol li ol li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    min-height: 75px !important;
+}
