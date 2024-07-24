@@ -42,18 +42,24 @@ namespace Indivis.Core.Application.Features.Pages.Queries
 
             try
             {
-                IQueryable<PageSystem> query = this._applicationDbContext.PageSystems.Include(x => x.Pages)
-                    .ThenInclude(x=>x.Url).AsQueryable();
-
-
-                if (request.OnlineAndOffline)
+                IQueryable<PageSystem> query = this._applicationDbContext.PageSystems.AsNoTracking();
+                if (request.OnlineAndOffline == true)
                 {
-                    query = query.Where(x => x.State == (int)StateEnum.Online || x.State == (int)StateEnum.Offline);
+                    query = query.Where(x => x.State == (int)StateEnum.Online || x.State == (int)StateEnum.Offline).AsQueryable();
                 }
                 else
                 {
-                    query = query.Where(x => x.State == (int)request.State);
+                    query = query.Where(x => x.State == (int)request.State).AsQueryable();
                 }
+
+                query= query
+                    .Where(x=>x.Pages.Any(i=>i.ParentPage != null))
+                    .Include(x => x.Pages)
+                    .ThenInclude(x => x.Url)
+                    .Include(x=>x.Pages).ThenInclude(x=>x.SubPages).ThenInclude(x=>x.Url)
+                    .AsNoTracking().AsQueryable();
+
+
 
                 List<PageSystem> result = await query.ToListAsync();
 

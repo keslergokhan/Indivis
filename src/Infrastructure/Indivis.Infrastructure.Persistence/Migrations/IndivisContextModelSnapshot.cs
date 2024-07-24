@@ -240,6 +240,9 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("PageSystemId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("ParentPageId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<byte>("State")
                         .HasColumnType("tinyint")
                         .HasColumnOrder(9999);
@@ -252,6 +255,8 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     b.HasIndex("LanguageId");
 
                     b.HasIndex("PageSystemId");
+
+                    b.HasIndex("ParentPageId");
 
                     b.HasIndex("UrlId");
 
@@ -963,8 +968,13 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.PageSystem", "PageSystem")
                         .WithMany("Pages")
                         .HasForeignKey("PageSystemId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Page", "ParentPage")
+                        .WithMany("SubPages")
+                        .HasForeignKey("ParentPageId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Url", "Url")
                         .WithMany()
@@ -973,6 +983,8 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("PageSystem");
+
+                    b.Navigation("ParentPage");
 
                     b.Navigation("Url");
                 });
@@ -990,7 +1002,7 @@ namespace Indivis.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Url", b =>
                 {
-                    b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Language", "Langauge")
+                    b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Language", "Language")
                         .WithMany()
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1007,7 +1019,7 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Langauge");
+                    b.Navigation("Language");
 
                     b.Navigation("ParentUrl");
 
@@ -1163,6 +1175,8 @@ namespace Indivis.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Page", b =>
                 {
                     b.Navigation("PageZones");
+
+                    b.Navigation("SubPages");
                 });
 
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.PageSystem", b =>

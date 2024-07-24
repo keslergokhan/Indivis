@@ -35,7 +35,7 @@ namespace Indivis.Core.Application.Features.Languages.Queries
 
             try
             {
-                Language defaultLanguage = await this._dbContext.Languages.OrderBy(x => x.Sort).FirstOrDefaultAsync();
+                Language defaultLanguage = await this._dbContext.Languages.OrderBy(x => x.Sort).AsNoTracking().FirstOrDefaultAsync();
                 model.SuccessSetData(this._mapper.Map<ReadLanguageDto>(defaultLanguage));
 
             }

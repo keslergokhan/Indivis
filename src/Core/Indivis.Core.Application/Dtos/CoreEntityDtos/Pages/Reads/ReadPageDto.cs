@@ -31,10 +31,13 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Pages.Reads
     public partial class ReadPageDto : IEntityLanguageDto
     {
         public Guid LanguageId { get; set; }
+        public Guid? ParentPageId { get; set; }
+        public ReadPageDto ParentPage { get; set; }
     }
 
     public partial class ReadPageDto
     {
         public List<ReadPageZoneDto> PageZones { get; set; }
+        public List<ReadPageDto> SubPages { get; set; }
     }
 }

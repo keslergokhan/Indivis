@@ -57,7 +57,7 @@ namespace Indivis.Core.Application.Common.BaseClasses.Features.Queries
             IResultDataControl<List<TResult>> outModel = new ResultDataControl<List<TResult>>();
             try
             {
-                IQueryable<TEntity> query = this._applicationDbContext.Set<TEntity>().AsQueryable();
+                IQueryable<TEntity> query = this._applicationDbContext.Set<TEntity>().AsNoTracking().AsQueryable();
                 
                 if (request.OnlineAndOffline)
                 {

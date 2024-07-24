@@ -59,7 +59,7 @@ namespace Indivis.Infrastructure.Persistence
 
             services.AddSystemsDependencyRegister(Assembly.GetExecutingAssembly());
 
-
+            //Identitty(services);
             //Run(services);
             return services;
         }
@@ -68,30 +68,40 @@ namespace Indivis.Infrastructure.Persistence
         public static void Identitty(IServiceCollection services)
         {
             UserManager<ApplicationUser> userManager = services.BuildServiceProvider().GetService<UserManager<ApplicationUser>>();
-            
-
-
-            var sss = userManager.FindByIdAsync("36F94388-F3EA-4414-79A7-08DC987928DF").Result;
-
-            ApplicationUser user = new ApplicationUser()
-            {
-                Email = "gokhan@gmail.com",
-                UserName = "gokhankesler",
-                NormalizedUserName = "Gökhan Kesler"
-            };
-
             RoleManager<ApplicationRole> roleManager = services.BuildServiceProvider().GetService<RoleManager<ApplicationRole>>();
-
-
+            
             ApplicationRole role = new ApplicationRole()
             {
                 Name = "BaseAdmin",
                 NormalizedName = "BASEADMIN",
             };
 
-            var userResult = userManager.FindByIdAsync("36F94388-F3EA-4414-79A7-08DC987928DF").Result;
+            roleManager.CreateAsync(role);
 
-            var roleResult = userManager.AddToRoleAsync(userResult, "BaseAdmin").Result;
+
+            var passwordHasher = new PasswordHasher<object>();
+
+            string email = "gokhan@gmail.com";
+            ApplicationUser user = new ApplicationUser()
+            {
+                Email = email,
+                NormalizedEmail = email.ToUpper(),
+                UserName = email,
+                NormalizedUserName = email.ToUpper(),
+                Name = "Gökhan",
+                EmailConfirmed = true,
+                Surname = "Kesler",
+                
+            };
+
+            user.Id = Guid.NewGuid();
+
+            userManager.CreateAsync(user,"Gokhan.123").Wait();
+
+            userManager.AddToRoleAsync(user,"BaseAdmin");
+            
+
+            
 
             
         }
@@ -100,6 +110,7 @@ namespace Indivis.Infrastructure.Persistence
         {
             IndivisContext db = services.BuildServiceProvider().GetService<IndivisContext>();
 
+            
 
             //AddLanguage(db);
 
@@ -120,6 +131,7 @@ namespace Indivis.Infrastructure.Persistence
             AddPageAnnouncementDetail(db);
 
             AnnouncementEntity(db);
+            
         }
 
 
@@ -320,6 +332,7 @@ namespace Indivis.Infrastructure.Persistence
                 IsEntity = false,
                 Path = "/hakkimizda",
                 UrlSystemType = pageSystem.UrlSystemType,
+                UrlSystemTypeId = pageSystem.UrlSystemType.Id,
                 State = 1
             };
             Page pageAbout = new Page()
@@ -330,6 +343,7 @@ namespace Indivis.Infrastructure.Persistence
                 Name = "Hakkimizda",
                 Url = pageAboutUrl,
                 PageSystem = pageSystem,
+                PageSystemId = pageSystem.Id,
                 State = 1,
             };
 

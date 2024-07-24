@@ -30,6 +30,18 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
                 .WithOne(x => x.Page)
                 .HasForeignKey(x => x.PageId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+
+            builder.HasOne(x=>x.ParentPage)
+                .WithMany(x=>x.SubPages)
+                .HasForeignKey(x=>x.ParentPageId)
+                .IsRequired(false).OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(x => x.ParentPage)
+                .WithMany(x => x.SubPages)
+                .HasForeignKey(x => x.ParentPageId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

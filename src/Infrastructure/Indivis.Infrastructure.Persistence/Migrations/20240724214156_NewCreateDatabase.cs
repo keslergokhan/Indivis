@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Indivis.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDatabase : Migration
+    public partial class NewCreateDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +30,8 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -51,13 +53,26 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DataProtectionKeys",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FriendlyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Xml = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DataProtectionKeys", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Entity",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TypeName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     IsUrlData = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    EntityDefaultProperty = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     State = table.Column<byte>(type: "tinyint", nullable: false)
@@ -100,6 +115,21 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UrlSystemType", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WidgetService",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    WidgetServiceClassName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    State = table.Column<byte>(type: "tinyint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WidgetService", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,6 +239,56 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Widget",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    State = table.Column<byte>(type: "tinyint", nullable: false),
+                    LanguageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Widget", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Widget_Language_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Language",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PageSystem",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Controller = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Action = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    State = table.Column<byte>(type: "tinyint", nullable: false),
+                    IsEntity = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    UrlSystemTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PageSystem", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PageSystem_UrlSystemType_UrlSystemTypeId",
+                        column: x => x.UrlSystemTypeId,
+                        principalTable: "UrlSystemType",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Url",
                 columns: table => new
                 {
@@ -218,8 +298,10 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     State = table.Column<byte>(type: "tinyint", nullable: false),
                     Path = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     FullPath = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    IsEntity = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     ParentUrlId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    LanguageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    LanguageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UrlSystemTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -231,8 +313,80 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Url_UrlSystemType_UrlSystemTypeId",
+                        column: x => x.UrlSystemTypeId,
+                        principalTable: "UrlSystemType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Url_Url_ParentUrlId",
                         column: x => x.ParentUrlId,
+                        principalTable: "Url",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WidgetTemplate",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Template = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    IsDefault = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    Image = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    State = table.Column<byte>(type: "tinyint", nullable: false),
+                    LanguageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    WidgetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    WidgetServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WidgetTemplate", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WidgetTemplate_Language_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Language",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_WidgetTemplate_WidgetService_WidgetServiceId",
+                        column: x => x.WidgetServiceId,
+                        principalTable: "WidgetService",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_WidgetTemplate_Widget_WidgetId",
+                        column: x => x.WidgetId,
+                        principalTable: "Widget",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Announcement",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SeoTitle = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    SeoBreadcrumbTitle = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    SeoDescription = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    State = table.Column<byte>(type: "tinyint", nullable: false),
+                    LanguageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UrlId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    sitemapNoIndex = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    SitemapNoWrite = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Announcement", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Announcement_Url_UrlId",
+                        column: x => x.UrlId,
                         principalTable: "Url",
                         principalColumn: "Id");
                 });
@@ -273,7 +427,9 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     State = table.Column<byte>(type: "tinyint", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     UrlId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LanguageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    LanguageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PageSystemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ParentPageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -285,6 +441,17 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Page_PageSystem_PageSystemId",
+                        column: x => x.PageSystemId,
+                        principalTable: "PageSystem",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Page_Page_ParentPageId",
+                        column: x => x.ParentPageId,
+                        principalTable: "Page",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_Page_Url_UrlId",
                         column: x => x.UrlId,
                         principalTable: "Url",
@@ -292,28 +459,101 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Url_UrlSystemType",
+                name: "PageWidgetSetting",
                 columns: table => new
                 {
-                    UrlId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UrlSystemTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClassCustom = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    Grid = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, defaultValue: "col-12"),
+                    IsAsync = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    IsShow = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    Order = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    State = table.Column<byte>(type: "tinyint", nullable: false),
+                    WidgetTemplateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Url_UrlSystemType", x => new { x.UrlId, x.UrlSystemTypeId });
+                    table.PrimaryKey("PK_PageWidgetSetting", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Url_UrlSystemType_UrlSystemType_UrlSystemTypeId",
-                        column: x => x.UrlSystemTypeId,
-                        principalTable: "UrlSystemType",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Url_UrlSystemType_Url_UrlId",
-                        column: x => x.UrlId,
-                        principalTable: "Url",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_PageWidgetSetting_WidgetTemplate_WidgetTemplateId",
+                        column: x => x.WidgetTemplateId,
+                        principalTable: "WidgetTemplate",
+                        principalColumn: "Id");
                 });
+
+            migrationBuilder.CreateTable(
+                name: "PageZone",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Key = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    State = table.Column<byte>(type: "tinyint", nullable: false),
+                    PageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LanguageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PageZone", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PageZone_Language_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Language",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PageZone_Page_PageId",
+                        column: x => x.PageId,
+                        principalTable: "Page",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PageWidget",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    State = table.Column<byte>(type: "tinyint", nullable: false),
+                    LanguageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PageZoneId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    WidgetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PageWidgetSettingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PageWidget", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PageWidget_Language_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Language",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PageWidget_PageWidgetSetting_PageWidgetSettingId",
+                        column: x => x.PageWidgetSettingId,
+                        principalTable: "PageWidgetSetting",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PageWidget_PageZone_PageZoneId",
+                        column: x => x.PageZoneId,
+                        principalTable: "PageZone",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PageWidget_Widget_WidgetId",
+                        column: x => x.WidgetId,
+                        principalTable: "Widget",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Announcement_UrlId",
+                table: "Announcement",
+                column: "UrlId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -370,10 +610,62 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                 column: "LanguageId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Page_PageSystemId",
+                table: "Page",
+                column: "PageSystemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Page_ParentPageId",
+                table: "Page",
+                column: "ParentPageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Page_UrlId",
                 table: "Page",
-                column: "UrlId",
+                column: "UrlId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PageSystem_UrlSystemTypeId",
+                table: "PageSystem",
+                column: "UrlSystemTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PageWidget_LanguageId",
+                table: "PageWidget",
+                column: "LanguageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PageWidget_PageWidgetSettingId",
+                table: "PageWidget",
+                column: "PageWidgetSettingId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PageWidget_PageZoneId",
+                table: "PageWidget",
+                column: "PageZoneId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PageWidget_WidgetId",
+                table: "PageWidget",
+                column: "WidgetId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PageWidgetSetting_WidgetTemplateId",
+                table: "PageWidgetSetting",
+                column: "WidgetTemplateId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PageZone_LanguageId",
+                table: "PageZone",
+                column: "LanguageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PageZone_PageId",
+                table: "PageZone",
+                column: "PageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Url_LanguageId",
@@ -386,14 +678,38 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                 column: "ParentUrlId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Url_UrlSystemType_UrlSystemTypeId",
-                table: "Url_UrlSystemType",
+                name: "IX_Url_UrlSystemTypeId",
+                table: "Url",
                 column: "UrlSystemTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Widget_LanguageId",
+                table: "Widget",
+                column: "LanguageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WidgetTemplate_LanguageId",
+                table: "WidgetTemplate",
+                column: "LanguageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WidgetTemplate_WidgetId",
+                table: "WidgetTemplate",
+                column: "WidgetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WidgetTemplate_WidgetServiceId",
+                table: "WidgetTemplate",
+                column: "WidgetServiceId",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Announcement");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -410,13 +726,13 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "DataProtectionKeys");
+
+            migrationBuilder.DropTable(
                 name: "EntityUrl");
 
             migrationBuilder.DropTable(
-                name: "Page");
-
-            migrationBuilder.DropTable(
-                name: "Url_UrlSystemType");
+                name: "PageWidget");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -428,13 +744,34 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                 name: "Entity");
 
             migrationBuilder.DropTable(
-                name: "UrlSystemType");
+                name: "PageWidgetSetting");
+
+            migrationBuilder.DropTable(
+                name: "PageZone");
+
+            migrationBuilder.DropTable(
+                name: "WidgetTemplate");
+
+            migrationBuilder.DropTable(
+                name: "Page");
+
+            migrationBuilder.DropTable(
+                name: "WidgetService");
+
+            migrationBuilder.DropTable(
+                name: "Widget");
+
+            migrationBuilder.DropTable(
+                name: "PageSystem");
 
             migrationBuilder.DropTable(
                 name: "Url");
 
             migrationBuilder.DropTable(
                 name: "Language");
+
+            migrationBuilder.DropTable(
+                name: "UrlSystemType");
         }
     }
 }
