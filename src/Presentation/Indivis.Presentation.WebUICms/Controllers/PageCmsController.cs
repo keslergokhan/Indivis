@@ -21,14 +21,16 @@ namespace Indivis.Presentation.WebUICms.Controllers
         {
         }
 
-        [Route("createpage/{Id:guid}")]
+
+        [Route("createpage/{pageSystemId:guid}")]
+        [Route("createpage/{pageSystemId:guid}/{pasePageId:guid}")]
 		[CmsAddBreadcrumbAttributes(nameof(PageCmsController.CreatePage), "Yeni Sayfa Ekle", "",nameof(PageCmsController.PageSystems))]
-		public async Task<IActionResult> CreatePage(Guid Id)
+		public async Task<IActionResult> CreatePage(Guid pageSystemId)
         {
 
 			CreatePageViewOutModel model = new CreatePageViewOutModel();
 
-            var query = base.EntityFeatureCustomContext.GetDependencyMediatRQuery<GetPageSystemByIdQuery>(x=>x.Id = Id);
+            var query = base.EntityFeatureCustomContext.GetDependencyMediatRQuery<GetPageSystemByIdQuery>(x=>x.Id = pageSystemId);
 
             IResultDataControl<ReadPageSystemDto> result = await this.Mediator.Send(query);
             if (!result.IsSuccess)

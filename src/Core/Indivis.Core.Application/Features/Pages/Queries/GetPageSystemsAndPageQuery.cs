@@ -53,11 +53,10 @@ namespace Indivis.Core.Application.Features.Pages.Queries
                 }
 
                 query= query
-                    .Where(x=>x.Pages.Any(i=>i.ParentPage != null))
                     .Include(x => x.Pages)
                     .ThenInclude(x => x.Url)
                     .Include(x=>x.Pages).ThenInclude(x=>x.SubPages).ThenInclude(x=>x.Url)
-                    .AsNoTracking().AsQueryable();
+                    .AsNoTrackingWithIdentityResolution().AsQueryable();
 
 
 
