@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Domain.Entities.CoreEntities
 {
-    public partial class Page : BaseEntity, IEntity
+    public partial class Page : BaseEntity, IEntity,IEntityUrl
     {
         public string Name { get; set; }
         public Url Url { get; set; }

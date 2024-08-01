@@ -56,8 +56,16 @@ export default class CreatePageService extends BaseService {
     async eventHandlerAsync(form) {
         console.log(form.querySelector(`[name="Slug"]`));
         form.querySelector(`[name="Slug"]`).addEventListener('keydown', (e) => {
+
             let newKey = HelperFunction.translateTextToSlug(e.target.value);
+            const parentUrl = e.target.getAttribute("data-parent-url");
+
+            if (parentUrl && parentUrl != "" && !e.target.value.startsWith(parentUrl)) {
+                newKey = HelperFunction.translateTextToSlug(parentUrl + "/" + e.target.value);
+            }
+
             e.target.value = newKey;
+            
         });
     }
 

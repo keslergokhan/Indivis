@@ -25,7 +25,8 @@ namespace Indivis.Core.Application.Common.BaseClasses.Features.Queries
     }
 
     public abstract class BaseGetByIdEntityDataHandlerQuery<TEntity, TResult> : 
-        IRequestHandler<BaseGetByIdEntityDataQuery<TEntity, TResult>, IResultDataControl<TResult>>
+        IRequestHandler<BaseGetByIdEntityDataQuery<TEntity, TResult>, 
+        IResultDataControl<TResult>>
         where TResult : BaseReadEntityDto, new()
         where TEntity : class, IEntity
     {
@@ -47,7 +48,10 @@ namespace Indivis.Core.Application.Common.BaseClasses.Features.Queries
             IResultDataControl<TResult> outModel = new ResultDataControl<TResult>();
             try
             {
-                TEntity result = await _applicationDbContext.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == request.Id);
+                IQueryable<TEntity> query = _applicationDbContext.Set<TEntity>().AsNoTracking().Where(x => x.Id == request.Id).AsQueryable();
+
+
+                TEntity result = await query.FirstOrDefaultAsync();
                 outModel.SuccessSetData(this._mapper.Map<TResult>(result));
             }
             catch (Exception ex)
@@ -58,4 +62,45 @@ namespace Indivis.Core.Application.Common.BaseClasses.Features.Queries
             return outModel;
         }
     }
+
+    public abstract class BaseGetByIdEntityIncludeUrlDataHandlerQuery<TEntity, TResult> :
+        IRequestHandler<BaseGetByIdEntityDataQuery<TEntity, TResult>,
+        IResultDataControl<TResult>>
+        where TResult : BaseReadEntityDto, new()
+        where TEntity : class, IEntity,IEntityUrl
+    {
+
+
+        protected readonly IMapper _mapper;
+        protected readonly IApplicationDbContext _applicationDbContext;
+        private readonly IServiceProvider _serviceProvider;
+
+        public BaseGetByIdEntityIncludeUrlDataHandlerQuery(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+            _applicationDbContext = serviceProvider.GetService<IApplicationDbContext>();
+            _mapper = serviceProvider.GetService<IMapper>();
+        }
+
+        public async Task<IResultDataControl<TResult>> Handle(BaseGetByIdEntityDataQuery<TEntity, TResult> request, CancellationToken cancellationToken)
+        {
+            IResultDataControl<TResult> outModel = new ResultDataControl<TResult>();
+            try
+            {
+                IQueryable<TEntity> query = _applicationDbContext.Set<TEntity>().AsNoTracking().Where(x => x.Id == request.Id).Include(x=>x.Url).AsQueryable();
+
+
+                TEntity result = await query.FirstOrDefaultAsync();
+                outModel.SuccessSetData(this._mapper.Map<TResult>(result));
+            }
+            catch (Exception ex)
+            {
+                outModel.Fail(ex);
+            }
+
+            return outModel;
+        }
+    }
+
+
 }
