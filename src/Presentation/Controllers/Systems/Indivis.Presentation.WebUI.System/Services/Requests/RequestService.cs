@@ -1,6 +1,6 @@
 ﻿using Indivis.Core.Application.Attributes.Systems;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads;
-using Indivis.Core.Application.Features.Urls.Queries;
+using Indivis.Core.Application.Features.Systems.Queries.Urls;
 using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Application.Interfaces.Data.Presentation;
 using Indivis.Core.Application.Interfaces.Results;
@@ -29,7 +29,7 @@ namespace Indivis.Presentation.WebUI.System.Services.Requests
         public Task<IResultDataControl<ReadUrlDto>> GetRequestUrlAsync(ICurrentRequest currentRequest)
         {
             return this._mediator
-                .Send(this._entityFeatureCustomContext.GetDependencyMediatRQuery<GetByFullPathUrlQuery>(x => x.FullPath = currentRequest.Path));
+                .Send(this._entityFeatureCustomContext.GetDependencyMediatRQuery<GetByFullPathUrlSystemQuery>(x => x.FullPath = currentRequest.Path));
         }
 
         public bool UrlSecurityVerification(ICurrentRequest currentRequest)

@@ -6,7 +6,7 @@ using Indivis.Core.Domain.Entities.CoreEntities;
 using MediatR;
 
 
-namespace Indivis.Core.Application.Features.Systems.Queries.Languages
+namespace Indivis.Core.Application.Features.Languages.Queries
 {
     public class GetByIdLanguageQuery :
         BaseGetByIdEntityDataQuery<Language, ReadLanguageDto>,

@@ -14,13 +14,13 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Features.Systems.Queries.Widgets
 {
-    public class GetAllPageIdPageZonesQuery : IRequest<IResultDataControl<List<ReadPageZoneDto>>>
+    public class GetAllPageIdPageZonesSystemQuery : IRequest<IResultDataControl<List<ReadPageZoneDto>>>
     {
         public Guid PageId { get; set; }
     }
 
 
-    public class GetAllPageIdPageZonesHandler : IRequestHandler<GetAllPageIdPageZonesQuery, IResultDataControl<List<ReadPageZoneDto>>>
+    public class GetAllPageIdPageZonesHandler : IRequestHandler<GetAllPageIdPageZonesSystemQuery, IResultDataControl<List<ReadPageZoneDto>>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
         private readonly IMapper _mapper;
@@ -31,7 +31,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Widgets
             _mapper = mapper;
         }
 
-        public async Task<IResultDataControl<List<ReadPageZoneDto>>> Handle(GetAllPageIdPageZonesQuery request, CancellationToken cancellationToken)
+        public async Task<IResultDataControl<List<ReadPageZoneDto>>> Handle(GetAllPageIdPageZonesSystemQuery request, CancellationToken cancellationToken)
         {
             IResultDataControl<List<ReadPageZoneDto>> model = new ResultDataControl<List<ReadPageZoneDto>>();
             model.SetData(new List<ReadPageZoneDto>());

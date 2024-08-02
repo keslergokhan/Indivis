@@ -16,15 +16,15 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Features.Systems.Queries.Pages
 {
-    public class GetPageQueryByUrlId: 
+    public class GetPageByUrlIdSystemQuery: 
         IRequest<IResultDataControl<ReadPageDto>>,
-        IQueryFactory<GetPageQueryByUrlId>
+        IQueryFactory<GetPageByUrlIdSystemQuery>
     {
         public Guid UrlId { get; set; }
         public StateEnum State { get; set; }
     }
 
-    public class GetPageQueryByUrlIdHandler : IRequestHandler<GetPageQueryByUrlId, IResultDataControl<ReadPageDto>>
+    public class GetPageQueryByUrlIdHandler : IRequestHandler<GetPageByUrlIdSystemQuery, IResultDataControl<ReadPageDto>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
         private readonly IMapper mapper;
@@ -35,7 +35,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Pages
             this.mapper = mapper;
         }
 
-        public async Task<IResultDataControl<ReadPageDto>> Handle(GetPageQueryByUrlId request, CancellationToken cancellationToken)
+        public async Task<IResultDataControl<ReadPageDto>> Handle(GetPageByUrlIdSystemQuery request, CancellationToken cancellationToken)
         {
             IResultDataControl<ReadPageDto> model = new ResultDataControl<ReadPageDto>();
 

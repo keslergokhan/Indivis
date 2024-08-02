@@ -12,31 +12,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Core.Application.Features.Languages.Queries
+namespace Indivis.Core.Application.Features.Systems.Queries.Languages
 {
-    public class GetDefaultLanguageQuery : IRequest<IResultDataControl<ReadLanguageDto>>
+    public class GetDefaultLanguageSystemQuery : IRequest<IResultDataControl<ReadLanguageDto>>
     {
     }
 
-    public class GetDefaultLanguageHandler : IRequestHandler<GetDefaultLanguageQuery, IResultDataControl<ReadLanguageDto>>
+    public class GetDefaultLanguageSystemQueryHandler : IRequestHandler<GetDefaultLanguageSystemQuery, IResultDataControl<ReadLanguageDto>>
     {
         private readonly IMapper _mapper;
         private readonly IApplicationDbContext _dbContext;
 
-        public GetDefaultLanguageHandler(IApplicationDbContext dbContext, IMapper mapper)
+        public GetDefaultLanguageSystemQueryHandler(IApplicationDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
         }
 
-        public async Task<IResultDataControl<ReadLanguageDto>> Handle(GetDefaultLanguageQuery request, CancellationToken cancellationToken)
+        public async Task<IResultDataControl<ReadLanguageDto>> Handle(GetDefaultLanguageSystemQuery request, CancellationToken cancellationToken)
         {
             IResultDataControl<ReadLanguageDto> model = new ResultDataControl<ReadLanguageDto>();
 
             try
             {
-                Language defaultLanguage = await this._dbContext.Languages.OrderBy(x => x.Sort).AsNoTracking().FirstOrDefaultAsync();
-                model.SuccessSetData(this._mapper.Map<ReadLanguageDto>(defaultLanguage));
+                Language defaultLanguage = await _dbContext.Languages.OrderBy(x => x.Sort).AsNoTracking().FirstOrDefaultAsync();
+                model.SuccessSetData(_mapper.Map<ReadLanguageDto>(defaultLanguage));
 
             }
             catch (Exception ex)

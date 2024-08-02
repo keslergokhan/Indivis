@@ -12,24 +12,24 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Features.Systems.Queries.Pages
 {
-    public class GetPageSystemByIdQuery:
+    public class GetPageSystemByIdSystemQuery:
         BaseGetByIdEntityDataQuery<PageSystem,ReadPageSystemDto>,
         IRequest<IResultDataControl<ReadPageSystemDto>>,
-        IQueryFactory<GetPageSystemByIdQuery>
+        IQueryFactory<GetPageSystemByIdSystemQuery>
 
     {
     }
 
     public class GetPageSystemByIdHandler :
         BaseGetByIdEntityDataHandlerQuery<PageSystem,ReadPageSystemDto>,
-        IRequestHandler<GetPageSystemByIdQuery, IResultDataControl<ReadPageSystemDto>>
+        IRequestHandler<GetPageSystemByIdSystemQuery, IResultDataControl<ReadPageSystemDto>>
 
     {
         public GetPageSystemByIdHandler(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 
-        public async Task<IResultDataControl<ReadPageSystemDto>> Handle(GetPageSystemByIdQuery request, CancellationToken cancellationToken)
+        public async Task<IResultDataControl<ReadPageSystemDto>> Handle(GetPageSystemByIdSystemQuery request, CancellationToken cancellationToken)
         {
             return await base.Handle(request, cancellationToken);
         }

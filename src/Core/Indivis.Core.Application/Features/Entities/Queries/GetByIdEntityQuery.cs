@@ -5,7 +5,7 @@ using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Domain.Entities.CoreEntities;
 using MediatR;
 
-namespace Indivis.Core.Application.Features.Systems.Queries.Entities
+namespace Indivis.Core.Application.Features.EntityUrls.Queries
 {
     public class GetByIdEntityQuery :
         BaseGetByIdEntityDataQuery<Entity, ReadEntityDto>,

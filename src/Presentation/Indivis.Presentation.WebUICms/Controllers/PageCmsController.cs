@@ -32,7 +32,7 @@ namespace Indivis.Presentation.WebUICms.Controllers
 			CreatePageViewOutModel model = new CreatePageViewOutModel();
 
 
-            IResultDataControl<ReadPageSystemDto> result = await this.Mediator.Send(new GetPageSystemByIdQuery
+            IResultDataControl<ReadPageSystemDto> result = await this.Mediator.Send(new GetPageSystemByIdSystemQuery
             {
                 Id = pageSystemId,
             });
@@ -44,7 +44,7 @@ namespace Indivis.Presentation.WebUICms.Controllers
 
             if (parentPageId != Guid.Empty)
             {
-                IResultDataControl<ReadPageDto> resultPage = await this.Mediator.Send(new GetPageByIdQuery(){
+                IResultDataControl<ReadPageDto> resultPage = await this.Mediator.Send(new GetPageByIdSystemQuery(){
                     Id = parentPageId,
                 });
 

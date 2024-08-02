@@ -4,18 +4,12 @@ using Indivis.Core.Application.Enums.Systems;
 using Indivis.Core.Application.Exceptions.Systems;
 using Indivis.Core.Application.Features.Systems.Queries.Pages;
 using Indivis.Core.Application.Features.Systems.Queries.Widgets;
-using Indivis.Core.Application.Features.Urls.Queries;
 using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Application.Interfaces.Data.Presentation;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Presentation.WebUI.System.Interfaces.Workers;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
 {
@@ -69,7 +63,7 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
         /// <returns></returns>
         public Task<IResultDataControl<ReadPageDto>> GetByUrlIdPageAsync(Guid urlId)
         {
-            return this.Mediator.Send(this.EntityFeatureCustomContext.GetDependencyMediatRQuery<GetPageQueryByUrlId>(x =>
+            return this.Mediator.Send(this.EntityFeatureCustomContext.GetDependencyMediatRQuery<GetPageByUrlIdSystemQuery>(x =>
             {
                 x.UrlId = urlId;
                 x.State = StateEnum.Online;
@@ -78,7 +72,7 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
 
         public Task<IResultDataControl<List<ReadPageZoneDto>>> GetByPageIdZoneAsync(Guid pageId)
         {
-            return this.Mediator.Send(new GetAllPageIdPageZonesQuery
+            return this.Mediator.Send(new GetAllPageIdPageZonesSystemQuery
             {
                 PageId = pageId,
             });

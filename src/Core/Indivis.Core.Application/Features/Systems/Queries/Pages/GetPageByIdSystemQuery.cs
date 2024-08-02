@@ -9,21 +9,21 @@ using MediatR;
 
 namespace Indivis.Core.Application.Features.Systems.Queries.Pages
 {
-    public class GetPageByIdQuery :
+    public class GetPageByIdSystemQuery :
         BaseGetByIdEntityDataQuery<Page, ReadPageDto>,
         IRequest<IResultDataControl<ReadPageDto>>,
-        IQueryFactory<GetPageByIdQuery>
+        IQueryFactory<GetPageByIdSystemQuery>
     {
     }
 
-    public class GetPageByIdHandler : BaseGetByIdEntityIncludeUrlDataHandlerQuery<Page, ReadPageDto>, IRequestHandler<GetPageByIdQuery, IResultDataControl<ReadPageDto>>
+    public class GetPageByIdHandler : BaseGetByIdEntityIncludeUrlDataHandlerQuery<Page, ReadPageDto>, IRequestHandler<GetPageByIdSystemQuery, IResultDataControl<ReadPageDto>>
     {
 
         public GetPageByIdHandler(IServiceProvider serviceProvider) : base(serviceProvider)
         {
 
         }
-        public async Task<IResultDataControl<ReadPageDto>> Handle(GetPageByIdQuery request, CancellationToken cancellationToken)
+        public async Task<IResultDataControl<ReadPageDto>> Handle(GetPageByIdSystemQuery request, CancellationToken cancellationToken)
         {
             return await base.Handle(request, cancellationToken);
         }

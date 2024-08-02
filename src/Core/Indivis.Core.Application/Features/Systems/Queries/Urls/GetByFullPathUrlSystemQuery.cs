@@ -14,45 +14,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Core.Application.Features.Urls.Queries
+namespace Indivis.Core.Application.Features.Systems.Queries.Urls
 {
-    public class GetByFullPathUrlQuery : 
+    public class GetByFullPathUrlSystemQuery :
         IRequest<IResultDataControl<ReadUrlDto>>,
-        IQueryFactory<GetByFullPathUrlQuery>
+        IQueryFactory<GetByFullPathUrlSystemQuery>
     {
         public string FullPath { get; set; }
         public StateEnum State { get; set; }
     }
 
 
-    public class GetByFullPathUrlQueryHandler : IRequestHandler<GetByFullPathUrlQuery, IResultDataControl<ReadUrlDto>>
+    public class GetByFullPathUrlSystemQueryHandler : IRequestHandler<GetByFullPathUrlSystemQuery, IResultDataControl<ReadUrlDto>>
     {
         private readonly IApplicationDbContext _applicaitonDbContext;
         private readonly IMapper _mapper;
 
-        public GetByFullPathUrlQueryHandler(IApplicationDbContext applicaitonDbContext, IMapper mapper)
+        public GetByFullPathUrlSystemQueryHandler(IApplicationDbContext applicaitonDbContext, IMapper mapper)
         {
             _applicaitonDbContext = applicaitonDbContext;
             _mapper = mapper;
         }
 
-        public async Task<IResultDataControl<ReadUrlDto>> Handle(GetByFullPathUrlQuery request, CancellationToken cancellationToken)
+        public async Task<IResultDataControl<ReadUrlDto>> Handle(GetByFullPathUrlSystemQuery request, CancellationToken cancellationToken)
         {
             IResultDataControl<ReadUrlDto> model = new ResultDataControl<ReadUrlDto>();
 
-            Url firstUrl = this._applicaitonDbContext.Urls
-                .Include(x=>x.ParentUrl)
-                .Include(x=>x.Language)
-                .Include(x=>x.UrlSystemType)
+            Url firstUrl = _applicaitonDbContext.Urls
+                .Include(x => x.ParentUrl)
+                .Include(x => x.Language)
+                .Include(x => x.UrlSystemType)
                 .FirstOrDefault(x => x.FullPath == request.FullPath && x.IsEntity == false);
 
-            if (firstUrl==null)
+            if (firstUrl == null)
             {
                 model.Fail();
                 return model;
             }
 
-            model.SuccessSetData(this._mapper.Map<ReadUrlDto>(firstUrl));
+            model.SuccessSetData(_mapper.Map<ReadUrlDto>(firstUrl));
             return model;
         }
     }
