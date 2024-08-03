@@ -19,13 +19,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseMiddleware<CmsLanguageControlMiddleware>();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseMiddleware<CmsLanguageControlMiddleware>();
+
 
 app.MapControllerRoute(
     name: "default",

@@ -24,6 +24,7 @@ export class BaseService {
         });
     }
 
+
     /**
      * doğrulama süreci
      * @param {JustValidate} justValidate

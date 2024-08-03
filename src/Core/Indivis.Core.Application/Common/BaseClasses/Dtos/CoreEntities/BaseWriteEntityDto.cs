@@ -8,5 +8,6 @@ namespace Indivis.Core.Application.Common.BaseClasses.Dtos.CoreEntities
 {
     public abstract class BaseWriteEntityDto
     {
+
     }
 }

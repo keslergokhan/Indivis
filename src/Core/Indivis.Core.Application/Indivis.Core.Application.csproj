@@ -39,7 +39,7 @@
     <Folder Include="Dtos\CoreEntityDtos\PageSystems\Writes\" />
     <Folder Include="Features\PageSystems\Queries\" />
     <Folder Include="Features\Systems\Queries\EntityUrls\" />
-    <Folder Include="Features\Systems\Queries\UrlSystemTypes\" />
+    <Folder Include="Features\UrlSystemTypes\Queries\" />
   </ItemGroup>
 
 </Project>

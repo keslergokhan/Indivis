@@ -36,7 +36,7 @@ export default class CreatePageService extends BaseService {
                     errorMessage: JustValidateMessage.maxLenght(20),
                 },
             ])
-            .addField(`[name="Slug"]`, [
+            .addField(`[name="FullPath"]`, [
                 {
                     rule: "required",
                     errorMessage: JustValidateMessage.required(),
@@ -55,7 +55,8 @@ export default class CreatePageService extends BaseService {
      */
     async eventHandlerAsync(form) {
 
-        form.querySelector(`[name="Slug"]`).addEventListener('keydown', (e) => {
+        const path = document.querySelector(`[name="Path"]`);
+        form.querySelector(`[name="FullPath"]`).addEventListener('keyup', (e) => {
 
             let newKey = HelperFunction.translateTextToSlug(e.target.value);
             const parentUrl = e.target.getAttribute("data-parent-url");
@@ -65,9 +66,8 @@ export default class CreatePageService extends BaseService {
             }
 
             e.target.value = newKey;
-            
+            path.value = newKey.substr(parentUrl.length);
         });
-
         
     }
 
@@ -80,13 +80,12 @@ export default class CreatePageService extends BaseService {
 
 
         let fullPathFoundControl = false;
-
         await fetch(`${this.BasePath}/check-url-full-path`, {
             method: "POST",
             headers: {
                 "Content-Type":"application/json"
             },
-            body: JSON.stringify({ FullPath: formData.Slug })
+            body: JSON.stringify({ FullPath: formData.FullPath })
         })
         .then(data => data.json())
         .then(json => {
@@ -95,7 +94,7 @@ export default class CreatePageService extends BaseService {
                     fullPathFoundControl = true;
                     Swal.fire({
                         title: "Hata",
-                        html: `<strong>${formData.Slug} </strong> zaten kullanılıyor lütfen farklı bir adres belirleyin`,
+                        html: `<strong>${formData.FullPath} </strong> zaten kullanılıyor lütfen farklı bir adres belirleyin`,
                         icon: "error"
                     });
 
@@ -106,20 +105,21 @@ export default class CreatePageService extends BaseService {
 
             } else {
                 this.errorSwal();
+                fullPathFoundControl = true;
             }
            
         })
         .catch(x => {
             console.log(x);
             this.errorSwal();
+            fullPathFoundControl = true;
         })
 
         if (fullPathFoundControl) {
             return;
         }
 
-        /*
-        await fetch(`${this.BasePath}/CreatePage`, {
+        await fetch(`${this.BasePath}/create-page`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -127,11 +127,9 @@ export default class CreatePageService extends BaseService {
             },
             body: JSON.stringify(formData)
         }).then(res => {
-            //return res.json();
+            return res.json();
         }).then(json => {
-
-            
+            console.log(json);
         })
-        */
     }
 }

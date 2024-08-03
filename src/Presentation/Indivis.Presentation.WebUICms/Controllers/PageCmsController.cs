@@ -6,8 +6,8 @@ using Indivis.Core.Application.Features.Systems.Queries.Pages;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Presentation.WebUICms.Attributes;
 using Indivis.Presentation.WebUICms.Common;
+using Indivis.Presentation.WebUICms.Helpers;
 using Indivis.Presentation.WebUICms.Models.PageModels;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,16 +31,16 @@ namespace Indivis.Presentation.WebUICms.Controllers
 
 			CreatePageViewOutModel model = new CreatePageViewOutModel();
 
-
-            IResultDataControl<ReadPageSystemDto> result = await this.Mediator.Send(new GetPageSystemByIdSystemQuery
+            IResultDataControl<ReadPageSystemDto> resultPageSystem = await this.Mediator.Send(new GetPageSystemByIdSystemQuery
             {
                 Id = pageSystemId,
             });
 
-            if (!result.IsSuccess)
+            if (!resultPageSystem.IsSuccess)
             {
                 throw new ViewDataNotFoundException(nameof(ReadPageSystemDto));
             }
+            
 
             if (parentPageId != Guid.Empty)
             {
@@ -56,7 +56,7 @@ namespace Indivis.Presentation.WebUICms.Controllers
                 model.ParentPage = resultPage.Data;
             }
 
-            model.PageSystem = result.Data;
+            model.PageSystem = resultPageSystem.Data;
 
             
 			return View("~/Views/Page/CreatePageView.cshtml",model);
@@ -72,6 +72,7 @@ namespace Indivis.Presentation.WebUICms.Controllers
             IResultDataControl<List<ReadPageSystemDto>> resultPageSystems = await base.Mediator.Send(new GetPageSystemsAndPageQuery
             {
                 OnlineAndOffline = true,
+                LanguageId = HttpContext.GetCurrentLanguageId()
             });
 
             if (!resultPageSystems.IsSuccess)

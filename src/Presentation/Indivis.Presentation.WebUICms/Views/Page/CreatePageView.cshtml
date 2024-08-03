@@ -19,18 +19,26 @@
     <div class="card-body">
        
         <form class="create-page-from" id="createPageForm">
+            <input hidden name="PageSystemId" value="@Model.PageSystem.Id"  />
+            <input hidden name="UrlSystemTypeId" value="@Model.PageSystem.UrlSystemTypeId"/>
+
+            @{
+                if(parentPage)
+                {
+                    <input hidden name="ParentPageId" value="@Model.ParentPage.Id" />
+                    <input hidden name="ParentUrlId" value="@Model.ParentPage.Url.Id" />
+                }
+            }
+            
+
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Sayfa Adı</label>
                 <input type="text" class="form-control" id="Name" name="Name">
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Sayfa Url Adresi</label>
-                <input type="text" class="form-control" data-parent-url="@parentUrl" value="@parentUrl/test" id="Slug" name="Slug">
-            </div>
-
-            <div class="mb-10">
-                <label for="exampleFormControlInput1" class="required form-label">Example</label>
-                <input type="email" class="form-control form-control-solid" placeholder="Example input" />
+                <input type="text" class="form-control" data-parent-url="@parentUrl" value="@parentUrl/test" id="FullPath" name="FullPath">
+                <input hidden type="text" name="Path" value=""/>
             </div>
 
             <div class="text-end">

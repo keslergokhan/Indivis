@@ -35,9 +35,22 @@ export const HelperFunction = {
     translateTextToSlug:(text) => {
         let invalidUrlCharacters = ['+', '&', '=', '?', '%', '#', '/', '\\', ';', ':', '@', '[', ']', '{', '}', '<', '>', '"', '\'', '^', '`', '|', '~', '!', '$', '(', ')', '*']; 
 
+        let replaceArray = [
+            ["ı", "i"],
+            ["ö", "o"],
+            ["ü", "u"],
+            ["ç", "c"],
+            ["ş", "s"],
+            ["ğ","g"]
+        ];
+
         invalidUrlCharacters.forEach((x) => {
             text = text.replace(x, '').replace(' ','-');
         });
+
+        replaceArray.forEach(x => {
+            text = text.replace(x[0], x[1]);
+        })
 
         return `/${text}`;
     },

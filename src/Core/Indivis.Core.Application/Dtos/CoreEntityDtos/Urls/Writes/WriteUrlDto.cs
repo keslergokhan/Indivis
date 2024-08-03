@@ -1,20 +1,18 @@
-﻿using Indivis.Core.Application.Interfaces.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Indivis.Core.Application.Attributes.Systems;
+using Indivis.Core.Application.Common.BaseClasses.Dtos.CoreEntities;
+using System.Security.Policy;
 
 namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Writes
 {
-    public partial class WriteUrlDto
+    [CreateMap(typeof(Indivis.Core.Domain.Entities.CoreEntities.Url))]
+    public partial class WriteUrlDto : BaseWriteEntityDto
     {
         public string Path { get; set; }
         public string FullPath { get; set; }
+        public Guid? ParentUrlId { get; set; }
+        public Guid LanguageId { get; set; }
+        public Guid UrlSystemTypeId { get; set; }
     }
 
-    public partial class ReadUrlDto 
-    {
-        
-    }
+    
 }

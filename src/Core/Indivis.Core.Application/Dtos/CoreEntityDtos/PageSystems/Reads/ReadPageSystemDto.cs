@@ -17,6 +17,7 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.PageSystems.Reads
         public string Description { get; set; }
         public string Controller { get; set; }
         public string Action { get; set; }
+        public Guid UrlSystemTypeId { get; set; }
 
         public ICollection<ReadPageDto> Pages { get; set; }
     }

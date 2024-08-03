@@ -2,6 +2,7 @@
 using Indivis.Core.Application.Dtos.CoreEntityDtos.PageSystems.Reads;
 using Indivis.Core.Application.Enums.Systems;
 using Indivis.Core.Application.Interfaces.Data;
+using Indivis.Core.Application.Interfaces.Dtos;
 using Indivis.Core.Application.Interfaces.Features.FeatureFactories;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
@@ -18,10 +19,12 @@ namespace Indivis.Core.Application.Features.Pages.Queries
 {
     public class GetPageSystemsAndPageQuery : 
         IRequest<IResultDataControl<List<ReadPageSystemDto>>>,
-        IQueryFactory<GetPageSystemsAndPageQuery>
+        IQueryFactory<GetPageSystemsAndPageQuery>,
+        IEntityLanguageDto
     {
         public bool OnlineAndOffline { get;set; }
         public StateEnum State { get; set; }
+        public Guid LanguageId { get; set; }
     }
 
 
@@ -53,7 +56,7 @@ namespace Indivis.Core.Application.Features.Pages.Queries
                 }
 
                 query= query
-                    .Include(x => x.Pages)
+                    .Include(x => x.Pages.Where(x=>x.LanguageId == request.LanguageId))
                     .ThenInclude(x => x.Url)
                     .Include(x=>x.Pages).ThenInclude(x=>x.SubPages).ThenInclude(x=>x.Url)
                     .AsNoTrackingWithIdentityResolution().AsQueryable();
