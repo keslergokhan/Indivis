@@ -1,6 +1,6 @@
 ﻿using Indivis.Core.Application.Common.Data.Presentation;
 using Indivis.Core.Application.Interfaces.Data.Presentation;
-using Indivis.Presentation.WebUI.System.Middlawares;
+using Indivis.Presentation.WebUI.System.Middlewares;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Indivis.Core.Application.Common.SystemInitializers;

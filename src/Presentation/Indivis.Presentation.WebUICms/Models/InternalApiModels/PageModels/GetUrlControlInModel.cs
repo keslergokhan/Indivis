@@ -2,6 +2,6 @@
 {
     public class GetUrlControlInModel
     {
-        public string FullUrl { get; set; }
+        public string FullPath { get; set; }
     }
 }

@@ -7,10 +7,10 @@ export default class CreatePageService extends BaseService {
     /**
      * 
      * @param {string} formClassName
-     * @param {string} path
+     * @param {string} basePath
      */
-    constructor(formClassName, path) {
-        super(formClassName, path);
+    constructor(formClassName, basePath) {
+        super(formClassName, basePath);
     }
 
     /**
@@ -68,10 +68,7 @@ export default class CreatePageService extends BaseService {
             
         });
 
-
-        form.querySelector(`[name="Slug"]`).addEventListener('keyup', (e) => {
-            console.log("a");
-        })
+        
     }
 
     /**
@@ -81,7 +78,48 @@ export default class CreatePageService extends BaseService {
     async submitHandlerAsync(e) {
         const formData = HelperFunction.formDataToJsonObject(new FormData(e.target));
 
-        await fetch(this.Path, {
+
+        let fullPathFoundControl = false;
+
+        await fetch(`${this.BasePath}/check-url-full-path`, {
+            method: "POST",
+            headers: {
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify({ FullPath: formData.Slug })
+        })
+        .then(data => data.json())
+        .then(json => {
+            if (json.isSuccess) {
+                if (json.data.fullPathFound) {
+                    fullPathFoundControl = true;
+                    Swal.fire({
+                        title: "Hata",
+                        html: `<strong>${formData.Slug} </strong> zaten kullanılıyor lütfen farklı bir adres belirleyin`,
+                        icon: "error"
+                    });
+
+                } else {
+                    fullPathFoundControl = false;
+                }
+
+
+            } else {
+                this.errorSwal();
+            }
+           
+        })
+        .catch(x => {
+            console.log(x);
+            this.errorSwal();
+        })
+
+        if (fullPathFoundControl) {
+            return;
+        }
+
+        /*
+        await fetch(`${this.BasePath}/CreatePage`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -94,5 +132,6 @@ export default class CreatePageService extends BaseService {
 
             
         })
+        */
     }
 }

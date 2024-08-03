@@ -1,4 +1,4 @@
-﻿using Indivis.Presentation.WebUI.System.Middlawares;
+﻿using Indivis.Presentation.WebUI.System.Middlewares;
 using Indivis.Presentation.WebUI.System.Services.DynamicRoutes;
 using Microsoft.AspNetCore.Builder;
 using System;

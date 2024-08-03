@@ -73,7 +73,7 @@ export default class LoginService extends BaseService {
 
         const formData = HelperFunction.formDataToJsonObject(new FormData(e.target));
 
-        await fetch(this.Path, {
+        await fetch(`${this.BasePath}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

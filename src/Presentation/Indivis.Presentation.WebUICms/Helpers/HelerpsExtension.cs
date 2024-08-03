@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Indivis.Presentation.WebUICms.Helpers
 {
-	public static class ExtensionHelerps
+	public static class HelerpsExtension
 	{
 
 		public static IHtmlContent GetBreadcrumbs(this IHtmlHelper htmlHelper, string key)

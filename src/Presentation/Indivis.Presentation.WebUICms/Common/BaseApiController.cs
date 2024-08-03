@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Indivis.Presentation.WebUICms.Common
 {
+    [ApiController]
     public abstract class BaseApiController : ControllerBase
     {
         public virtual IMediator Mediator { get { return HttpContext.RequestServices.GetService<IMediator>(); } }

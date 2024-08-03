@@ -1,10 +1,12 @@
 using Indivis.Core.Application;
 using Indivis.Infrastructure.Persistence;
+using Indivis.Presentation.WebUICms.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddPersistence(builder.Configuration).AddApplication(builder.Configuration);
+builder.Services.AddScoped<CmsLanguageControlMiddleware>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -23,7 +25,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseMiddleware<CmsLanguageControlMiddleware>();
 
 app.MapControllerRoute(
     name: "default",

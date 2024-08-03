@@ -5,15 +5,25 @@ export class BaseService {
     /**
      * @param {JustValidate}
      * @param {string} formClassName
-     * @param {string} path
+     * @param {string} basePath
      */
-    constructor(formClassName, path) {
+    constructor(formClassName, basePath) {
         this.FormClassName = formClassName;
-        this.Path = path;
+        this.BasePath = basePath;
         this.JustValidate;
     }
 
-   
+    /**
+     * Beklenmedik bir problem yaşandı, lütfen daha sonra tekrar deneyin !
+     */
+    errorSwal() {
+        Swal.fire({
+            title: "Hata",
+            text: "Beklenmedik bir problem yaşandı, lütfen daha sonra tekrar deneyin !",
+            icon: "error"
+        });
+    }
+
     /**
      * doğrulama süreci
      * @param {JustValidate} justValidate

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Indivis.Presentation.WebUI.System.Middlawares
+namespace Indivis.Presentation.WebUI.System.Middlewares
 {
     public class SystemRequestAboutMiddleware : IMiddleware
     {
