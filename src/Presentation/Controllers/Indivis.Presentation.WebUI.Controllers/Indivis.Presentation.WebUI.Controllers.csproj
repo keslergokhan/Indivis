@@ -14,9 +14,5 @@
     <ProjectReference Include="..\Indivis.Presentation.WebUI.Widgets\Indivis.Presentation.WebUI.Widgets.csproj" />
     <ProjectReference Include="..\Systems\Indivis.Presentation.WebUI.System\Indivis.Presentation.WebUI.System.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Common\" />
-  </ItemGroup>
   
 </Project>

@@ -16,7 +16,6 @@ namespace Indivis.Presentation.WebUI.System
             app.UseMiddleware<SystemRequestAboutMiddleware>();
             return app;
         }
-
         
 
 	}

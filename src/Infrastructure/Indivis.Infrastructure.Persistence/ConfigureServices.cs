@@ -17,15 +17,11 @@ using System.IO.Enumeration;
 using System.Security.Cryptography;
 using System.Collections.ObjectModel;
 using System.Reflection;
-using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
 using Indivis.Core.Application.Common.Constants.Systems;
-using Indivis.Presentation.WebUI.System.Interfaces.Workers;
 using System.Runtime.CompilerServices;
 using Indivis.Core.Domain.Entities.CoreEntities.Widgets;
 using Microsoft.AspNetCore.Identity;
 using Indivis.Core.Application.Common.SystemInitializers;
-using Indivis.Core.Application.Interfaces.Services;
-using Indivis.Infrastructure.Persistence.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
 
@@ -47,10 +43,9 @@ namespace Indivis.Infrastructure.Persistence
             .AddCookie(options =>
             {
                 options.Cookie.Name = "indivis.Auth";
-                options.LoginPath = "/Account/Login";
+                options.LoginPath = "/AccountCms/Login";
                 options.Cookie.HttpOnly = true;
-                options.AccessDeniedPath = "/Account/AccessDenied";
-
+                options.AccessDeniedPath = "/AccountCms/Login";
             });
             
             services.AddDataProtection().SetApplicationName("Indivis").PersistKeysToDbContext<IndivisContext>();
@@ -277,7 +272,7 @@ namespace Indivis.Infrastructure.Persistence
             {
                 Id = Guid.NewGuid(),
                 Name = "PageContent",
-                Controller = "PageController",
+                Controller = "PageContentController",
                 Action = "PageContent",
                 Description = "Boş sayfa taslağı",
                 Pages = new Collection<Page>(),
@@ -286,7 +281,7 @@ namespace Indivis.Infrastructure.Persistence
                 CreateDate = DateTime.Now
             };
 
-            if (!db.Set<PageSystem>().Any(x => x.Controller == "PageController"))
+            if (!db.Set<PageSystem>().Any(x => x.Controller == "PageContentController"))
             {
                 db.Set<PageSystem>().Add(pageSystem2);
             }
@@ -317,7 +312,7 @@ namespace Indivis.Infrastructure.Persistence
         {
             Language language = db.Set<Language>().FirstOrDefault(x => x.FLag == "TR");
             UrlSystemType urlSystemTypePageDefault = db.Set<UrlSystemType>().FirstOrDefault(x => x.InterfaceType == "IPageUrlSystemType");
-            PageSystem pageSystem = db.Set<PageSystem>().FirstOrDefault(x => x.Controller == "PageController" && x.Action == "PageContent");
+            PageSystem pageSystem = db.Set<PageSystem>().FirstOrDefault(x => x.Controller == "PageContentController" && x.Action == "PageContent");
             PageSystem announcementList = db.Set<PageSystem>().FirstOrDefault(x => x.Controller == "AnnouncementController" && x.Action == "List");
             PageSystem announcementSystemDetail = db.Set<PageSystem>().FirstOrDefault(x => x.Controller == "AnnouncementController" && x.Action == "Detail");
 
@@ -705,7 +700,7 @@ namespace Indivis.Infrastructure.Persistence
         public static void InsertDbDataParentUrl(IndivisContext db)
         {
             Language language = db.Set<Language>().FirstOrDefault(x => x.CountryCode == "TR");
-            PageSystem pageSystemEmpty = db.Set<PageSystem>().FirstOrDefault(x=>x.Controller == "EmptyPageController");
+            PageSystem pageSystemEmpty = db.Set<PageSystem>().FirstOrDefault(x=>x.Controller == "EmptyPageContentController");
 
             if (!db.Urls.Any(x=>x.FullPath == "/duyurular"))
             {
@@ -714,7 +709,7 @@ namespace Indivis.Infrastructure.Persistence
                     Id = Guid.NewGuid(),
                     Name = "İçerik Sayfası",
                     Description = "Doldurulmaya müsait boş sayfa",
-                    Controller = "EmptyPageController",
+                    Controller = "EmptyPageContentController",
                     Action = "Default",
                     State = 1,
                     CreateDate = DateTime.Now
@@ -754,7 +749,7 @@ namespace Indivis.Infrastructure.Persistence
         public static void InsertDbPage(IndivisContext db)
         {
             Language language = db.Set<Language>().FirstOrDefault(x => x.CountryCode == "TR");
-            PageSystem pageSystemEmpty = db.Set<PageSystem>().FirstOrDefault(x => x.Controller == "EmptyPageController");
+            PageSystem pageSystemEmpty = db.Set<PageSystem>().FirstOrDefault(x => x.Controller == "EmptyPageContentController");
             Url parentUrl = db.Set<Url>().FirstOrDefault(x=>x.FullPath == "/kurumsal");
 
             Url url = new Url()

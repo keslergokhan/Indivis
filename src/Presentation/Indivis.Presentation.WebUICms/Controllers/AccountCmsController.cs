@@ -10,7 +10,7 @@ namespace Indivis.Presentation.WebUICms.Controllers
     /// 
     /// Giriş / Çıkış / Şifre Yenileme
     /// </summary>
-    public class AccountCmsController : BaseController
+    public class AccountCmsController : BaseCmsController
     {
         private ILogger<AccountCmsController> _logger;
         private readonly IIdentityService _ıdentityService;

@@ -7,7 +7,7 @@ namespace Indivis.Presentation.WebUICms.Controllers
 {
     [Authorize(Roles = "BaseAdmin")]
 	[CmsAddBreadcrumbAttributes(nameof(HomeCmsController), "Anasayfa", "/homecms/index",null)]
-	public class HomeCmsController : BaseController
+	public class HomeCmsController : BaseCmsController
     {
         public HomeCmsController()
         {

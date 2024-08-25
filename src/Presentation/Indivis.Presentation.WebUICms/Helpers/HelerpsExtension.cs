@@ -13,7 +13,7 @@ namespace Indivis.Presentation.WebUICms.Helpers
 			IHtmlContentBuilder html = new HtmlContentBuilder();
 			string li = "<li class=\"breadcrumb-item pe-3 \">{0}</li>";
 
-			KeyValuePair<string, CmsBreadcrumbModel> currentBreadcrumb = BaseController.Breadcrumbs.First(x => x.Key == key);
+			KeyValuePair<string, CmsBreadcrumbModel> currentBreadcrumb = BaseCmsController.Breadcrumbs.First(x => x.Key == key);
 
 			if (string.IsNullOrEmpty(currentBreadcrumb.Value.BaseKey))
 			{
@@ -40,7 +40,7 @@ namespace Indivis.Presentation.WebUICms.Helpers
 
 		private static IEnumerable<KeyValuePair<string,CmsBreadcrumbModel>> CreateBreadcrumb(string key, Dictionary<string, CmsBreadcrumbModel> list)
 		{
-			KeyValuePair<string, CmsBreadcrumbModel> result = BaseController.Breadcrumbs.First(x => x.Key == key);
+			KeyValuePair<string, CmsBreadcrumbModel> result = BaseCmsController.Breadcrumbs.First(x => x.Key == key);
 
 			list.Add(result.Key, result.Value);
 

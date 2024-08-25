@@ -14,6 +14,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Indivis.Core.Application\Indivis.Core.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Indivis.Infrastructure.Persistence\Indivis.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\Controllers\Indivis.Presentation.WebUI.Controllers\Indivis.Presentation.WebUI.Controllers.csproj" />
+    <ProjectReference Include="..\Controllers\Indivis.Presentation.WebUI.Views\Indivis.Presentation.WebUI.Views.csproj" />
+    <ProjectReference Include="..\Controllers\Indivis.Presentation.WebUI.Widgets\Indivis.Presentation.WebUI.Widgets.csproj" />
+    <ProjectReference Include="..\Controllers\Systems\Indivis.Presentation.WebUI.System\Indivis.Presentation.WebUI.System.csproj" />
   </ItemGroup>
 
 </Project>

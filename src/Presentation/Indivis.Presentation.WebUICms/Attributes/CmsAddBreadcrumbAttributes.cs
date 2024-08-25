@@ -21,9 +21,9 @@ namespace Indivis.Presentation.WebUICms.Attributes
 			_key = key;
 			_title = title;
 
-			if (!BaseController.Breadcrumbs.Any(x=>x.Key == key))
+			if (!BaseCmsController.Breadcrumbs.Any(x=>x.Key == key))
 			{
-				BaseController.Breadcrumbs.Add(key,new Models.Helpers.CmsBreadcrumbModel() { Title = title,Link = link,BaseKey = baseKey});
+				BaseCmsController.Breadcrumbs.Add(key,new Models.Helpers.CmsBreadcrumbModel() { Title = title,Link = link,BaseKey = baseKey});
 			}
         }
 		public override void OnActionExecuting(ActionExecutingContext context)

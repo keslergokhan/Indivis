@@ -32,7 +32,6 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.AddSystemWebUIApplication();
 app.UseRouting();
 
 app.UseAuthorization();

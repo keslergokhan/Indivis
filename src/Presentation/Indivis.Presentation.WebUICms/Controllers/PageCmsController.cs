@@ -16,12 +16,11 @@ namespace Indivis.Presentation.WebUICms.Controllers
     [Authorize(Roles = "BaseAdmin")]
     [Route("[controller]")]
     [CmsAddBreadcrumbAttributes(nameof(PageCmsController),"Sayfa","/pagecms/pagesystems")]
-    public class PageCmsController : BaseController
+    public class PageCmsController : BaseCmsController
     {
         public PageCmsController()
         {
         }
-
 
         [Route("createpage/{pageSystemId:guid}")]
         [Route("createpage/{pageSystemId:guid}/{parentPageId:guid}")]

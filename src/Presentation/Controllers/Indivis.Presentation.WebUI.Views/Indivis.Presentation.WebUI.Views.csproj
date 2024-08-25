@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\cmsEdit\**" />
+    <Content Remove="wwwroot\cmsEdit\**" />
+    <EmbeddedResource Remove="wwwroot\cmsEdit\**" />
+    <None Remove="wwwroot\cmsEdit\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 

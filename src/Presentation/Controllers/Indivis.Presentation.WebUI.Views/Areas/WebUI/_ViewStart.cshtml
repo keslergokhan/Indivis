@@ -1,3 +1,11 @@
 ﻿@{
-    Layout = "~/Areas/WebUI/Shareds/Layouts/_Layout.cshtml";
+    @if (User.Identity.IsAuthenticated)
+    {
+        Layout = "~/Areas/WebUI/Shareds/Layouts/_CmsLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Areas/WebUI/Shareds/Layouts/_Layout.cshtml";
+    }
+    
 }

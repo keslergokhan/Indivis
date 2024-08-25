@@ -3,15 +3,45 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <base href="/"/>
+    <base href="/" />
     <title>@ViewData["Title"] - Indivis.Presentation.WebUI</title>
     <!link rel="stylesheet" href="_content/Indivis.Presentation.WebUI.Views/lib/bootstrap/css/bootstrap.min.css" />
     <!link rel="stylesheet" href="_content/Indivis.Presentation.WebUI.Views/css/Stylesheet1.css" />
+    <!link href="_content/Indivis.Presentation.WebUI.Views/cms/css/cms.edit.styles.css?v=@DateTime.Now.ToString("fffffff")" rel="stylesheet" type="text/css" />
     @await RenderSectionAsync("Head", required: false)
 </head>
 <body>
+    
 
     <header>
+       
+        <nav class="navbar navbar-expand-lg navbar-light cms-page-edit-nav">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
+                    <a href="" class="d-lg-none indivis-min">
+                        <span>indivis+</span>
+                    </a>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/"><span class="cms-page-edit-logo-min">indivis+</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/pagecms/pagesystems">Sayfa Sistemleri</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Tasarımlar</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <h1>CMS</h1>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Indivis.Presentation.WebUI</a>
