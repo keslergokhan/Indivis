@@ -49,9 +49,12 @@ namespace Indivis.Presentation.WebUI.Widgets.Common.ViewComponents
             if (pageWidget.PageWidgetSetting == null)
                 throw new NotFoundPageWidgetSettingException(pageWidget.Id);
 
-            Type serviceType = SystemDependencyInjection.Instance.GetAssemblyType(Assembly.GetExecutingAssembly(),pageWidget.PageWidgetSetting.WidgetTemplate.WidgetService.WidgetServiceClassName);
+            Type serviceType = SystemDependencyInjection.Instance.GetAssemblyType(Assembly.GetExecutingAssembly()
+                ,pageWidget.PageWidgetSetting.WidgetTemplate.WidgetService.WidgetServiceTypeName);
 
-            object result = await SystemDependencyInjection.Instance.GeMethodInvokeAsync(serviceType,nameof(IWidgetService<BaseWidgetServiceOutModel>.ExecuteAsync),this._serviceProvider);
+            string methodName = nameof(IWidgetService<BaseWidgetServiceOutModel>.ExecuteAsync);
+
+            object result = await SystemDependencyInjection.Instance.GeMethodInvokeAsync(serviceType, methodName, this._serviceProvider);
 
             return result;
         }

@@ -11,16 +11,17 @@ using System.Threading.Tasks;
 
 namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntity.Widgets
 {
-    public class WidgetServiceConfiguration : BaseEntityConfiguration<WidgetService>
+    public class WidgetFormInputConfiguration : BaseEntityConfiguration<WidgetFormInput>
     {
-        public override void Configure(EntityTypeBuilder<WidgetService> builder)
+        public override void Configure(EntityTypeBuilder<WidgetFormInput> builder)
         {
             base.Configure(builder);
 
-            builder.Property(x => x.WidgetServiceTypeName)
-                .HasMaxLength(EntityConfigurationConstants.MaxStringLv4)
-                .IsRequired(true)
-                .HasColumnOrder(1);
+            builder.Property(x => x.Name).IsRequired(true).HasMaxLength(EntityConfigurationConstants.MaxStringLv3);
+            builder.Property(x=>x.Required).HasDefaultValue<bool>(false);
+            builder.Property(x => x.InputComponentName).IsRequired(true).HasMaxLength(EntityConfigurationConstants.MaxStringLv3);
+
+
         }
     }
 }

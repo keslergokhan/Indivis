@@ -12,6 +12,6 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads
     [CreateMap(typeof(WidgetService))]
     public class ReadWidgetServiceDto : BaseReadEntityDto
     {
-        public string WidgetServiceClassName { get; set; }
+        public string WidgetServiceTypeName { get; set; }
     }
 }

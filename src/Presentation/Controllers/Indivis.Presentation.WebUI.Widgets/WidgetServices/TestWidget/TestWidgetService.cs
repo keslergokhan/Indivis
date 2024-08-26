@@ -1,15 +1,8 @@
 ﻿using Indivis.Core.Application.Attributes.Systems;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
-using Indivis.Presentation.WebUI.Widgets.Common.Models;
 using Indivis.Presentation.WebUI.Widgets.Common.WidgetServices;
-using Indivis.Presentation.WebUI.Widgets.Interfaces.WidgetServices;
 using Indivis.Presentation.WebUI.Widgets.Models.TestWidget;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUI.Widgets.WidgetServices.TestWidget
 {

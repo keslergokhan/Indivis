@@ -404,7 +404,7 @@ namespace Indivis.Infrastructure.Persistence
                         {
                             Id = Guid.NewGuid(),
                             CreateDate = DateTime.Now,
-                            WidgetServiceClassName = "TestWidgetService",
+                            WidgetServiceTypeName = "TestWidgetService",
                             State = 1,
                         }
                     }

@@ -10,6 +10,6 @@ namespace Indivis.Core.Domain.Entities.CoreEntities.Widgets
 {
     public partial class WidgetService : BaseEntity, IEntity
     {
-        public string WidgetServiceClassName { get; set; }
+        public string WidgetServiceTypeName { get; set; }
     }
 }
