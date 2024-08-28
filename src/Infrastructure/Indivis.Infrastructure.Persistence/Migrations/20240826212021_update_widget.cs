@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Indivis.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class NewCreateDatabase : Migration
+    public partial class update_widget : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -118,11 +118,29 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WidgetFormInput",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    State = table.Column<byte>(type: "tinyint", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Label = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Required = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    InputComponentName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WidgetFormInput", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "WidgetService",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    WidgetServiceClassName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    WidgetServiceTypeName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     State = table.Column<byte>(type: "tinyint", nullable: false)
@@ -326,6 +344,28 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WidgetForm",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    State = table.Column<byte>(type: "tinyint", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    WidgetServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WidgetForm", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WidgetForm_WidgetService_WidgetServiceId",
+                        column: x => x.WidgetServiceId,
+                        principalTable: "WidgetService",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "WidgetTemplate",
                 columns: table => new
                 {
@@ -459,6 +499,28 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WidgetForm_WidgetFormInput",
+                columns: table => new
+                {
+                    WidgetFormId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    WidgetFormInputId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WidgetForm_WidgetFormInput", x => new { x.WidgetFormInputId, x.WidgetFormId });
+                    table.ForeignKey(
+                        name: "FK_WidgetForm_WidgetFormInput_WidgetFormInput_WidgetFormInputId",
+                        column: x => x.WidgetFormInputId,
+                        principalTable: "WidgetFormInput",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_WidgetForm_WidgetFormInput_WidgetForm_WidgetFormId",
+                        column: x => x.WidgetFormId,
+                        principalTable: "WidgetForm",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PageWidgetSetting",
                 columns: table => new
                 {
@@ -522,6 +584,7 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     LanguageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PageZoneId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     WidgetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    WidgetJsonData = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PageWidgetSettingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -688,6 +751,16 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                 column: "LanguageId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_WidgetForm_WidgetServiceId",
+                table: "WidgetForm",
+                column: "WidgetServiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WidgetForm_WidgetFormInput_WidgetFormId",
+                table: "WidgetForm_WidgetFormInput",
+                column: "WidgetFormId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WidgetTemplate_LanguageId",
                 table: "WidgetTemplate",
                 column: "LanguageId");
@@ -735,6 +808,9 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                 name: "PageWidget");
 
             migrationBuilder.DropTable(
+                name: "WidgetForm_WidgetFormInput");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -748,6 +824,12 @@ namespace Indivis.Infrastructure.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "PageZone");
+
+            migrationBuilder.DropTable(
+                name: "WidgetFormInput");
+
+            migrationBuilder.DropTable(
+                name: "WidgetForm");
 
             migrationBuilder.DropTable(
                 name: "WidgetTemplate");

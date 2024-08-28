@@ -1,0 +1,11 @@
+﻿@model Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads.ReadWidgetFormInputDto
+
+@{
+    string Id = string.Concat(Model.Name, "_");
+}
+
+
+<div class="mb-3">
+    <label for="@Id" class="form-label">@Model.Label</label>
+    <input type="text" name="@Model.Name" class="form-control" id="@Id">
+</div>

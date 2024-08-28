@@ -4,6 +4,7 @@ using Indivis.Infrastructure.Persistence.Data.IndivisContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Indivis.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IndivisContext))]
-    partial class IndivisContextModelSnapshot : ModelSnapshot
+    [Migration("20240827190014_update-inputs")]
+    partial class updateinputs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -216,15 +219,15 @@ namespace Indivis.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.ManyToMany.WidgetForm_WidgetFormInput", b =>
                 {
-                    b.Property<Guid>("WidgetFormId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("WidgetFormInputId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("WidgetFormId", "WidgetFormInputId");
+                    b.Property<Guid>("WidgetFormId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("WidgetFormInputId");
+                    b.HasKey("WidgetFormInputId", "WidgetFormId");
+
+                    b.HasIndex("WidgetFormId");
 
                     b.ToTable("WidgetForm_WidgetFormInput", (string)null);
                 });

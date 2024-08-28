@@ -95,10 +95,6 @@ namespace Indivis.Infrastructure.Persistence
 
             userManager.AddToRoleAsync(user,"BaseAdmin");
             
-
-            
-
-            
         }
 
         public static void Run(IServiceCollection services)
@@ -107,9 +103,9 @@ namespace Indivis.Infrastructure.Persistence
 
             
 
-            //AddLanguage(db);
+            AddLanguage(db);
 
-            //AddEntity(db);
+            AddEntity(db);
 
             AddUrlSystemType(db);
 
@@ -117,9 +113,8 @@ namespace Indivis.Infrastructure.Persistence
 
             AddPage(db);
 
-            //AddWidget(db);
+            AddWidget(db);
 
-            //AddPageZone(db);
 
             AddPageAnnouncement(db);
 
@@ -342,20 +337,6 @@ namespace Indivis.Infrastructure.Persistence
                 State = 1,
             };
 
-            
-
-
-
-
-
-
-
-
-
-            
-
-
-            
 
             IQueryable<Page> page = db.Set<Page>().AsNoTracking();
 
@@ -364,7 +345,17 @@ namespace Indivis.Infrastructure.Persistence
                 db.Set<Page>().Add(pageAbout);
             }
 
-            
+            if (!db.Set<PageZone>().Any(x => x.Key == "widget-about-top-widgets"))
+            {
+                db.Set<PageZone>().Add(new PageZone()
+                {
+                    Id = new Guid(),
+                    Key = "widget-about-top-widgets",
+                    LanguageId = language.Id,
+                    PageId = pageAbout.Id,
+                    State = 1,
+                });
+            }
 
             db.SaveChanges();
         }
@@ -373,6 +364,7 @@ namespace Indivis.Infrastructure.Persistence
         public static void AddWidget(IndivisContext db)
         {
 
+            Guid widgetServiceId = Guid.NewGuid();
             if (!db.Set<Widget>().Any(x=>x.Name == "TestWidget"))
             {
                 var ss = db.Set<WidgetTemplate>().AsNoTracking().FirstOrDefault(x=>x.Template == "/TestWidget/TestDefault.cshtml");
@@ -402,7 +394,7 @@ namespace Indivis.Infrastructure.Persistence
                         LanguageId = GetLanguageTr(db).Id,
                         WidgetService = new WidgetService()
                         {
-                            Id = Guid.NewGuid(),
+                            Id = widgetServiceId,
                             CreateDate = DateTime.Now,
                             WidgetServiceTypeName = "TestWidgetService",
                             State = 1,
@@ -413,59 +405,72 @@ namespace Indivis.Infrastructure.Persistence
 
                 db.SaveChanges();
             }
-            
-        }
 
-        public static void AddPageZone(IndivisContext db)
-        {
-            Page page1 = db.Set<Page>().FirstOrDefault(x=>x.Name == "Hakkimizda");
 
-            Widget widget = db.Set<Widget>().FirstOrDefault(x => x.Name == "TestWidget");
-
-            if (!db.Set<PageZone>().Any(x=>x.Key == "about-page-top-zone"))
+            if (!db.Set<WidgetForm>().Any(x=>x.Name == "TestWidgetForm"))
             {
-                db.Set<PageZone>().Add(new PageZone()
+                db.Set<WidgetForm>().Add(new WidgetForm()
                 {
                     Id = Guid.NewGuid(),
-                    Key = "about-page-top-zone",
+                    Name = "TestWidgetForm",
                     CreateDate = DateTime.Now,
-                    LanguageId = GetLanguageTr(db).Id,
-                    PageId = page1.Id,
+                    Order = 1,
                     State = 1,
-                    PageWidgets = new List<PageWidget>()
+                    WidgetServiceId = widgetServiceId,
+                    WidgetForm_WidgetFormInputs = new List<WidgetForm_WidgetFormInput>()
                     {
-                        new PageWidget()
+                        new WidgetForm_WidgetFormInput()
                         {
-                            Id = Guid.NewGuid(),
-                            CreateDate = DateTime.Now,
-                            LanguageId= GetLanguageTr(db).Id,
-                            State = 1,
-                            Widget = widget,
-                            PageWidgetSetting = new PageWidgetSetting()
+                            WidgetFormInput = new WidgetFormInput()
                             {
-                                Id = Guid.NewGuid(),
-                                ClassCustom = "",
-                                CreateDate= DateTime.Now,
-                                Grid = "col-12",
-                                IsAsync = false,
-                                IsShow = false,
-                                Order = 1,
+                                InputComponentName = "DefaultText",
+                                Label = "Başlık",
+                                Name = "Title",
                                 State = 1,
+                                Order = 1
+                            }
+                        },
+                        new WidgetForm_WidgetFormInput()
+                        {
+                            WidgetFormInput = new WidgetFormInput()
+                            {
+                                InputComponentName = "DefaultTextArea",
+                                Label = "Açıklama",
+                                Name = "Description",
+                                State = 1,
+                                Order = 2
                             }
                         }
-                    }
-
+                    },
                 });
-
-                db.SaveChanges();
             }
 
-            
+            if (!db.Set<PageWidget>().Any(x=>x.PageZone.Key == "widget-about-top-widgets"))
+            {
+                db.Set<PageWidget>().Add(new PageWidget()
+                {
+                    Id= Guid.NewGuid(),
+                    PageZoneId = db.Set<PageZone>().First(x=>x.Key == "widget-about-top-widgets").Id,
+                    State = 1,
+                    LanguageId = GetLanguageTr(db).Id,
+                    WidgetId = db.Set<Widget>().First(x=>x.Name == "TestWidget").Id,
+                    WidgetJsonData = @"{""Title"":""Merhaba dünya"",""Description"":""bu bir denemeçıklaması""}",
+                    PageWidgetSetting = new PageWidgetSetting()
+                    {
+                        Grid = "3",
+                        IsAsync = false,
+                        IsShow = true,
+                        Order = 1,
+                        State = 1,
+                        ClassCustom = "",
+                        WidgetTemplateId = db.Set<WidgetTemplate>().AsNoTracking().FirstOrDefault(x => x.Template == "/TestWidget/TestDefault.cshtml").Id,
+                    }
+                });;
+            }
 
 
-
+            db.SaveChanges();
         }
-
 
 
         public static void AddPageAnnouncement(IndivisContext db)

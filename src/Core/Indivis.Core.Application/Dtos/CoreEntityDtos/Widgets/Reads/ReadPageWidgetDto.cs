@@ -30,5 +30,6 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads
 
         public ReadPageWidgetSettingDto PageWidgetSetting { get; set; }
         public Guid PageWidgetSettingId { get; set; }
+        public string WidgetJsonData { get; set; }
     }
 }

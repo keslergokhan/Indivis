@@ -3,6 +3,7 @@ using Indivis.Core.Application.Dtos.CoreEntityDtos.PageSystems.Reads;
 using Indivis.Core.Application.Enums.Systems;
 using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Application.Interfaces.Dtos;
+using Indivis.Core.Application.Interfaces.Features;
 using Indivis.Core.Application.Interfaces.Features.FeatureFactories;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
@@ -20,7 +21,8 @@ namespace Indivis.Core.Application.Features.Pages.Queries
     public class GetPageSystemsAndPageQuery : 
         IRequest<IResultDataControl<List<ReadPageSystemDto>>>,
         IQueryFactory<GetPageSystemsAndPageQuery>,
-        IEntityLanguageDto
+        IEntityLanguageDto,
+        IOnlineAndOfflineQuery
     {
         public bool OnlineAndOffline { get;set; }
         public StateEnum State { get; set; }

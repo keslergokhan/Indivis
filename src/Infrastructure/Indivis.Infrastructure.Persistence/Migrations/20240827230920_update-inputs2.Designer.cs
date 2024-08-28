@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Indivis.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IndivisContext))]
-    [Migration("20240724214156_NewCreateDatabase")]
-    partial class NewCreateDatabase
+    [Migration("20240827230920_update-inputs2")]
+    partial class updateinputs2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -215,6 +215,21 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Language", (string)null);
+                });
+
+            modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.ManyToMany.WidgetForm_WidgetFormInput", b =>
+                {
+                    b.Property<Guid>("WidgetFormId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("WidgetFormInputId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("WidgetFormId", "WidgetFormInputId");
+
+                    b.HasIndex("WidgetFormInputId");
+
+                    b.ToTable("WidgetForm_WidgetFormInput", (string)null);
                 });
 
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Page", b =>
@@ -437,6 +452,10 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("WidgetId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("WidgetJsonData")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("LanguageId");
@@ -606,6 +625,89 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     b.ToTable("Widget", (string)null);
                 });
 
+            modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Widgets.WidgetForm", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnOrder(0);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnOrder(998);
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnOrder(999);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<byte>("State")
+                        .HasColumnType("tinyint")
+                        .HasColumnOrder(9999);
+
+                    b.Property<Guid>("WidgetServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WidgetServiceId");
+
+                    b.ToTable("WidgetForm", (string)null);
+                });
+
+            modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Widgets.WidgetFormInput", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnOrder(0);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnOrder(998);
+
+                    b.Property<string>("InputComponentName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnOrder(999);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Required")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<byte>("State")
+                        .HasColumnType("tinyint")
+                        .HasColumnOrder(9999);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WidgetFormInput", (string)null);
+                });
+
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Widgets.WidgetService", b =>
                 {
                     b.Property<Guid>("Id")
@@ -625,7 +727,7 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         .HasColumnType("tinyint")
                         .HasColumnOrder(9999);
 
-                    b.Property<string>("WidgetServiceClassName")
+                    b.Property<string>("WidgetServiceTypeName")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)")
@@ -960,6 +1062,25 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     b.Navigation("Url");
                 });
 
+            modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.ManyToMany.WidgetForm_WidgetFormInput", b =>
+                {
+                    b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Widgets.WidgetForm", "WidgetForm")
+                        .WithMany("WidgetForm_WidgetFormInputs")
+                        .HasForeignKey("WidgetFormId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Widgets.WidgetFormInput", "WidgetFormInput")
+                        .WithMany("WidgetForm_WidgetFormInputs")
+                        .HasForeignKey("WidgetFormInputId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("WidgetForm");
+
+                    b.Navigation("WidgetFormInput");
+                });
+
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Page", b =>
                 {
                     b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Language", null)
@@ -1099,6 +1220,17 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Widgets.WidgetForm", b =>
+                {
+                    b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Widgets.WidgetService", "WidgetService")
+                        .WithMany()
+                        .HasForeignKey("WidgetServiceId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("WidgetService");
+                });
+
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Widgets.WidgetTemplate", b =>
                 {
                     b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Language", null)
@@ -1200,6 +1332,16 @@ namespace Indivis.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Widgets.Widget", b =>
                 {
                     b.Navigation("WidgetTemplates");
+                });
+
+            modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Widgets.WidgetForm", b =>
+                {
+                    b.Navigation("WidgetForm_WidgetFormInputs");
+                });
+
+            modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Widgets.WidgetFormInput", b =>
+                {
+                    b.Navigation("WidgetForm_WidgetFormInputs");
                 });
 #pragma warning restore 612, 618
         }

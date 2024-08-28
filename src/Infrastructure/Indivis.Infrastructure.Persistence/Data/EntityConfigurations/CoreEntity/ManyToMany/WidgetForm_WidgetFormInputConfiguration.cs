@@ -13,10 +13,12 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
     {
         public void Configure(EntityTypeBuilder<WidgetForm_WidgetFormInput> builder)
         {
-            builder.ToTable(nameof(Url_UrlSystemType));
-            builder.HasKey(src => new { 
-                src.WidgetFormInputId,
-                src.WidgetFormId,
+            builder.ToTable(nameof(WidgetForm_WidgetFormInput));
+
+            builder.HasKey(x => new
+            {
+                x.WidgetFormId,
+                x.WidgetFormInputId
             });
 
             builder.HasOne(x => x.WidgetForm)

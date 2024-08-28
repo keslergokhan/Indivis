@@ -1,4 +1,6 @@
 ﻿using Indivis.Core.Application.Attributes.Systems;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads;
+using Indivis.Core.Application.Interfaces.Data.Presentation;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
 using Indivis.Presentation.WebUI.Widgets.Common.WidgetServices;
@@ -9,15 +11,20 @@ namespace Indivis.Presentation.WebUI.Widgets.WidgetServices.TestWidget
     [DependencyRegister(typeof(TestWidgetService), DependencyTypes.Scopet)]
     public class TestWidgetService : BaseWidgetService<TestWidgetOutModel>
     {
-        public async override Task<IResultDataControl<TestWidgetOutModel>> ExecuteAsync()
+        private readonly ICurrentResponse _currentResponse;
+
+        public TestWidgetService(ICurrentResponse currentResponse)
+        {
+            _currentResponse = currentResponse;
+        }
+
+        public async override Task<IResultDataControl<TestWidgetOutModel>> ExecuteAsync(ReadPageWidgetDto pageWidget)
         {
             IResultDataControl<TestWidgetOutModel> model = new ResultDataControl<TestWidgetOutModel>();
+            model.SetData(base.JsonConvertToModel(pageWidget));
 
             try
             {
-                TestWidgetOutModel data = new TestWidgetOutModel();
-                data.Title = "Merhaba dünya";
-                model.SuccessSetData(data);
             }
             catch (Exception exception)
             {

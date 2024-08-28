@@ -54,7 +54,7 @@ namespace Indivis.Presentation.WebUI.Widgets.Common.ViewComponents
 
             string methodName = nameof(IWidgetService<BaseWidgetServiceOutModel>.ExecuteAsync);
 
-            object result = await SystemDependencyInjection.Instance.GeMethodInvokeAsync(serviceType, methodName, this._serviceProvider);
+            object result = await SystemDependencyInjection.Instance.GeMethodInvokeAsync(serviceType, methodName, this._serviceProvider,pageWidget);
 
             return result;
         }

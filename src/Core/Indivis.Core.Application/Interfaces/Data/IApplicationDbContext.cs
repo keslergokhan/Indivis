@@ -27,6 +27,8 @@ namespace Indivis.Core.Application.Interfaces.Data
         public DbSet<PageWidgetSetting> PageWidgetSettings { get; }
         public DbSet<WidgetService> WidgetServices { get; }
         public DbSet<WidgetTemplate> WidgetTemplates { get; }
+        public DbSet<WidgetForm> WidgetForms { get; }
+        public DbSet<WidgetFormInput> WidgetFormInputs { get; }
 
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken);

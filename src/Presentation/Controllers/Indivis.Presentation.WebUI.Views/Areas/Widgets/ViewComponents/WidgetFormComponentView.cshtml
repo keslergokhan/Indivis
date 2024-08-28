@@ -1,0 +1,21 @@
+﻿@using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads;
+@model Indivis.Presentation.WebUI.Widgets.Models.ViewComponents.WidgetFormComponentOutModel
+
+
+@foreach (ReadWidgetFormDto form in Model.WidgetFormList)
+{
+
+
+    <form class="d-none">
+        @foreach (ReadWidgetForm_WidgetFormInputDto input in form.WidgetForm_WidgetFormInputs)
+        {
+            @await Component.InvokeAsync(input.WidgetFormInput.InputComponentName,input.WidgetFormInput)
+        }
+        
+      
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+}
+
+

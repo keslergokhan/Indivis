@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Indivis.Presentation.WebUI.Widgets.ViewComponents;
+@using Indivis.Presentation.WebUI.Widgets.ViewComponents.Widgets
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -41,7 +44,6 @@
             </div>
         </nav>
 
-        <h1>CMS</h1>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Indivis.Presentation.WebUI</a>
@@ -70,6 +72,8 @@
             &copy; 2024 - Indivis.Presentation.WebUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    @await Component.InvokeAsync(nameof(WidgetFormComponent));
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

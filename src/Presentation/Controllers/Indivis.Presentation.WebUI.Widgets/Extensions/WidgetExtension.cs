@@ -1,18 +1,11 @@
-﻿using Indivis.Core.Application.Common.Data.Presentation;
-using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads;
+﻿using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads;
 using Indivis.Core.Application.Interfaces.Data.Presentation;
-using Indivis.Core.Domain.Entities.CoreEntities.Widgets;
 using Indivis.Presentation.WebUI.Widgets.Models.ViewComponents;
 using Indivis.Presentation.WebUI.Widgets.ViewComponents.Widgets;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUI.Widgets.Extensions
 {
