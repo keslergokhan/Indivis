@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Presentation.WebUI.Widgets.Models.ViewComponents
+namespace Indivis.Presentation.WebUICms.Models.ViewComponents
 {
     public class WidgetFormComponentOutModel
     {

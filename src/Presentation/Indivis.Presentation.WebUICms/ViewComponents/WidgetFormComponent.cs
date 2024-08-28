@@ -2,7 +2,7 @@
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads;
 using Indivis.Core.Application.Features.Systems.Queries.Widgets;
 using Indivis.Core.Application.Interfaces.Results;
-using Indivis.Presentation.WebUI.Widgets.Models.ViewComponents;
+using Indivis.Presentation.WebUICms.Models.ViewComponents;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Indivis.Presentation.WebUI.Widgets.ViewComponents.Widgets
+namespace Indivis.Presentation.WebUICms.ViewComponents
 {
     public class WidgetFormComponent : ViewComponent
     {
@@ -38,7 +38,7 @@ namespace Indivis.Presentation.WebUI.Widgets.ViewComponents.Widgets
             }
 
 
-            return View("~/Areas/Widgets/ViewComponents/WidgetFormComponentView.cshtml",model);
+            return View("~/Views/ViewComponents/WidgetFormComponentView.cshtml",model);
         }
     }
 }
