@@ -3,14 +3,14 @@
 @using Indivis.Presentation.WebUI.Widgets.Extensions;
 @inject ICurrentResponse res;
 
-<section>
-    @res.CurrentPage.PageSystem.Name;
-    @res.CurrentPage.Name
-</section>
 
-@await Component.Zone("widget-about-top-widgets", res)
+<div class="container">
+    <section>
+        @res.CurrentPage.PageSystem.Name;
+        @res.CurrentPage.Name
+    </section>
 
-@section Head{
-    <link rel="stylesheet" href="~/css/Stylesheet1.css" />
-    <link href="_content/Indivis.Presentation.WebUI.Views/css/Stylesheet1.css" rel="stylesheet" />
-}
+    @await Component.Zone("widget-about-top-widgets", res)
+</div>
+
+

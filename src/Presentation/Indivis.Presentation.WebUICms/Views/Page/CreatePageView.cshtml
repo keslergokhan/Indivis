@@ -52,10 +52,5 @@
 
 
 @section Footer{
-    <script type="module">
-        import CreatePageService from './js/cms/Page/CreatePage.js?v2=@DateTime.Now.ToString("fffffff")'
-
-        const createPageService = new CreatePageService(".create-page-from", "/api/PageApi");
-        createPageService.executeAsync();
-    </script>
+    <script type="module" src="/worker-assets/pages/CreatePage.js"></script>
 }

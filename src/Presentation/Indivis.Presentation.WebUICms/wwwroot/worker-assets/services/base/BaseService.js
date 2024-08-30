@@ -1,7 +1,4 @@
-﻿
-
-
-export class BaseService {
+﻿export class BaseService {
     /**
      * @param {JustValidate}
      * @param {string} formClassName

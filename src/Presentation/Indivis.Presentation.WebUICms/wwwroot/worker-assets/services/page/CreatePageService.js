@@ -1,5 +1,5 @@
-﻿import { HelperFunction, JustValidateMessage } from '../Helpers/HelperFunctions.js'
-import { BaseService } from '../Base/BaseService.js'
+﻿import { HelperFunction, JustValidateMessage } from '../helpers/HelperFunctions.js'
+import { BaseService } from '../base/BaseService.js'
 
 export default class CreatePageService extends BaseService {
 

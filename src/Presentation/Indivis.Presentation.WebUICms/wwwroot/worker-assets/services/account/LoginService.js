@@ -1,5 +1,5 @@
-﻿import { JustValidateMessage, HelperFunction  } from '../Helpers/HelperFunctions.js'
-import { BaseService } from '../Base/BaseService.js'
+﻿import { JustValidateMessage, HelperFunction  } from '../helpers/HelperFunctions.js'
+import { BaseService } from '../base/BaseService.js'
 
 
 export default class LoginService extends BaseService {

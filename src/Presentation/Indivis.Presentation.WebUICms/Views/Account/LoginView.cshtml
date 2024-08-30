@@ -104,11 +104,5 @@
 <!--end::Body-->
 
 @section Footer{
-	<script type="module">
-		import LoginService from './js/cms/Account/Login.js';
-
-		const loginService = new LoginService(".login-form", "/api/accountApi");
-		loginService.executeAsync();
-
-	</script>
+	<script type="module" src="/worker-assets/pages/LoginPage.js?v=4"></script>
 }

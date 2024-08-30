@@ -1,0 +1,5 @@
+﻿.page-systems-card .card-body ol li ol li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    min-height: 75px !important;
+}
