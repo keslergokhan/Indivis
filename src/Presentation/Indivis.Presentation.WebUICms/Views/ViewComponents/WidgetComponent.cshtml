@@ -1,0 +1,46 @@
+﻿@using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads
+@model Indivis.Presentation.WebUICms.Models.ViewComponents.WidgetComponentOutModel
+
+<div class="cms-editpage-setting-p d-none">
+
+    <div class="cms-editpage-setting">
+        <div class="cms-editpage-setting__button js-cms-editpage-setting-button">
+            <button class="btn ">Tasarımlar</button>
+        </div>
+        <div class="cms-editpage-setting__header">
+            <h4>Widget Listesi</h4>
+        </div>
+        <div class="cms-editpage-setting__body">
+            @foreach (ReadWidgetDto item in Model.Widgets)
+            {
+                <div class="cms-editpage-setting__item">
+                    <div class="cms-editpage-setting__item__image">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M368 80l32 0 0 32-32 0 0-32zM352 32c-17.7 0-32 14.3-32 32L128 64c0-17.7-14.3-32-32-32L32 32C14.3 32 0 46.3 0 64l0 64c0 17.7 14.3 32 32 32l0 192c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32l64 0c17.7 0 32-14.3 32-32l192 0c0 17.7 14.3 32 32 32l64 0c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32l0-192c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32l-64 0zM96 160c17.7 0 32-14.3 32-32l192 0c0 17.7 14.3 32 32 32l0 192c-17.7 0-32 14.3-32 32l-192 0c0-17.7-14.3-32-32-32l0-192zM48 400l32 0 0 32-32 0 0-32zm320 32l0-32 32 0 0 32-32 0zM48 112l0-32 32 0 0 32-32 0z" /></svg>
+                    </div>
+                    <div class="cms-editpage-setting__item__text">
+                        <div class="cms-editpage-setting__item__title">
+                            <span>@item.Name</span>
+                        </div>
+                        <div class="cms-editpage-setting__item__des">
+                            <p>sdfsd sd sdfsf sdfsd sfsdfs sdfsdfsd ss sdfsd sdfsdfsd sdfsd</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="cms-editpage-setting__item">
+                <div class="cms-editpage-setting__item__image">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M368 80l32 0 0 32-32 0 0-32zM352 32c-17.7 0-32 14.3-32 32L128 64c0-17.7-14.3-32-32-32L32 32C14.3 32 0 46.3 0 64l0 64c0 17.7 14.3 32 32 32l0 192c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32l64 0c17.7 0 32-14.3 32-32l192 0c0 17.7 14.3 32 32 32l64 0c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32l0-192c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32l-64 0zM96 160c17.7 0 32-14.3 32-32l192 0c0 17.7 14.3 32 32 32l0 192c-17.7 0-32 14.3-32 32l-192 0c0-17.7-14.3-32-32-32l0-192zM48 400l32 0 0 32-32 0 0-32zm320 32l0-32 32 0 0 32-32 0zM48 112l0-32 32 0 0 32-32 0z" /></svg>
+                </div>
+                <div class="cms-editpage-setting__item__text">
+                    <div class="cms-editpage-setting__item__title">
+                        <span>sdfsdfs</span>
+                    </div>
+                    <div class="cms-editpage-setting__item__des">
+                        <p>sdfsd sd sdfsf sdfsd</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

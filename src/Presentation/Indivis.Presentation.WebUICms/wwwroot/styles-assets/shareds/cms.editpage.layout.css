@@ -1,7 +1,10 @@
-﻿.cms-editpage-top{
+﻿
+
+.cms-editpage-top{
     padding-left:20px;
     padding-right:20px;
     min-height:50px;
+    z-index:999;
 }
 
 .cms-editpage-top__menu__logo {
@@ -44,8 +47,6 @@
     list-style-type:none;
 }
 
-
-
 .cms-editpage-top__menu__left ul, .cms-editpage-top__menu__right ul {
     height: 50px;
     display: flex;
@@ -53,6 +54,79 @@
     gap: 20px;
     align-items: center;
 }
+
+.cms-editpage-setting-p {
+    position: relative;
+}
+
+
+.cms-editpage-setting {
+    position: fixed;
+    color: white;
+    z-index: 99;
+    background: #1e1e2d;
+    right: 0px;
+    z-index: 99;
+    top: 75px;
+    padding: 0 20px 40px 20px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    min-height: 200px;
+    max-width: 230px;
+    transition: 0.3s;
+}
+
+.cms-editpage-setting__header{
+    padding-bottom:20px;
+}
+.cms-editpage-setting__button {
+    position: relative;
+    background: #ef305e;
+    width: 100px;
+    z-index: 5;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-left: -87px;
+    top: 50px;
+    transform: rotate(-90deg);
+}
+
+.cms-editpage-setting--toggle {
+    right:-230px;
+}
+
+.cms-editpage-setting__item{
+    display:flex;
+    max-height:100px;
+    overflow:hidden;
+    margin-top:10px;
+    border-bottom:solid 1px;
+}
+
+.cms-editpage-setting__item__image {
+    display: block;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cms-editpage-setting__item__image svg{
+    fill:white;
+    height:35px;
+}
+
+.cms-editpage-setting__item__text{
+    width:70%;
+}
+
+.cms-editpage-setting__item__title span{
+    font-size:15px;
+}
+.cms-editpage-setting__item__des p{
+    font-size:13px;
+}
+
 
 @media (max-width: 768px) {
     .cms-editpage-top__menu {

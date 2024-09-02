@@ -56,6 +56,9 @@ namespace Indivis.Infrastructure.Persistence
 
             //Identitty(services);
             //Run(services);
+
+
+           
             return services;
         }
 
@@ -100,8 +103,6 @@ namespace Indivis.Infrastructure.Persistence
         public static void Run(IServiceCollection services)
         {
             IndivisContext db = services.BuildServiceProvider().GetService<IndivisContext>();
-
-            
 
             AddLanguage(db);
 

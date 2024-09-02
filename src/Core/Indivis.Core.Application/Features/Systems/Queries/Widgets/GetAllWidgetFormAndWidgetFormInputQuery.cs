@@ -18,8 +18,8 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Widgets
 {
     public class GetAllWidgetFormAndWidgetFormInputQuery :
         IRequest<IResultDataControl<List<ReadWidgetFormDto>>>,
-        IOnlineAndOfflineQuery,
-        IStateQuery
+        IOnlineAndOfflineFilterQuery,
+        IStateFilterQuery
     {
         public bool OnlineAndOffline { get; set; }
         public StateEnum State { get; set; }

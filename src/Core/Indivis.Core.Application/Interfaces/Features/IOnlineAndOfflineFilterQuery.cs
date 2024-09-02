@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Interfaces.Features
 {
-    public interface IOnlineAndOfflineQuery
+    public interface IOnlineAndOfflineFilterQuery
     {
         public bool OnlineAndOffline { get; set; }
     }

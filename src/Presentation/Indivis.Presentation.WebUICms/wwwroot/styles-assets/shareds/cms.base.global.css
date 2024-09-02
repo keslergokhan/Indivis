@@ -29,7 +29,7 @@
 
 
 /* Genel Buton Stili */
-.btn {
+.cms-btn {
     display: inline-block;
     font-weight: 400;
     color: #fff;
@@ -48,109 +48,108 @@
 /* Renkli Butonlar */
 
 /* Primary (Mavi) */
-.btn-primary {
+.cms-btn-primary {
     color: #fff;
     background-color: #0d6efd;
     border-color: #0d6efd;
 }
 
-    .btn-primary:hover {
-        color: #fff;
-        background-color: #0b5ed7;
-        border-color: #0a58ca;
-    }
+.cms-btn-primary:hover {
+    color: #fff;
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
 
 /* Secondary (Gri) */
-.btn-secondary {
+.cms-btn-secondary {
     color: #fff;
     background-color: #6c757d;
     border-color: #6c757d;
 }
 
-    .btn-secondary:hover {
+    .cms-btn-secondary:hover {
         color: #fff;
         background-color: #5c636a;
         border-color: #565e64;
     }
 
 /* Success (Yeşil) */
-.btn-success {
+.cms-btn-success {
     color: #fff;
     background-color: #198754;
     border-color: #198754;
 }
 
-    .btn-success:hover {
-        color: #fff;
-        background-color: #157347;
-        border-color: #146c43;
-    }
+.cms-btn-success:hover {
+    color: #fff;
+    background-color: #157347;
+    border-color: #146c43;
+}
 
 /* Danger (Kırmızı) */
-.btn-danger {
+.cms-btn-danger {
     color: #fff;
     background-color: #dc3545;
     border-color: #dc3545;
 }
 
-    .btn-danger:hover {
+    .cms-btn-danger:hover {
         color: #fff;
         background-color: #bb2d3b;
         border-color: #b02a37;
     }
 
 /* Warning (Sarı) */
-.btn-warning {
+.cms-btn-warning {
     color: #212529;
     background-color: #ffc107;
     border-color: #ffc107;
 }
 
-    .btn-warning:hover {
+    .cms-btn-warning:hover {
         color: #212529;
         background-color: #e0a800;
         border-color: #d39e00;
     }
 
 /* Info (Açık Mavi) */
-.btn-info {
+.cms-btn-info {
     color: #fff;
     background-color: #0dcaf0;
     border-color: #0dcaf0;
 }
 
-    .btn-info:hover {
+    .cms-btn-info:hover {
         color: #fff;
         background-color: #31d2f2;
         border-color: #25c0e5;
     }
 
 /* Light (Açık) */
-.btn-light {
+.cms-btn-light {
     color: #212529;
     background-color: #f8f9fa;
     border-color: #f8f9fa;
 }
 
-    .btn-light:hover {
+    .cms-btn-light:hover {
         color: #212529;
         background-color: #e2e6ea;
         border-color: #dae0e5;
     }
 
 /* Dark (Koyu) */
-.btn-dark {
+.cms-btn-dark {
     color: #fff;
     background-color: #212529;
     border-color: #212529;
 }
 
-    .btn-dark:hover {
-        color: #fff;
-        background-color: #1c1f23;
-        border-color: #1a1e21;
-    }
+.cms-btn-dark:hover {
+    color: #fff;
+    background-color: #1c1f23;
+    border-color: #1a1e21;
+}
 
-/* Link (
 
 

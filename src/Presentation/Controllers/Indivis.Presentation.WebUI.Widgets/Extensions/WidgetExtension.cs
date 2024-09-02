@@ -32,7 +32,8 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
 
             if (pageZone.PageWidgets.Count <= 0)
             {
-                return null;
+                zone.WriteTo(writer, HtmlEncoder.Default);
+                return new HtmlString(writer.ToString());
             }
 
             foreach (ReadPageWidgetDto pageWidget in pageZone.PageWidgets.Where(x=>x.PageWidgetSetting.IsShow == true).OrderBy(x=>x.PageWidgetSetting.Order))

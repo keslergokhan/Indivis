@@ -25,6 +25,7 @@ export const JustValidateMessage = {
 
 }
 
+
 export const HelperFunction = {
 
     /**
@@ -83,5 +84,19 @@ export const HelperFunction = {
 
 
         return jsonObject;
+    },
+
+    /**
+     * 
+     * @param {ParentNode} element toggle işlemi uygulanacak element
+     * @param {string} toggleClass toggle aktif olacak class
+     */
+    toggleClass:(element,toggleClass) => {
+        if ([...element.classList].indexOf(toggleClass) == -1) {
+            element.classList.add(toggleClass);
+
+        } else {
+            element.classList.remove(toggleClass);
+        }
     }
 }

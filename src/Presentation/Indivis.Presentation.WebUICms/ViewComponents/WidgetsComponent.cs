@@ -13,32 +13,33 @@ using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUICms.ViewComponents
 {
-    public class WidgetFormComponent : ViewComponent
+    public class WidgetsComponent : ViewComponent
     {
         private readonly IMediator _mediator;
 
-        public WidgetFormComponent(IMediator mediator)
+        public WidgetsComponent(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            WidgetFormComponentOutModel model = new WidgetFormComponentOutModel();
+            WidgetComponentOutModel model = new WidgetComponentOutModel();
 
-
-            IResultDataControl<List<ReadWidgetFormDto>> result = await this._mediator.Send(new GetAllWidgetFormAndWidgetFormInputQuery()
+            IResultDataControl<List<ReadWidgetDto>> resultWidgets = await this._mediator.Send(new GetAllWidgetsSystemQuery()
             {
                 State = Core.Application.Enums.Systems.StateEnum.Online
             });
 
-            if (result.IsSuccess)
+
+            if (!resultWidgets.IsSuccess)
             {
-                model.WidgetFormList = result.Data;
+                throw new Exception("Widget listesine ulaşılamdı !");
             }
 
+            model.Widgets = resultWidgets.Data;
 
-            return View("~/Views/ViewComponents/WidgetFormComponentView.cshtml",model);
+            return View("~/Views/ViewComponents/WidgetComponent.cshtml", model);
         }
     }
 }

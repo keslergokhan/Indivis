@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Interfaces.Features
 {
-    public interface IStateQuery
+    public interface IStateFilterQuery
     {
         public StateEnum State { get; set; }
     }

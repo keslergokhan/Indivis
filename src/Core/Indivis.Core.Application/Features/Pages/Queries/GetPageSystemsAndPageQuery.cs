@@ -22,7 +22,7 @@ namespace Indivis.Core.Application.Features.Pages.Queries
         IRequest<IResultDataControl<List<ReadPageSystemDto>>>,
         IQueryFactory<GetPageSystemsAndPageQuery>,
         IEntityLanguageDto,
-        IOnlineAndOfflineQuery
+        IOnlineAndOfflineFilterQuery
     {
         public bool OnlineAndOffline { get;set; }
         public StateEnum State { get; set; }

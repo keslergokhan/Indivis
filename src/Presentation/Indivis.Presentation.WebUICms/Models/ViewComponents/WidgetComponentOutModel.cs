@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUICms.Models.ViewComponents
 {
-    public class WidgetFormComponentOutModel
+    public class WidgetComponentOutModel
     {
-        public WidgetFormComponentOutModel()
+        public WidgetComponentOutModel()
         {
-            this.WidgetFormList = new List<ReadWidgetFormDto>();
+            this.Widgets = new List<ReadWidgetDto>();
         }
-        public List<ReadWidgetFormDto> WidgetFormList { get; set; }
+        public List<ReadWidgetDto> Widgets { get; set; }
     }
 }

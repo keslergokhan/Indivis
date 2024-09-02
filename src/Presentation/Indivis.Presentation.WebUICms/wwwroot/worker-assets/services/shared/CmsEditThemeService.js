@@ -1,31 +1,74 @@
-﻿import { CustomEvent } from '../common/CustomEvent.js';
-
-
-export const EventArray = [
+﻿export class CmsEditThemeService {
     /**
-     * Menu toggle event
+     * Sayfa içerisindeki zone yapılarına yeni widget ekleme buttonu
+     * @param {Event} e
      */
-    new CustomEvent(
-        "click",
-        ".js-top-menu-button",
-        /**
-         * 
-         * @param {MouseEvent} e
-         */
-        function (e) {
+    createZone = (e) => {
+        /** @type {NodeListOf}  */
+        const zoneList = document.querySelectorAll(".zone-section");
 
-            /**
-             * @type {ParentNode}
-             */
-            const menu = document.querySelector(".cms-editpage-top__menu__group");
-
-            if ([...document.querySelector(".cms-editpage-top__menu__group").classList].indexOf("cms-editpage-top__menu__group--toggle") == -1) {
-                menu.classList.add("cms-editpage-top__menu__group--toggle");
-
-            } else {
-                menu.classList.remove("cms-editpage-top__menu__group--toggle");
+        zoneList.forEach((x) => 
+        {
+            if (x) {
+                new PageZone(x).execute();
             }
+                
+        })
+        
 
-        },
-    ),
-]
+    }
+}
+
+
+
+
+class PageZone {
+
+    /**
+     * 
+     * @param {Element} zone
+     */
+    constructor(zone) {
+        this.Zone = zone;
+    }
+
+    /**
+     * Zone yeni widget ekleme button HTML kodu
+     * @param {any} attrKey button özellik adı
+     * @returns
+     */
+    getZoneAddButtonHTML = (attrKey) => {
+        return `<button ${attrKey}="${this.getZoneId()}">Ekle</button>`;
+    }
+
+    getZoneId = () => {
+        return this.Zone.getAttribute("data-zone-id");
+    }
+    getZoneKey = () => {
+        return this.Zone.getAttribute("data-zone-key");
+    }
+
+    /**
+     * Zone alanına widget ekleme buttonu oluşturur
+     * @returns {Element}
+     */
+    zoneSetButtonHanlderAsync = async () => {
+        const key = "zone-add-widget-btn";
+        this.Zone.insertAdjacentHTML('afterbegin', this.getZoneAddButtonHTML(key));
+        return this.Zone.querySelector(`[${key}="${this.getZoneId()}"]`)
+    }
+
+    zoneButtonClickEvent = async () => {
+
+        const button = await this.zoneSetButtonHanlderAsync();
+
+        button.addEventListener('click', () => {
+            console.log(this.getZoneId());
+        })
+        
+    }
+
+    execute = () => {
+        this.zoneButtonClickEvent();
+    }
+}
