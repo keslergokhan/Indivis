@@ -70,11 +70,12 @@ namespace Indivis.Presentation.WebUI.System.Services.DynamicRoutes
             this._currentRequest.Path = context.Request.Path;
             this._currentRequest.Schema = context.Request.Scheme;
             
-            this._currentRequest.Path = this._currentRequest.Path.Replace(WebUISystemContant.CmsPageEditRoute, "");
+            this._currentRequest.Path = this._currentRequest.Path.Replace(WebUISystemContant.CmsPageEditRoute, "").Replace(WebUISystemContant.CmsWidgetTemplateRoute, "");
             this._currentRequest.FullPath = $"{context.Request.Scheme}://{context.Request.Host}{this._currentRequest.Path}";
             this._currentRequest.BaseUrl = $"{context.Request.Scheme}://{context.Request.Host}";
 
-            if (context.Request.Path.HasValue && context.Request.Path.Value.StartsWith(WebUISystemContant.CmsPageEditRoute) && context.Request.Path.Value.Contains(WebUISystemContant.CmsPageEditRoute))
+            if (context.Request.Path.HasValue && context.Request.Path.Value.StartsWith(WebUISystemContant.CmsPageEditRoute) 
+                && context.Request.Path.Value.Contains(WebUISystemContant.CmsPageEditRoute))
             {
                 this._currentRequest.EditMode = true;
                 this._currentResponse.EditMode = true;
@@ -87,11 +88,19 @@ namespace Indivis.Presentation.WebUI.System.Services.DynamicRoutes
 
             await UrlSystemTypeInvokerAsync(context);
 
+            if (context.Request.Path.HasValue && context.Request.Path.Value.StartsWith(WebUISystemContant.CmsWidgetTemplateRoute)
+                && context.Request.Path.Value.Contains(WebUISystemContant.CmsWidgetTemplateRoute))
+            {
+                values["controller"] = "PageZoneApi";
+                values["action"] = "GetWidgetTemplate";
+                return values;
+            }
 
             if (this._currentResponse.CurrentPage != null)
 			{
                 values["controller"] = this._currentResponse.CurrentPage.PageSystem.Controller.Replace("Controller", "");
                 values["action"] = this._currentResponse.CurrentPage.PageSystem.Action;
+                return values;
 			}
 			
 

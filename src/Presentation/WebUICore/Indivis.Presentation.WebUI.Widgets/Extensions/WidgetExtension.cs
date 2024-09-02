@@ -1,8 +1,11 @@
-﻿using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads;
+﻿using Indivis.Core.Application.Common.Data.Presentation;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads;
 using Indivis.Core.Application.Interfaces.Data.Presentation;
+using Indivis.Core.Domain.Entities.CoreEntities.Widgets;
 using Indivis.Presentation.WebUI.Widgets.Models.ViewComponents;
 using Indivis.Presentation.WebUI.Widgets.ViewComponents.Widgets;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Runtime.CompilerServices;
@@ -55,32 +58,52 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
                 div.AddCssClass(pageWidget.PageWidgetSetting.ClassCustom);
                 div.MergeAttribute("data-page-widget-id", pageWidget.Id.ToString());
 
-                IHtmlContent result = null;
+                IHtmlContent content = null;
 
                 if (!currentResposne.EditMode)
                 {
-                    result = await viewComponent.InvokeAsync(nameof(DefaultWidgetComponent), new DefaultViewComponentInModel
+                    content = await viewComponent.InvokeAsync(nameof(DefaultWidgetComponent), new DefaultViewComponentInModel
                     {
                         PageWidget = pageWidget
                     });
                 }
                 else
                 {
-                    result = await viewComponent.InvokeAsync(nameof(DefaultWidgetComponent), new DefaultViewComponentInModel
-                    {
-                        PageWidget = pageWidget
-                    }); ;
                     div.AddCssClass("empty-widget cms-spinner-border");
                 }
                
 
-                div.InnerHtml.AppendHtml(result);
+                div.InnerHtml.AppendHtml(content);
                 baseDiv.InnerHtml.AppendHtml(div);
                 
             }
             zone.InnerHtml.AppendHtml(baseDiv);
             zone.WriteTo(writer, HtmlEncoder.Default);
-            return new HtmlString(writer.ToString());
+            HtmlString result = new HtmlString(writer.ToString());
+            writer.Close();
+            writer.Dispose();
+            return result;
+        }
+
+
+        public static async Task<IHtmlContent> Widget(this IViewComponentHelper viewComponent,ReadPageWidgetDto pageWidget)
+        {
+            using (StringWriter writer = new StringWriter())
+            {
+                IHtmlContent content = null;
+
+                content = await viewComponent.InvokeAsync(nameof(DefaultWidgetComponent), new DefaultViewComponentInModel
+                {
+                    PageWidget = pageWidget
+                });
+
+                content.WriteTo(writer, HtmlEncoder.Default);
+                HtmlString result = new HtmlString(writer.ToString());
+                writer.Close();
+                writer.Dispose();
+                return result;
+            }
+            
         }
     }
 }

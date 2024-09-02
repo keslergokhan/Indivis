@@ -9,5 +9,6 @@ namespace Indivis.Presentation.WebUI.System.Constants
     public static class WebUISystemContant
     {
         public static string CmsPageEditRoute = "/cms-page-edit";
+        public static string CmsWidgetTemplateRoute = "/widget-template";
     }
 }

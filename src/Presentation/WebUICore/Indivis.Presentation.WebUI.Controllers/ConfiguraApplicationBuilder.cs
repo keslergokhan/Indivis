@@ -30,6 +30,7 @@ namespace Indivis.Presentation.WebUI.Controllers
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDynamicControllerRoute<DefaultDynamicRouteValueTransformer>(WebUISystemContant.CmsPageEditRoute+"/{**slug}");
+                endpoints.MapDynamicControllerRoute<DefaultDynamicRouteValueTransformer>(WebUISystemContant.CmsWidgetTemplateRoute + "/{**slug}");
 
             });
             return app;
