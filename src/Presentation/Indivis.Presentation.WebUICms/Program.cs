@@ -7,10 +7,16 @@ using Indivis.Presentation.WebUICms.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddPersistence(builder.Configuration).AddApplication(builder.Configuration)
-    .AddWebUIController().AddWebUIWidgets();
-builder.Services.AddScoped<CmsLanguageControlMiddleware>();
 builder.Services.AddControllersWithViews();
+builder.Services
+    .AddPersistence(builder.Configuration)
+    .AddApplication(builder.Configuration)
+    .AddWebUIController();
+
+builder.Services.AddWebUIWidgets();
+
+builder.Services.AddScoped<CmsLanguageControlMiddleware>();
+
 
 var app = builder.Build();
 

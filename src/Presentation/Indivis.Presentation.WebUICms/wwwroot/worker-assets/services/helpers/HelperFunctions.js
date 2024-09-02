@@ -98,5 +98,34 @@ export const HelperFunction = {
         } else {
             element.classList.remove(toggleClass);
         }
+    },
+    /**
+     * 
+     * @param {Element} element
+     */
+    startSpinner: (element) => {
+        element.classList.add("cms-spinner-border");
+    },
+    /**
+     * 
+     * @param {Element} element
+     */
+    stopSpinner: (element) => {
+        element.classList.remove("cms-spinner-border");
+    },
+    /**
+     * 
+     * @param {Element} element
+     */
+    startWhiteSpinner: (element) => {
+        element.classList.add("cms-spinner-white-border");
+    },
+    /**
+     * 
+     * @param {Element} element
+     */
+    stopWhiteSpinner: (element) => {
+        element.classList.remove("cms-spinner-white-border");
     }
+
 }

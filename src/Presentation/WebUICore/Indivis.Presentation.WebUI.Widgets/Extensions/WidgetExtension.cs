@@ -38,10 +38,10 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
             zone.MergeAttribute("data-zone-page-id", pageZone.Page.Id.ToString());
 
             TagBuilder baseDiv = new TagBuilder("div");
-            baseDiv.AddCssClass("zone-widget-container");
+            baseDiv.AddCssClass("zone-widgets-container");
             if (pageZone.PageWidgets.Count <= 0)
             {
-                baseDiv.AddCssClass("empty-widget-container");
+                baseDiv.AddCssClass("empty-widgets-container");
                 zone.InnerHtml.AppendHtml(baseDiv);
                 zone.WriteTo(writer, HtmlEncoder.Default);
                 return new HtmlString(writer.ToString());
@@ -69,7 +69,8 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
                     result = await viewComponent.InvokeAsync(nameof(DefaultWidgetComponent), new DefaultViewComponentInModel
                     {
                         PageWidget = pageWidget
-                    });
+                    }); ;
+                    div.AddCssClass("empty-widget cms-spinner-border");
                 }
                
 

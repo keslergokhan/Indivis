@@ -62,9 +62,10 @@ namespace Indivis.Presentation.WebUI.System.Services.DynamicRoutes
             }
         }
 
+
+
         public override async ValueTask<RouteValueDictionary> TransformAsync(HttpContext context, RouteValueDictionary values)
 		{
-            
 
             this._currentRequest.Path = context.Request.Path;
             this._currentRequest.Schema = context.Request.Scheme;

@@ -1,4 +1,6 @@
-﻿export class CmsEditThemeService {
+﻿import { HelperFunction } from "../helpers/HelperFunctions.js";
+
+export class CmsEditThemeService {
     /**
      * Sayfa içerisindeki zone yapılarına yeni widget ekleme buttonu
      * @param {Event} e
@@ -30,6 +32,10 @@ class PageZone {
      */
     constructor(zone) {
         this.Zone = zone;
+        /** @type {Array<ZoneWidget>} */
+        this.Widgets = [];
+
+        
     }
 
     /**
@@ -38,7 +44,7 @@ class PageZone {
      * @returns
      */
     getZoneAddButtonHTML = (attrKey) => {
-        return `<button onload="console.log('merhaba dünya')" class="cms-btn cms-btn-success" ${attrKey}="${this.getZoneId()}">Yeni Tasarım Ekle</button>`;
+        return `<button class="cms-btn cms-btn-success" ${attrKey}="${this.getZoneId()}">Yeni Tasarım Ekle </button>`;
     }
 
     getZoneId = () => {
@@ -58,6 +64,9 @@ class PageZone {
         return this.Zone.querySelector(`[${key}="${this.getZoneId()}"]`)
     }
 
+    /**
+     * Zone yeni widget ekleme buttonu click event
+     */
     zoneButtonClickEvent = async () => {
 
         const button = await this.zoneSetButtonHanlderAsync();
@@ -65,10 +74,47 @@ class PageZone {
         button.addEventListener('click', () => {
             console.log(this.getZoneId());
         })
+    }
+
+    /**
+     * Zone içindeki yüklenmesi gereken widget yapıları
+     */
+    createPageZoneWidgets = () => {
+
+        const zoneWidgetList = this.Zone.querySelectorAll(`[data-page-widget-id]`);
+
+        console.log(zoneWidgetList.length);
+        if (zoneWidgetList.length > 0) {
+            zoneWidgetList.forEach(x => {
+                this.Widgets.push(new ZoneWidget(x));
+            });
+        }
         
     }
 
     execute = () => {
         this.zoneButtonClickEvent();
+        this.createPageZoneWidgets();
+    }
+}
+
+
+class ZoneWidget {
+
+    /**
+     * 
+     * @param {Element} widget
+     */
+    constructor(widget) {
+        this.Widget = widget;
+    }
+
+
+    getWidgetTemplateAsync = async () => {
+
+    }
+
+    execute = () => {
+
     }
 }

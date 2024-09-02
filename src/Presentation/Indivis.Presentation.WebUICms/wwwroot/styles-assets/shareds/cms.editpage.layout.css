@@ -133,12 +133,12 @@
    
 }
 
-.zone-section .zone-widget-container{
+.zone-section .zone-widgets-container{
     border: dotted 2px #19875469;
     border-radius:10px;
     padding:10px;
 }
-.empty-widget-container{
+.empty-widgets-container{
     min-height:100px;
 }
 .zone-buttons {
@@ -149,7 +149,11 @@
     border-radius: 0.25rem 0.25rem 0 0;
 }
 
-
+.empty-widget{
+    min-height:40px;
+    border: dotted 2px #19875469;
+    border-radius:10px;
+}
 
 
 

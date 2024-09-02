@@ -23,6 +23,11 @@
     <ProjectReference Include="..\Indivis.Presentation.WebUI.Widgets\Indivis.Presentation.WebUI.Widgets.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\areas\webui\" />
+    <Folder Include="wwwroot\assets\areas\widgets\" />
+  </ItemGroup>
+
 
 
 </Project>

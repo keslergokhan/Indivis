@@ -11,7 +11,7 @@ namespace Indivis.Presentation.WebUI.Widgets.WidgetServices.TestWidget
     [DependencyRegister(typeof(TestWidgetService), DependencyTypes.Scopet)]
     public class TestWidgetService : BaseWidgetService<TestWidgetOutModel>
     {
-        private readonly ICurrentResponse _currentResponse;
+        public readonly ICurrentResponse _currentResponse;
 
         public TestWidgetService(ICurrentResponse currentResponse)
         {
