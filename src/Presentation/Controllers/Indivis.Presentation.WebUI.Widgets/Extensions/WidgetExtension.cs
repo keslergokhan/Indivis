@@ -5,6 +5,7 @@ using Indivis.Presentation.WebUI.Widgets.ViewComponents.Widgets;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Runtime.CompilerServices;
 using System.Text.Encodings.Web;
 
 namespace Indivis.Presentation.WebUI.Widgets.Extensions
@@ -23,6 +24,12 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
             using StringWriter writer = new StringWriter();
 
             TagBuilder zone = new TagBuilder("section");
+
+            TagBuilder zoneBtn = new TagBuilder("div");
+            zoneBtn.AddCssClass("zone-buttons");
+            zoneBtn.MergeAttribute("data-zone-buttons", "");
+            zone.InnerHtml.AppendHtml(zoneBtn);
+
             zone.AddCssClass("row");
             zone.AddCssClass("zone-section");
             zone.MergeAttribute("data-zone-id", pageZone.Id.ToString());
@@ -30,12 +37,17 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
             zone.MergeAttribute("data-zone-type", "widget");
             zone.MergeAttribute("data-zone-page-id", pageZone.Page.Id.ToString());
 
+            TagBuilder baseDiv = new TagBuilder("div");
+            baseDiv.AddCssClass("zone-widget-container");
             if (pageZone.PageWidgets.Count <= 0)
             {
+                baseDiv.AddCssClass("empty-widget-container");
+                zone.InnerHtml.AppendHtml(baseDiv);
                 zone.WriteTo(writer, HtmlEncoder.Default);
                 return new HtmlString(writer.ToString());
             }
 
+            
             foreach (ReadPageWidgetDto pageWidget in pageZone.PageWidgets.Where(x=>x.PageWidgetSetting.IsShow == true).OrderBy(x=>x.PageWidgetSetting.Order))
             {
                 TagBuilder div = new TagBuilder("div");
@@ -45,15 +57,24 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
 
                 IHtmlContent result = null;
 
-                result = await viewComponent.InvokeAsync(nameof(DefaultWidgetComponent), new DefaultViewComponentInModel
+                if (!currentResposne.EditMode)
                 {
-                    PageWidget = pageWidget
-                });
+                    result = await viewComponent.InvokeAsync(nameof(DefaultWidgetComponent), new DefaultViewComponentInModel
+                    {
+                        PageWidget = pageWidget
+                    });
+                }
+                else
+                {
+                    result = null;
+                }
+               
 
                 div.InnerHtml.AppendHtml(result);
-                zone.InnerHtml.AppendHtml(div);
+                baseDiv.InnerHtml.AppendHtml(div);
+                
             }
-
+            zone.InnerHtml.AppendHtml(baseDiv);
             zone.WriteTo(writer, HtmlEncoder.Default);
             return new HtmlString(writer.ToString());
         }

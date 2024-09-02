@@ -38,7 +38,7 @@ class PageZone {
      * @returns
      */
     getZoneAddButtonHTML = (attrKey) => {
-        return `<button ${attrKey}="${this.getZoneId()}">Ekle</button>`;
+        return `<button onload="console.log('merhaba dünya')" class="cms-btn cms-btn-success" ${attrKey}="${this.getZoneId()}">Yeni Tasarım Ekle</button>`;
     }
 
     getZoneId = () => {
@@ -54,7 +54,7 @@ class PageZone {
      */
     zoneSetButtonHanlderAsync = async () => {
         const key = "zone-add-widget-btn";
-        this.Zone.insertAdjacentHTML('afterbegin', this.getZoneAddButtonHTML(key));
+        this.Zone.querySelector(".zone-buttons").insertAdjacentHTML('afterbegin', this.getZoneAddButtonHTML(key));
         return this.Zone.querySelector(`[${key}="${this.getZoneId()}"]`)
     }
 

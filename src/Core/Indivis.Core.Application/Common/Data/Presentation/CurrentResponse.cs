@@ -13,5 +13,6 @@ namespace Indivis.Core.Application.Common.Data.Presentation
 	public class CurrentResponse : ICurrentResponse
 	{
 		public ReadPageDto CurrentPage { get; set; }
-	}
+        public bool EditMode { get; set; }
+    }
 }

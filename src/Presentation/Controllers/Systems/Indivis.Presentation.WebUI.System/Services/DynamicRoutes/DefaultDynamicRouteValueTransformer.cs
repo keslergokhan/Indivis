@@ -76,10 +76,12 @@ namespace Indivis.Presentation.WebUI.System.Services.DynamicRoutes
             if (context.Request.Path.HasValue && context.Request.Path.Value.StartsWith(WebUISystemContant.CmsPageEditRoute) && context.Request.Path.Value.Contains(WebUISystemContant.CmsPageEditRoute))
             {
                 this._currentRequest.EditMode = true;
+                this._currentResponse.EditMode = true;
             }
             else
             {
                 this._currentRequest.EditMode = false;
+                this._currentResponse.EditMode = false;
             }
 
             await UrlSystemTypeInvokerAsync(context);

@@ -9,6 +9,7 @@ namespace Indivis.Core.Application.Interfaces.Data.Presentation
 {
 	public interface ICurrentResponse
 	{
+        public bool EditMode { get; set; }
         public ReadPageDto CurrentPage { get; set; }
     }
 }
