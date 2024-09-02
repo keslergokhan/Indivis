@@ -11,6 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Core\Indivis.Core.Application\Indivis.Core.Application.csproj" />
+    <ProjectReference Include="..\..\..\Core\Indivis.Core.Application\Indivis.Core.Application.csproj" />
   </ItemGroup>
 </Project>

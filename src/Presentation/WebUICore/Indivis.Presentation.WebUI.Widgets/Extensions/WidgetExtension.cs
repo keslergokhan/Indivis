@@ -66,7 +66,10 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
                 }
                 else
                 {
-                    result = null;
+                    result = await viewComponent.InvokeAsync(nameof(DefaultWidgetComponent), new DefaultViewComponentInModel
+                    {
+                        PageWidget = pageWidget
+                    });
                 }
                
 
