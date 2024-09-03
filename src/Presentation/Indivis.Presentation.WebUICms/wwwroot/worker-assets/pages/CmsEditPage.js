@@ -11,9 +11,9 @@ export class CmsEditPage {
         this._CmsEditThemeService = new CmsEditThemeService();
     }
 
-    createZone = () => {
+    createObjectZone = () => {
         window.addEventListener('load', (e) => {
-            this._CmsEditThemeService.createZone(e);
+            this._CmsEditThemeService.createObjectZone(e);
         });
     }
 
@@ -41,7 +41,7 @@ export class CmsEditPage {
     execute = () => {
         this.topMenuButtonHandler();
         this.settingsButtonHandler();
-        this.createZone();
+        this.createObjectZone();
     }
 }
 

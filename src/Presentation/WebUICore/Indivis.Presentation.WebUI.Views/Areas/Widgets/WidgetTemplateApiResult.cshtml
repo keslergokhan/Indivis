@@ -1,9 +1,15 @@
-﻿@model Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads.ReadPageWidgetDto;
+﻿@model IResultDataControl<ReadPageWidgetDto>;
+@using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads
+@using Indivis.Core.Application.Interfaces.Results
 @using Indivis.Presentation.WebUI.Widgets.Extensions;
 
 @{
     Layout = null;
 }
 @{
-    @await Component.Widget(Model)
+    if (Model.IsSuccess)
+    {
+        @await Component.Widget(Model.Data);
+    }
+
 }

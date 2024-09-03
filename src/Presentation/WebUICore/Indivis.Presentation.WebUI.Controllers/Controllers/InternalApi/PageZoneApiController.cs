@@ -1,4 +1,8 @@
-﻿using Indivis.Core.Application.Interfaces.Data.Presentation;
+﻿using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads;
+using Indivis.Core.Application.Exceptions;
+using Indivis.Core.Application.Features.Systems.Queries.Widgets;
+using Indivis.Core.Application.Interfaces.Data.Presentation;
+using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Presentation.WebUI.Controllers.Common;
 using Indivis.Presentation.WebUI.Widgets.Extensions;
 using MediatR;
@@ -26,10 +30,20 @@ namespace Indivis.Presentation.WebUI.Controllers.Controllers.InternalApi
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetWidgetTemplate()
+        public async Task<IActionResult> GetWidgetTemplate([FromQuery]Guid pageWidgetId)
         {
+            IResultDataControl<ReadPageWidgetDto> pageWidgetResult = await this._mediator.Send(new GetByIdPageWidgetSystemQuery()
+            {
+                Id = pageWidgetId
+            });
 
-            return View("~/Areas/Widgets/WidgetTemplateApiResult.cshtml");
+            if (!pageWidgetResult.IsSuccess)
+            {
+                throw new PageWidgetNotFaundException();
+            }
+
+
+            return View("~/Areas/Widgets/WidgetTemplateApiResult.cshtml",pageWidgetResult);
         }
     }
 }

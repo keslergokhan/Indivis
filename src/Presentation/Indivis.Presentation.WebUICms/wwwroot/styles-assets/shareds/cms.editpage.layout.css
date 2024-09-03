@@ -155,7 +155,80 @@
     border-radius:10px;
 }
 
+/* The Modal (background) */
+.cms-modal {
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
 
+.cms-modal__dialog-header {
+    min-height: 50px;
+
+    display: grid;
+    grid-template-columns: 99% 1%;
+}
+.cms-modal__dialog-header-title {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cms-modal__dialog-content {
+    background: red;
+    display:flex;
+    min-height: 50px;
+    align-items: center;
+    justify-content: center;
+}
+.cms-modal__dialog-footer {
+    background: blue;
+    min-height: 40px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* Modal Content/Box */
+.cms-modal__dialog {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    width: 80%; /* Could be more or less, depending on screen size */
+    
+}
+
+.cms-modal__dialog-header-btns {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* The Close Button */
+.cms-modal__dialog-close {
+    color: #aaa;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.cms-modal__dialog-close:hover,
+.cms-modal__dialog-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 
 

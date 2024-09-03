@@ -5,7 +5,7 @@ export class CmsEditThemeService {
      * Sayfa içerisindeki zone yapılarına yeni widget ekleme buttonu
      * @param {Event} e
      */
-    createZone = (e) => {
+    createObjectZone = (e) => {
         /** @type {NodeListOf}  */
         const zoneList = document.querySelectorAll(".zone-section");
 
@@ -65,7 +65,7 @@ class PageZone {
     }
 
     /**
-     * Zone yeni widget ekleme buttonu click event
+     * Mevcut Zone alanına yeni widget ekleme buttonu click event
      */
     zoneButtonClickEvent = async () => {
 
@@ -83,12 +83,15 @@ class PageZone {
 
         const zoneWidgetList = this.Zone.querySelectorAll(`[data-page-widget-id]`);
 
-        console.log(zoneWidgetList.length);
         if (zoneWidgetList.length > 0) {
             zoneWidgetList.forEach(x => {
                 this.Widgets.push(new ZoneWidget(x));
             });
         }
+
+        this.Widgets.forEach(x => {
+            x.execute();
+        });
         
     }
 
@@ -109,12 +112,49 @@ class ZoneWidget {
         this.Widget = widget;
     }
 
-
-    getWidgetTemplateAsync = async () => {
-
+    /**
+     * 
+     * @returns {string}
+     */
+    getPageWidgetId = () => {
+        return this.Widget.getAttribute("data-page-widget-id");
     }
 
-    execute = () => {
+    /**
+     * Widget tasarımı alınacak url adresi
+     * @param {string} id
+     * @returns {string}
+     */
+    getWidgetTemplateApiUrl = (id) => {
+        const path = window.location.pathname.replace("/cms-page-edit", "/widget-template");
+        return `${path}?pageWidgetId=${id}`;
+    }
 
+    /**
+     * 
+     * @param {string} html
+     */
+    setWidgetHtmlTemplate = (html) => {
+        HelperFunction.stopSpinner(this.Widget);
+        this.Widget.innerHTML = html;
+    }
+    getWidgetTemplateAsync = async () => {
+        const url = this.getWidgetTemplateApiUrl(this.getPageWidgetId());
+
+        await fetch(url).then(res => {
+            if (res.status !== 200) {
+                throw new Error("Beklenmedik bir hata oluştu");
+            }
+
+            return res.text();
+        }).then(html => {
+            this.setWidgetHtmlTemplate(html);
+        }).catch(error => {
+            alert("Beklenmedik bir hata oluştu !");
+        })
+    }
+
+    execute = async () => {
+        await this.getWidgetTemplateAsync();
     }
 }

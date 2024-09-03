@@ -2,11 +2,55 @@
 @using Indivis.Presentation.WebUI.Widgets.Models.TestWidget
 @model IResultDataControl<TestWidgetOutModel>
 
+    <style>
+
+        /* Kart Yapısı */
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Başlık */
+        .card h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        /* Paragraf */
+        .card p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Buton */
+        .card button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .card button:hover {
+            background-color: #2980b9;
+        }
+    </style>
 @if (Model.IsSuccess)
 {
-    @Model.Data.Title
+    <div class="card">
+        <h1>@Model.Data.Title</h1>
+        <p> @Model.Data.Description Bu, basit bir HTML ve CSS örneğidir. CSS ile tasarımınızı güzelleştirebilirsiniz.</p>
+        <button>Başlayın</button>
+    </div>
+    
     <br />
-    @Model.Data.Description
 }
 
-test widget
