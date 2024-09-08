@@ -199,3 +199,32 @@
     50% {
     }
 }
+
+
+
+
+body {
+    --sb-track-color: #d9e1e4;
+    --sb-thumb-color: #93939A;
+    --sb-size: 7px;
+}
+
+::-webkit-scrollbar {
+    width: var(--sb-size);
+}
+
+::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 1px;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+    body {
+        scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    }
+}

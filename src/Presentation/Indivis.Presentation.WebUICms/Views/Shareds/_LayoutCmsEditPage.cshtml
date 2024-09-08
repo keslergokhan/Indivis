@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Indivis.Presentation.WebUICms.ViewComponents
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -16,7 +17,6 @@
     <header>
         @{
             await Html.RenderPartialAsync("~/Views/Shareds/Partials/_CmdEditPageTopMenuPartial.cshtml");
-            @await Component.InvokeAsync(nameof(Indivis.Presentation.WebUICms.ViewComponents.WidgetsComponent));
         }
        
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -58,16 +58,25 @@
     </header>
 
     @RenderBody()
+    <div id="draggable" draggable="true" style="width: 100px; height: 100px; background-color: red;">
+        Sürükle Beni
+    </div>
 
+    <div id="dropzone" style="width: 200px; height: 200px; background-color: lightgray; margin-top: 20px;">
+        Buraya Bırak
+    </div>
+
+
+    
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - Indivis.Presentation.WebUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 
-    <button type="button js-cms-modal" data-cms-modal-id="deneme-modal">Modal Button</button>
+
     
-    <div class="cms-modal" id="deneme-modal">
+    <div class="cms-modal" id="widget-list">
 
         <div class="cms-modal__dialog">
 
@@ -81,20 +90,16 @@
             </div>
             <!-- Modal content -->
             <div class="cms-modal__dialog-content">
-                <div>
-                    div sdfsdf
-                </div>
+               
             </div>
-            <div class="cms-modal__dialog-footer">
+            <div class="cms-modal__dialog-footer d-none">
                 <p>burası footer</p>
             </div>
-
         </div>
-
-
     </div>
 
     <!script src="_content/Indivis.Presentation.WebUI.Views/lib/bootstrap/js/bootstrap.bundle.min.js"></!script>
+    <!script type="module" src="worker-assets/services/helpers/HelperFunctions.js?v=@DateTime.Now.ToString("FFFFFFF")"></!script>
     <!script type="module" src="worker-assets/pages/CmsEditPage.js?v=@DateTime.Now.ToString("FFFFFFF")"></!script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

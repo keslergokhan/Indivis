@@ -1,4 +1,4 @@
-﻿import { HelperFunction, JustValidateMessage } from '../helpers/HelperFunctions.js'
+﻿import { JustValidateMessage } from '../helpers/HelperFunctions.js'
 import { BaseService } from '../base/BaseService.js'
 
 export default class CreatePageService extends BaseService {
@@ -58,11 +58,11 @@ export default class CreatePageService extends BaseService {
         const path = document.querySelector(`[name="Path"]`);
         form.querySelector(`[name="FullPath"]`).addEventListener('keyup', (e) => {
 
-            let newKey = HelperFunction.translateTextToSlug(e.target.value);
+            let newKey = window.HelperFunction.translateTextToSlug(e.target.value);
             const parentUrl = e.target.getAttribute("data-parent-url");
 
             if (parentUrl && parentUrl != "" && !e.target.value.startsWith(parentUrl)) {
-                newKey = HelperFunction.translateTextToSlug(parentUrl + "/" + e.target.value);
+                newKey = window.HelperFunction.translateTextToSlug(parentUrl + "/" + e.target.value);
             }
 
             e.target.value = newKey;
@@ -76,7 +76,7 @@ export default class CreatePageService extends BaseService {
      * @param {Event} e
      */
     async submitHandlerAsync(e) {
-        const formData = HelperFunction.formDataToJsonObject(new FormData(e.target));
+        const formData = window.HelperFunction.formDataToJsonObject(new FormData(e.target));
 
 
         let fullPathFoundControl = false;

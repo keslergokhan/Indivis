@@ -1,6 +1,11 @@
-﻿import { HelperFunction } from "../helpers/HelperFunctions.js";
+﻿export class CmsEditThemeService {
 
-export class CmsEditThemeService {
+
+    constructor() {
+        /** @type {Array<PageZone>} */
+        this.PageZones = [];
+    }
+
     /**
      * Sayfa içerisindeki zone yapılarına yeni widget ekleme buttonu
      * @param {Event} e
@@ -9,16 +14,25 @@ export class CmsEditThemeService {
         /** @type {NodeListOf}  */
         const zoneList = document.querySelectorAll(".zone-section");
 
+
+
         zoneList.forEach((x) => 
         {
             if (x) {
-                new PageZone(x).execute();
+                this.PageZones.push(new PageZone(x));
             }
                 
         })
-        
-
     }
+
+
+    pageZoneExecute = () => {
+        this.PageZones.forEach(pageZone => {
+            pageZone.execute();
+        })
+    }
+   
+
 }
 
 
@@ -44,7 +58,10 @@ class PageZone {
      * @returns
      */
     getZoneAddButtonHTML = (attrKey) => {
-        return `<button class="cms-btn cms-btn-success" ${attrKey}="${this.getZoneId()}">Yeni Tasarım Ekle </button>`;
+        return `
+            <button class="cms-btn cms-btn-success" ${attrKey}="${this.getZoneId()}" data-cms-modal-id="widget-list" >
+                Yeni Tasarım Ekle
+            </button>`;
     }
 
     getZoneId = () => {
@@ -60,6 +77,7 @@ class PageZone {
      */
     zoneSetButtonHanlderAsync = async () => {
         const key = "zone-add-widget-btn";
+        this.Zone.querySelector(".zone-buttons").innerHTML = "";
         this.Zone.querySelector(".zone-buttons").insertAdjacentHTML('afterbegin', this.getZoneAddButtonHTML(key));
         return this.Zone.querySelector(`[${key}="${this.getZoneId()}"]`)
     }
@@ -70,9 +88,10 @@ class PageZone {
     zoneButtonClickEvent = async () => {
 
         const button = await this.zoneSetButtonHanlderAsync();
+        window.HelperFunction.modalEvent(button);
 
-        button.addEventListener('click', () => {
-            console.log(this.getZoneId());
+        button.addEventListener('click', (e) => {
+            console.log("ff");
         })
     }
 
@@ -135,7 +154,8 @@ class ZoneWidget {
      * @param {string} html
      */
     setWidgetHtmlTemplate = (html) => {
-        HelperFunction.stopSpinner(this.Widget);
+        window.HelperFunction.stopSpinner(this.Widget);
+        this.Widget.innerHTML = "";
         this.Widget.innerHTML = html;
     }
     getWidgetTemplateAsync = async () => {

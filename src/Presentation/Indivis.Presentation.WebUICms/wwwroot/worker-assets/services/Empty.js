@@ -1,4 +1,4 @@
-﻿import { HelperFunction, JustValidateMessage } from '../helpers/HelperFunctions.js'
+﻿import { JustValidateMessage } from '../helpers/HelperFunctions.js'
 import { BaseService } from '../base/BaseService.js'
 
 export default class CreatePageService extends BaseService {
@@ -62,7 +62,7 @@ export default class CreatePageService extends BaseService {
      * @param {Event} e
      */
     async submitHandlerAsync(e) {
-        const formData = HelperFunction.formDataToJsonObject(new FormData(e.target));
+        const formData = window.HelperFunction.formDataToJsonObject(new FormData(e.target));
 
         await fetch(this.Path, {
             method: 'POST',
