@@ -19,10 +19,12 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Widgets
     public class GetAllWidgetsSystemQuery :
         IRequest<IResultDataControl<List<ReadWidgetDto>>>,
         IOnlineAndOfflineFilterQuery,
-        IStateFilterQuery
+        IStateFilterQuery,
+        ILanguageFilterQuery
     {
         public bool OnlineAndOffline { get; set; }
         public StateEnum State { get; set; }
+        public Guid LanguageId { get; set; }
     }
 
 
@@ -44,7 +46,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Widgets
 
             try
             {
-                IQueryable<Widget> widgetQuery = this._applicationDbContext.Widgets.AsQueryable();
+                IQueryable<Widget> widgetQuery = this._applicationDbContext.Widgets.Where(x=>x.LanguageId == request.LanguageId).Include(x=>x.WidgetTemplates).AsNoTrackingWithIdentityResolution().AsQueryable();
 
                 if (request.OnlineAndOffline)
                 {

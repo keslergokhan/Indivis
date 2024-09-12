@@ -154,4 +154,108 @@ export class HelperFunction {
     }
 }
 
-window.HelperFunction = new HelperFunction(); 
+
+class CmsModal {
+    constructor(modalKey) {
+        this.ModalKey = modalKey
+        this.Modal = null;
+        this.showButtonEvent();
+        this.closeButtonEvent();
+    }
+
+    /**
+     * 
+     * @returns {Element}
+     */
+    getModal = () => {
+        if (this.Element == null) {
+            this.Modal = document.getElementById(this.ModalKey);
+        }
+        return this.Modal;
+    }
+
+    showButtonEvent = () => {
+        const modalBtn = document.querySelector(`[data-cms-modal-key="${this.ModalKey}"]`);
+        if (modalBtn) {
+            document.querySelector(`[data-cms-modal-key="${this.ModalKey}"]`).addEventListener('click', () => {
+                this.show();
+            })
+        }
+        
+    }
+
+    closeButtonEvent = () => {
+        const closeBtn = this.getModal().querySelector(".cms-modal__dialog-close");
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                this.hide();
+            });
+        }
+    }
+
+    show = () => {
+        this.getModal().style.visibility = "visible";
+        this.getModal().querySelector(".cms-modal__dialog").classList.add("cms-modal__dialog--show");
+    }
+
+    hide = () => {
+        this.getModal().style.visibility = "hidden";
+        this.getModal().querySelector(".cms-modal__dialog").classList.remove("cms-modal__dialog--show");
+    
+    }
+    
+}
+
+class WidgetFormIframe {
+    constructor() {
+        this.Element = document.querySelector(".js-widget-form-iframe");
+        this.closeButtonEvent();
+    }
+
+   
+
+    closeButtonEvent = () => {
+        this.Element.querySelector(".js-widget-form-iframe-close").addEventListener('click', () => {
+            this.hide();
+        });
+    }
+
+    /**
+     * WidgetForm yapısını getiren iframe src düzenle
+     * @param {string} widgetId
+     * @param {string} widgetTemplateId
+     * @returns
+     */
+    setIframeSrc = (widgetId, widgetTemplateId) => {
+        return this.Element.querySelector("iframe").src = `/api/widgetformapi/getform/${widgetId}/${widgetTemplateId}`;
+    }
+
+    /**
+     * WidgetFormIframe tasarımını aktifet
+     * @param {string} title
+     * @param {string} widgetId
+     * @param {string} widgetTemplateId
+     */
+    show = (title,widgetId,widgetTemplateId) => {
+        this.Element.classList.add("widget-form-iframe--show");
+        if (title) {
+            this.Element.querySelector(".widget-form-iframe__header-title").innerHTML = title;
+        }
+        if (!widgetId || !widgetTemplateId) {
+            alert("Teknik bir problem yaşandı lütfen daha sonra tekrar deneyiniz !");
+            console.error("Sürüklenen widget settings değerlerine ulaşılamadı !");
+        }
+
+        this.setIframeSrc(widgetId, widgetTemplateId);
+
+        document.body.style.overflow = "hidden";
+    }
+
+    hide = () => {
+        this.Element.classList.remove("widget-form-iframe--show");
+        document.body.style.overflow = "auto";
+    }
+}
+
+window.HelperFunction = new HelperFunction();
+window.WidgetFormIframe = new WidgetFormIframe();

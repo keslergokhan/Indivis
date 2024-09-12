@@ -14,9 +14,32 @@
 </head>
 <body>
 
+    <div class="widget-form-iframe js-widget-form-iframe">
+        <div class="widget-form-iframe__body">
+            <div class="widget-form-iframe__header">
+                <h2 class="widget-form-iframe__header-title">başlık</h2>
+            </div>
+
+
+            <div class="widget-form-iframe__content">
+                <iframe src="" height="100%" width="100%"></iframe>
+            </div>
+
+            <div class="widget-form-iframe__footer">
+                <div class="widget-form-iframe__buttons">
+                    <button class="cms-btn cms-btn-danger js-widget-form-iframe-close" >İptal</button>
+                    <button class="cms-btn cms-btn-success js-widget-form-iframe-submit">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <header>
         @{
             await Html.RenderPartialAsync("~/Views/Shareds/Partials/_CmdEditPageTopMenuPartial.cshtml");
+            @await Component.InvokeAsync(nameof(WidgetsComponent));
         }
        
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -58,15 +81,9 @@
     </header>
 
     @RenderBody()
-    <div id="draggable" draggable="true" style="width: 100px; height: 100px; background-color: red;">
-        Sürükle Beni
-    </div>
+   
 
-    <div id="dropzone" style="width: 200px; height: 200px; background-color: lightgray; margin-top: 20px;">
-        Buraya Bırak
-    </div>
-
-
+    
     
     <footer class="border-top footer text-muted">
         <div class="container">
@@ -76,6 +93,8 @@
 
 
     
+    
+
     <div class="cms-modal" id="widget-list">
 
         <div class="cms-modal__dialog">
@@ -90,12 +109,15 @@
             </div>
             <!-- Modal content -->
             <div class="cms-modal__dialog-content">
-               
+                
             </div>
             <div class="cms-modal__dialog-footer d-none">
                 <p>burası footer</p>
             </div>
+
         </div>
+
+
     </div>
 
     <!script src="_content/Indivis.Presentation.WebUI.Views/lib/bootstrap/js/bootstrap.bundle.min.js"></!script>

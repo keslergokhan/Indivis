@@ -55,12 +55,12 @@
     align-items: center;
 }
 
-.cms-editpage-setting-p {
+.cms-editpage-widget-p {
     position: relative;
 }
 
 
-.cms-editpage-setting {
+.cms-editpage-widget {
     position: fixed;
     color: white;
     z-index: 99;
@@ -76,10 +76,10 @@
     transition: 0.3s;
 }
 
-.cms-editpage-setting__header{
+.cms-editpage-widget__header{
     padding-bottom:20px;
 }
-.cms-editpage-setting__button {
+.cms-editpage-widget__button {
     position: relative;
     background: #ef305e;
     width: 100px;
@@ -91,11 +91,11 @@
     transform: rotate(-90deg);
 }
 
-.cms-editpage-setting--toggle {
+.cms-editpage-widget--toggle {
     right:-230px;
 }
 
-.cms-editpage-setting__item{
+.cms-editpage-widget__item{
     display:flex;
     max-height:100px;
     overflow:hidden;
@@ -103,7 +103,11 @@
     border-bottom:solid 1px;
 }
 
-.cms-editpage-setting__item__image {
+.cms-editpage-widget__item:active{
+    cursor:grabbing;
+}
+
+.cms-editpage-widget__item__image {
     display: block;
     width: 30%;
     display: flex;
@@ -111,19 +115,19 @@
     justify-content: center;
 }
 
-.cms-editpage-setting__item__image svg{
+.cms-editpage-widget__item__image svg{
     fill:white;
     height:35px;
 }
 
-.cms-editpage-setting__item__text{
+.cms-editpage-widget__item__text{
     width:70%;
 }
 
-.cms-editpage-setting__item__title span{
+.cms-editpage-widget__item__title span{
     font-size:15px;
 }
-.cms-editpage-setting__item__des p{
+.cms-editpage-widget__item__des p{
     font-size:13px;
 }
 
@@ -133,13 +137,32 @@
    
 }
 
-.zone-section .zone-widgets-container{
-    border: dotted 2px #19875469;
-    border-radius:10px;
-    padding:10px;
+
+.zone-widgets-container {
+    border: dotted 3px transparent;
+    padding: 10px;
+    transition:1s;
 }
 .empty-widgets-container{
     min-height:100px;
+}
+.zone-widgets-container--active, .zone-widgets-container--dragover {
+    border-color: #19875469;
+    border-radius: 10px;
+    animation: zone-widgets-container-border 1.5s ease-in-out infinite; /* Süreyi 5s yapıyoruz */
+}
+.zone-widgets-container--dragover {
+    border-color: red;
+    animation: none;
+}
+@keyframes zone-widgets-container-border {
+    50% {
+        border-color: transparent; /* Border kayboluyor */
+    }
+
+    100% {
+        border-color: #19875469;
+    }
 }
 .zone-buttons {
     display: flex;
@@ -150,9 +173,7 @@
 }
 
 .empty-widget{
-    min-height:40px;
-    border: dotted 2px #19875469;
-    border-radius:10px;
+  
 }
 
 /* The Modal (background) */
@@ -242,50 +263,60 @@
     cursor: pointer;
 }
 
-
-
-/*--widget-list--*/
-
-.widget-list {
+.widget-form-iframe {
+    position: fixed;
+    z-index: 100;
+    left: 0px;
+    top: 0px;
+    max-height: 100%;
+    height: 100%;
     width: 100%;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Otomatik kolon yerleşimi */
-    display: grid;
-    gap: 10px; /* Elemanlar arası boşluk */
-    box-sizing: border-box; /* Padding ve border'ı genişliğe dahil etmek için */
-    margin-top:100px;
-    padding:10px;
-}
-.widget-list__item {
+    margin: auto;
+    background: white;
     display: flex;
-    height: 100px;
-    max-height: 100px;
-    border: solid 1px #a8a8a8;
     padding: 10px;
-    cursor:pointer;
+    visibility: hidden;
 }
-.widget-list__item-image {
-    display: flex;
-    width: 75px;
-    height: 100px;
-    align-items: center;
-    justify-content: center;
-    padding-right:10px;
+
+.widget-form-iframe--show {
+    visibility: visible;
 }
-.widget-list__item-image svg {
-    max-height: 50px;
-}
-.widget-list__item-text {
+
+.widget-form-iframe__body {
+    width: 100%;
+    max-height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    justify-content: space-between;
+    overflow: auto;
 }
 
-
-.widget-list__item-title{
-    font-size:18px;
+.widget-form-iframe__content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 80%;
+    overflow: auto;
+    justify-content: center;
+    align-items: center;
 }
-.widget-list__item-description{
 
+.widget-form-iframe__header {
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.widget-form-iframe__footer {
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 

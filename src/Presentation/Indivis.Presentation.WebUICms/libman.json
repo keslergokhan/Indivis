@@ -3,10 +3,17 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "destination": "wwwroot/packets/tabulator",
-      "library": "tabulator-tables@6.2.5"
-
-
+      "library": "tabulator-tables@6.2.5",
+      "destination": "wwwroot/packets/tabulator"
+    },
+    {
+      "library": "bootstrap@5.3.3",
+      "destination": "wwwroot/lib/bootstrap/",
+      "files": [
+        "js/bootstrap.min.js",
+        "css/bootstrap.min.css",
+        "js/bootstrap.bundle.min.js"
+      ]
     }
   ]
 }

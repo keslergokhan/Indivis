@@ -5,12 +5,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class AccountApiController : ControllerBase
+    public class AccountApiController : Controller
     {
         private readonly IIdentityService _identityService;
 

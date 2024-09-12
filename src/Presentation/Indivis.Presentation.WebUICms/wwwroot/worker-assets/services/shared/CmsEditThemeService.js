@@ -7,14 +7,12 @@
     }
 
     /**
-     * Sayfa içerisindeki zone yapılarına yeni widget ekleme buttonu
+     * Zone nesnelerini oluştur
      * @param {Event} e
      */
     createObjectZone = (e) => {
         /** @type {NodeListOf}  */
         const zoneList = document.querySelectorAll(".zone-section");
-
-
 
         zoneList.forEach((x) => 
         {
@@ -25,13 +23,32 @@
         })
     }
 
-
+    /**
+     * Yüklenen zone nesnelerini çalıştır.
+     */
     pageZoneExecute = () => {
         this.PageZones.forEach(pageZone => {
             pageZone.execute();
         })
     }
-   
+
+    /**
+     * Widget eklemek için element sürüklendiğine zone yapılarını göster
+     */
+    pageZoneDragStartStyle = () => {
+        this.PageZones.forEach(x => {
+            x.pageZoneDragStartStyle()
+        });
+    }
+
+    /**
+     * Widget eklemek için element sürükleme bırakıldığında zone yapılarını gizle
+     */
+    pageZoneDragEndStyle = () => {
+        this.PageZones.forEach(x => {
+            x.pageZoneDragEndStyle()
+        });
+    }
 
 }
 
@@ -52,17 +69,6 @@ class PageZone {
         
     }
 
-    /**
-     * Zone yeni widget ekleme button HTML kodu
-     * @param {any} attrKey button özellik adı
-     * @returns
-     */
-    getZoneAddButtonHTML = (attrKey) => {
-        return `
-            <button class="cms-btn cms-btn-success" ${attrKey}="${this.getZoneId()}" data-cms-modal-id="widget-list" >
-                Yeni Tasarım Ekle
-            </button>`;
-    }
 
     getZoneId = () => {
         return this.Zone.getAttribute("data-zone-id");
@@ -71,32 +77,9 @@ class PageZone {
         return this.Zone.getAttribute("data-zone-key");
     }
 
-    /**
-     * Zone alanına widget ekleme buttonu oluşturur
-     * @returns {Element}
-     */
-    zoneSetButtonHanlderAsync = async () => {
-        const key = "zone-add-widget-btn";
-        this.Zone.querySelector(".zone-buttons").innerHTML = "";
-        this.Zone.querySelector(".zone-buttons").insertAdjacentHTML('afterbegin', this.getZoneAddButtonHTML(key));
-        return this.Zone.querySelector(`[${key}="${this.getZoneId()}"]`)
-    }
 
     /**
-     * Mevcut Zone alanına yeni widget ekleme buttonu click event
-     */
-    zoneButtonClickEvent = async () => {
-
-        const button = await this.zoneSetButtonHanlderAsync();
-        window.HelperFunction.modalEvent(button);
-
-        button.addEventListener('click', (e) => {
-            console.log("ff");
-        })
-    }
-
-    /**
-     * Zone içindeki yüklenmesi gereken widget yapıları
+     * Zone yapısı içindeki widget nesnelerini oluştur ve çalıştır.
      */
     createPageZoneWidgets = () => {
 
@@ -114,9 +97,64 @@ class PageZone {
         
     }
 
+    pageZoneDragStartStyle = () => {
+        this.pageZoneDragEndStyle();
+        this.Zone.querySelector(".zone-widgets-container").classList.add("zone-widgets-container--active");
+    }
+
+    pageZoneDragEndStyle = () => {
+        this.Zone.querySelector(".zone-widgets-container").classList.remove("zone-widgets-container--active");
+        this.Zone.querySelector(".zone-widgets-container").classList.remove("zone-widgets-container--dragover");
+    }
+
+    /**
+     * Sürüklenen bir öğe hedef öğenin üzerine geldiğinde
+     */
+    pageZoneDragoverHandler = () => {
+        this.Zone.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            this.Zone.querySelector(".zone-widgets-container").classList.add("zone-widgets-container--dragover");
+        });
+    }
+
+    /**
+     * Sürüklenen öğe hedef öğeye bırakıldığında tetiklenir.
+     */
+    pageZoneDropHandler = () => {
+        this.Zone.addEventListener('drop', (event) => {
+            event.preventDefault();
+            this.pageZoneDragEndStyle();
+
+            // Sürüklenen widget elementin transferedilen verileri
+            const dataTransferJson = JSON.parse(event.dataTransfer.getData('text/plain')); 
+
+            //widget formiframe
+            window.WidgetFormIframe.show(dataTransferJson.widgetName, dataTransferJson.widgetId, dataTransferJson.widgetTemplateId);
+
+            
+        });
+    }
+
+    /**
+     * Sürüklenen öğe hedef öğeden ayrıldığında
+     */
+    pageZoneDragleaveHandler = () => {
+        this.Zone.addEventListener('dragleave', (event) => {
+            event.preventDefault();
+            this.pageZoneDragEndStyle();
+            this.pageZoneDragStartStyle();
+        });
+    }
+    
+
+
+
+
     execute = () => {
-        this.zoneButtonClickEvent();
         this.createPageZoneWidgets();
+        this.pageZoneDragoverHandler();
+        this.pageZoneDropHandler();
+        this.pageZoneDragleaveHandler();
     }
 }
 
@@ -140,7 +178,7 @@ class ZoneWidget {
     }
 
     /**
-     * Widget tasarımı alınacak url adresi
+     * Widget tasarım api
      * @param {string} id
      * @returns {string}
      */
@@ -150,7 +188,7 @@ class ZoneWidget {
     }
 
     /**
-     * 
+     * Widget tasarımım gelene kadar Spinner çıkart
      * @param {string} html
      */
     setWidgetHtmlTemplate = (html) => {
@@ -158,6 +196,10 @@ class ZoneWidget {
         this.Widget.innerHTML = "";
         this.Widget.innerHTML = html;
     }
+
+    /**
+     * Widget tasarımını getir
+     */
     getWidgetTemplateAsync = async () => {
         const url = this.getWidgetTemplateApiUrl(this.getPageWidgetId());
 
@@ -177,4 +219,22 @@ class ZoneWidget {
     execute = async () => {
         await this.getWidgetTemplateAsync();
     }
+}
+
+
+class WidgetForms {
+
+    constructor() {
+
+    }
+
+    showWidggetFormModal = () => {
+
+    }
+
+
+    execute = () => {
+
+    }
+
 }
