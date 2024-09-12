@@ -28,7 +28,7 @@ namespace Indivis.Presentation.WebUICms.Controllers
 		public async Task<IActionResult> CreatePage(Guid pageSystemId,Guid parentPageId)
         {
 
-			CreatePageViewOutModel model = new CreatePageViewOutModel();
+			CreatePageViewResModel model = new CreatePageViewResModel();
 
             IResultDataControl<ReadPageSystemDto> resultPageSystem = await this.Mediator.Send(new GetPageSystemByIdSystemQuery
             {
@@ -66,7 +66,7 @@ namespace Indivis.Presentation.WebUICms.Controllers
 		public async Task<IActionResult> PageSystems()
         {
 
-			PageSystemViewOutModel model = new PageSystemViewOutModel();
+			PageSystemViewResModel model = new PageSystemViewResModel();
 
             IResultDataControl<List<ReadPageSystemDto>> resultPageSystems = await base.Mediator.Send(new GetPageSystemsAndPageQuery
             {

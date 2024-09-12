@@ -5,7 +5,7 @@ using Indivis.Presentation.WebUICms.Common;
 
 namespace Indivis.Presentation.WebUICms.Models.PageModels
 {
-    public class CreatePageViewOutModel : BaseViewOutModel
+    public class CreatePageViewResModel : BaseViewResModel
     {
         public ReadPageSystemDto PageSystem { get; set; }
         public ReadPageDto ParentPage { get; set; }

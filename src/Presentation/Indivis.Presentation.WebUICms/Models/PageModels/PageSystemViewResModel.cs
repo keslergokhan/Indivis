@@ -2,7 +2,7 @@
 
 namespace Indivis.Presentation.WebUICms.Models.PageModels
 {
-    public class PageSystemViewOutModel
+    public class PageSystemViewResModel
     {
         public List<ReadPageSystemDto> PageSystems { get; set; }
     }

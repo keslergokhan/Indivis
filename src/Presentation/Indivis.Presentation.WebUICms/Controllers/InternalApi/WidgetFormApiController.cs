@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
 {
@@ -6,6 +7,15 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
     [ApiController]
     public class WidgetFormApiController : Controller
     {
+        private readonly IMediator _mediator;
+
+        public WidgetFormApiController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+
+
         [HttpGet]
         [Route("getform/{widgetId:guid}/{widgetTemplateId:guid}")]
         public IActionResult GetForm()

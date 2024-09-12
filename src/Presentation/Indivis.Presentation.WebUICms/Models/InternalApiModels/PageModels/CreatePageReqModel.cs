@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Indivis.Presentation.WebUICms.Models.InternalApiModels.PageModels
 {
-    public class CreatePageInModel
+    public class CreatePageReqModel
     {
         public string FullPath { get; set; }
         public string Path { get; set; }

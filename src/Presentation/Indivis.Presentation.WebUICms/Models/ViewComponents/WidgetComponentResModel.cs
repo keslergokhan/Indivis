@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUICms.Models.ViewComponents
 {
-    public class WidgetComponentOutModel
+    public class WidgetComponentResModel
     {
-        public WidgetComponentOutModel()
+        public WidgetComponentResModel()
         {
             this.Widgets = new List<ReadWidgetDto>();
         }

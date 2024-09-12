@@ -21,4 +21,6 @@
     <ProjectReference Include="..\WebUICore\Indivis.Presentation.WebUI.Widgets\Indivis.Presentation.WebUI.Widgets.csproj" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+
 </Project>

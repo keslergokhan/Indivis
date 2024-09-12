@@ -21,7 +21,7 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
 
         [HttpPost]
         [Route("create-page")]
-        public async Task<IActionResult> CreatePage([FromBody] CreatePageInModel inModel)
+        public async Task<IActionResult> CreatePage([FromBody] CreatePageReqModel inModel)
         {
 
             WritePageDto page = new WritePageDto()
@@ -61,7 +61,7 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
         /// </returns>
         [HttpPost]
         [Route("check-url-full-path")]
-        public async Task<IActionResult> GetUrlControl([FromBody] GetUrlControlInModel inModel)
+        public async Task<IActionResult> GetUrlControl([FromBody] GetUrlControlReqModel inModel)
         {
             IResultControl model = new ResultControl();
 

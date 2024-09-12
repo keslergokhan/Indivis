@@ -1,6 +1,6 @@
 ﻿namespace Indivis.Presentation.WebUICms.Models.InternalApiModels.PageModels
 {
-    public class GetUrlControlInModel
+    public class GetUrlControlReqModel
     {
         public string FullPath { get; set; }
     }

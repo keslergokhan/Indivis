@@ -25,7 +25,7 @@ namespace Indivis.Presentation.WebUICms.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            WidgetComponentOutModel model = new WidgetComponentOutModel();
+            WidgetComponentResModel model = new WidgetComponentResModel();
 
             IResultDataControl<List<ReadWidgetDto>> resultWidgets = await this._mediator.Send(new GetAllWidgetsSystemQuery()
             {
