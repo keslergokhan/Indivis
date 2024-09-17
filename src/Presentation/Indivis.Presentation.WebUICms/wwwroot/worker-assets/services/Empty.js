@@ -62,7 +62,7 @@ export default class CreatePageService extends BaseService {
      * @param {Event} e
      */
     async submitHandlerAsync(e) {
-        const formData = window.HelperFunction.formDataToJsonObject(new FormData(e.target));
+        const formData = HelperFunction.formDataToJsonObject(new FormData(e.target));
 
         await fetch(this.Path, {
             method: 'POST',

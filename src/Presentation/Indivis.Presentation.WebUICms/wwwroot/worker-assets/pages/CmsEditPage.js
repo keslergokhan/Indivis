@@ -1,4 +1,5 @@
 ﻿import { CmsEditThemeService } from '../services/shared/CmsEditThemeService.js'
+import { HelperFunction } from '../services/helpers/HelperFunctions.js'
 
 export class CmsEditPage {
 
@@ -26,7 +27,7 @@ export class CmsEditPage {
         const button = document.querySelector(".js-top-menu-button");
         button.addEventListener('click', function (e) {
             const menu = document.querySelector(".cms-editpage-top__menu__group");
-            window.HelperFunction.toggleClass(menu, "cms-editpage-top__menu__group--toggle");
+            HelperFunction.toggleClass(menu, "cms-editpage-top__menu__group--toggle");
         })
     }
 
@@ -38,7 +39,7 @@ export class CmsEditPage {
 
         button.addEventListener('click', function (e) {
             const btn = document.querySelector(".cms-editpage-widget");
-            window.HelperFunction.toggleClass(btn, "cms-editpage-widget--toggle");
+            HelperFunction.toggleClass(btn, "cms-editpage-widget--toggle");
         });
     }
 
@@ -68,7 +69,7 @@ export class CmsEditPage {
      */
     modalButtonHandler = () => {
         document.querySelectorAll(`[data-cms-modal-id]`).forEach((btn) => {
-            window.HelperFunction.modalEvent(btn);
+            HelperFunction.modalEvent(btn);
         });
     }
 

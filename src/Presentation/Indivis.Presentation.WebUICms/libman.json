@@ -18,6 +18,14 @@
         "font/fonts/bootstrap-icons.woff",
         "font/fonts/bootstrap-icons.woff2"
       ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "just-validate@4.3.0",
+      "destination": "wwwroot/lib/justvalidate",
+      "files": [
+        "dist/just-validate.production.min.js"
+      ]
     }
   ]
 }

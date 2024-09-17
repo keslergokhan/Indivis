@@ -19,10 +19,14 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Widgets
     public class GetAllWidgetFormAndWidgetFormInputQuery :
         IRequest<IResultDataControl<List<ReadWidgetFormDto>>>,
         IOnlineAndOfflineFilterQuery,
-        IStateFilterQuery
+        IStateFilterQuery,
+        ILanguageFilterQuery
     {
         public bool OnlineAndOffline { get; set; }
         public StateEnum State { get; set; }
+        public Guid LanguageId { get; set; }
+        public Guid WidgetTemplateId { get; set; }
+        public Guid WidgetId { get; set; }
     }
 
     public class GetAllWidgetFormAndWidgetFormInputQueryHandler :
@@ -41,23 +45,38 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Widgets
             IResultDataControl<List<ReadWidgetFormDto>> result = new ResultDataControl<List<ReadWidgetFormDto>>();
             try
             {
-                IQueryable<WidgetForm> widgetFormQuery = this._applicationDbContext.WidgetForms.AsNoTracking().AsQueryable();
+
+                IQueryable<WidgetTemplate> widgetQuery = this._applicationDbContext.WidgetTemplates
+                    .Where(x => x.Id == request.WidgetTemplateId && x.WidgetId == request.WidgetId).AsNoTracking().AsQueryable();
 
                 if (request.OnlineAndOffline)
                 {
-                    widgetFormQuery = widgetFormQuery
+                    widgetQuery = widgetQuery
                         .Where(x => x.State == (int)StateEnum.Online || x.State == (int)StateEnum.Offline).AsQueryable();
                 }
                 else
                 {
-                    widgetFormQuery = widgetFormQuery
+                    widgetQuery = widgetQuery
                         .Where(x => x.State == (int)request.State).AsQueryable();
                 }
 
 
-                List<WidgetForm> resultWidgetForm = widgetFormQuery
-                    .Include(x => x.WidgetForm_WidgetFormInputs).ThenInclude(x=>x.WidgetFormInput).AsNoTrackingWithIdentityResolution().ToList();
-                result.SuccessSetData(this._mapper.Map<List<ReadWidgetFormDto>>(resultWidgetForm));
+                ICollection<WidgetForm> widgetFormResult = await widgetQuery
+                    .Include(x => x.WidgetService)
+                    .ThenInclude(x => x.WidgetForms)
+                    .ThenInclude(x => x.WidgetForm_WidgetFormInputs)
+                    .ThenInclude(x=>x.WidgetFormInput)
+                    .Select(x=> x.WidgetService.WidgetForms)
+                    .AsNoTracking().AsQueryable().FirstOrDefaultAsync();
+
+                if (widgetFormResult==null || widgetFormResult.Count <= 0)
+                {
+                    result.SuccessSetData(new List<ReadWidgetFormDto>());
+                }
+                else
+                {
+                    result.SuccessSetData(this._mapper.Map<List<ReadWidgetFormDto>>(widgetFormResult));
+                }
             }
             catch (Exception ex)
             {

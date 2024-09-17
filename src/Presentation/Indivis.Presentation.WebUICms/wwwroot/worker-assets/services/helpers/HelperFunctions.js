@@ -33,7 +33,7 @@ export class HelperFunction {
      * @param {string} text
      * @returns {string}
      */
-    translateTextToSlug = (text) => {
+    static translateTextToSlug = (text) => {
         let invalidUrlCharacters = ['+', '&', '=', '?', '%', '#', '/', '\\', ';', ':', '@', '[', ']', '{', '}', '<', '>', '"', '\'', '^', '`', '|', '~', '!', '$', '(', ')', '*']; 
 
         let replaceArray = [
@@ -60,7 +60,7 @@ export class HelperFunction {
      * @param {FormData} formData
      * @return {object}
      */
-    formDataToJsonObject=(formData) => {
+    static formDataToJsonObject=(formData) => {
         var jsonObject = {};
 
        
@@ -91,7 +91,7 @@ export class HelperFunction {
      * @param {ParentNode} element toggle işlemi uygulanacak element
      * @param {string} toggleClass toggle aktif olacak class
      */
-    toggleClass=(element,toggleClass) => {
+    static toggleClass=(element,toggleClass) => {
         if ([...element.classList].indexOf(toggleClass) == -1) {
             element.classList.add(toggleClass);
 
@@ -103,32 +103,32 @@ export class HelperFunction {
      * 
      * @param {Element} element
      */
-    startSpinner = (element) => {
+    static startSpinner = (element) => {
         element.classList.add("cms-spinner-border");
     }
     /**
      * 
      * @param {Element} element
      */
-    stopSpinner = (element) => {
+    static stopSpinner = (element) => {
         element.classList.remove("cms-spinner-border");
     }
     /**
      * 
      * @param {Element} element
      */
-    startWhiteSpinner = (element) => {
+    static startWhiteSpinner = (element) => {
         element.classList.add("cms-spinner-white-border");
     }
     /**
      * 
      * @param {Element} element
      */
-    stopWhiteSpinner = (element) => {
+    static stopWhiteSpinner = (element) => {
         element.classList.remove("cms-spinner-white-border");
     }
 
-    modalEvent = (btn) => {
+    static modalEvent = (btn) => {
 
         const modalId = btn.getAttribute("data-cms-modal-id");
 
@@ -206,17 +206,79 @@ class CmsModal {
     
 }
 
-class WidgetFormIframe {
-    constructor() {
-        this.Element = document.querySelector(".js-widget-form-iframe");
-        this.closeButtonEvent();
-    }
-
+class WidgetForms {
    
 
-    closeButtonEvent = () => {
-        this.Element.querySelector(".js-widget-form-iframe-close").addEventListener('click', () => {
-            this.hide();
+    widgetFormSettingsHandler = () => {
+        const formData = new FormData(WidgetFormIframe.SettingsForm);
+        console.log(HelperFunction.formDataToJsonObject(formData));
+    }
+
+    widgetFormDataHandler = () => {
+
+        const formData = new FormData(WidgetFormIframe.DataForm);
+        console.log(HelperFunction.formDataToJsonObject(formData));
+    }
+
+
+    widgetFormDataResetButtonHandler = () => {
+        WidgetFormIframe.IframeContent.querySelector(`[type="reset"]`).addEventListener('click', (e) => {
+            e.preventDefault();
+            WidgetFormIframe.IframeContent.hide();
+        });
+    }
+
+    widgetFormSubmitEventHandler = () => {
+        WidgetFormIframe.IframeContent.querySelector(`[type="submit"]`).addEventListener('click', (e) => {
+            e.preventDefault();
+
+
+            this.widgetFormSettingsHandler();
+            this.widgetFormDataHandler();
+
+        });
+    }
+
+
+    execute = () => {
+        this.widgetFormSubmitEventHandler();
+    }
+}
+
+export class WidgetFormIframe {
+
+    
+    static isExecute = false;
+    static IframeContent = document.querySelector(".js-widget-form-iframe");
+    static SettingsForm = null;
+    static DataForm = null;
+    static WidgetForms = null;
+    static IframeFormsSumitHandlerCallBack = null;
+    
+    
+
+    static getIframe = () => {
+        return this.IframeContent.querySelector("iframe");
+    }
+
+    static closeButtonEvent = () => {
+        if (this.IframeContent) {
+            this.IframeContent.querySelector(".js-widget-form-iframe-close").addEventListener('click', () => {
+                this.hide();
+            });
+        }
+    }
+
+    static IframeLoadHandler = () => {
+        
+        this.getIframe().addEventListener('load', () => {
+            this.SettingsForm = this.getIframe().contentDocument.querySelector(".js-widget-form-settings");
+            this.DataForm = this.getIframe().contentDocument.querySelector(".js-widget-form-data");
+            
+            if (typeof this.IframeFormsSumitHandlerCallBack === 'function') {
+                
+                this.IframeFormsSumitHandlerCallBack();
+            }
         });
     }
 
@@ -226,8 +288,12 @@ class WidgetFormIframe {
      * @param {string} widgetTemplateId
      * @returns
      */
-    setIframeSrc = (widgetId, widgetTemplateId) => {
-        return this.Element.querySelector("iframe").src = `/api/widgetformapi/getform/${widgetId}/${widgetTemplateId}`;
+    static setIframeSrc = (widgetId, widgetTemplateId) => {
+        return this.IframeContent.querySelector("iframe").src = `/api/widgetformapi/getform/${widgetId}/${widgetTemplateId}`;
+    }
+
+    static setIframeSrcEmpty = () => {
+        return this.IframeContent.querySelector("iframe").src = ``;
     }
 
     /**
@@ -236,10 +302,10 @@ class WidgetFormIframe {
      * @param {string} widgetId
      * @param {string} widgetTemplateId
      */
-    show = (title,widgetId,widgetTemplateId) => {
-        this.Element.classList.add("widget-form-iframe--show");
+    static show = (title,widgetId,widgetTemplateId) => {
+        this.IframeContent.classList.add("widget-form-iframe--show");
         if (title) {
-            this.Element.querySelector(".widget-form-iframe__header-title").innerHTML = title;
+            this.IframeContent.querySelector(".widget-form-iframe__header-title").innerHTML = title;
         }
         if (!widgetId || !widgetTemplateId) {
             alert("Teknik bir problem yaşandı lütfen daha sonra tekrar deneyiniz !");
@@ -251,11 +317,19 @@ class WidgetFormIframe {
         document.body.style.overflow = "hidden";
     }
 
-    hide = () => {
-        this.Element.classList.remove("widget-form-iframe--show");
+    static hide = () => {
+        this.IframeContent.classList.remove("widget-form-iframe--show");
         document.body.style.overflow = "auto";
+    }
+
+    static execute() {
+        if (this.WidgetForms === null) {
+            this.WidgetForms = new WidgetForms();
+            this.WidgetForms.execute();
+        }
+        this.closeButtonEvent();
+        this.IframeLoadHandler();
     }
 }
 
-window.HelperFunction = new HelperFunction();
-window.WidgetFormIframe = new WidgetFormIframe();
+WidgetFormIframe.execute();

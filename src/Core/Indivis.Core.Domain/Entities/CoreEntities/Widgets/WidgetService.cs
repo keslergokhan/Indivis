@@ -12,4 +12,9 @@ namespace Indivis.Core.Domain.Entities.CoreEntities.Widgets
     {
         public string WidgetServiceTypeName { get; set; }
     }
+
+    public partial class WidgetService
+    {
+        public ICollection<WidgetForm> WidgetForms { get; set; }
+    }
 }

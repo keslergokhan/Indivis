@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads
+@using Indivis.Presentation.WebUICms.Models.InternalApiModels.WidgetFormModels
+@model WidgetFormApiGetFormResModel
+
+@{
     Layout = null;
 }
 
@@ -10,7 +14,7 @@
         <!link rel="stylesheet" href="/lib/bootstrap/font/bootstrap-icons.min.css" />
     <body>
         <div class="container">
-            <!form>
+            <!form class="js-widget-form-settings">
                 <div class="card">
                     <div class="card-header">
                         <h6 class="card-title">Tasarım Ayarlar</h6>
@@ -21,19 +25,19 @@
                         <div class="mb-2 row">
 
                             <div class="col-4">
-                                <label for="exampleInputEmail1" class="form-label">
+                                <label for="WidgetName" class="form-label">
                                     Tasarım Adı
                                     <i class="bi bi-question-circle" data-bs-toggle="tooltip" title="Tasarım adı son kullanıcıya gözükmeyen admin taraflı bir içeriktir."></i>
                                 </label>
-                                <input required type="text" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                <input required type="text" class="form-control form-control-sm" name="WidgetName" id="WidgetName" aria-describedby="emailHelp">
                             </div>
 
                             <div class="col-4">
-                                <label for="exampleInputEmail1" class="form-label">
+                                <label for="WidgetWidth" class="form-label">
                                     Tasarım Genişliği
                                     <i class="bi bi-question-circle" data-bs-toggle="tooltip" title="Tasarımın web sayfasında ekranın kapladığı alanı ayarlar"></i>
                                 </label>
-                                <select required class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <select required name="WidgetWidth" id="WidgetWidth" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                     <!option selected value="12">Ekranın 12/12 genişliği</!option>
                                     <!option value="6">Ekranın 12/6 genişliği</!option>
                                     <!option value="4">Ekranın 12/4 genişliği</!option>
@@ -41,11 +45,11 @@
                             </div>
 
                             <div class="col-4">
-                                <label for="exampleInputEmail1" class="form-label">
+                                <label for="WidgetState" class="form-label">
                                     Durum
                                     <i class="bi bi-question-circle" data-bs-toggle="tooltip" title="Gizli, durumunda olan tasarımlar son kullanıcıya gösterilmez."></i>
                                 </label>
-                                <select required class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <select required class="form-select form-select-sm" name="WidgetState" id="WidgetState" aria-label=".form-select-sm example">
                                     <!option selected value="1">Göster</!option>
                                     <!option value="0">Gizle</!option>
                                 </select>
@@ -57,14 +61,22 @@
                 </div>
             </!form>
 
-            <!form>
+            <!form class="js-widget-form-data">
                 <div class="card mt-3">
                     <div class="card-header">
                         <h5>Tasarım Bilgileri</h5>
                     </div>
 
                     <div class="card-body">
-                        f
+                        @foreach (ReadWidgetFormDto form in Model.WidgetForms)
+                        {
+                            <h6 class="card-title"> @form.Name </h6>
+                            <hr />
+                            foreach (ReadWidgetForm_WidgetFormInputDto input in form.WidgetForm_WidgetFormInputs)
+                            {
+                                @await Component.InvokeAsync(input.WidgetFormInput.InputComponentName,input.WidgetFormInput);
+                            }
+                        }
                     </div>
                 </div>
             </!form>

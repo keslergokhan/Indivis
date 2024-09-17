@@ -1,4 +1,6 @@
-﻿export class CmsEditThemeService {
+﻿import { WidgetFormIframe,HelperFunction } from '../helpers/HelperFunctions.js';
+
+export class CmsEditThemeService {
 
 
     constructor() {
@@ -65,8 +67,6 @@ class PageZone {
         this.Zone = zone;
         /** @type {Array<ZoneWidget>} */
         this.Widgets = [];
-
-        
     }
 
 
@@ -129,9 +129,8 @@ class PageZone {
             const dataTransferJson = JSON.parse(event.dataTransfer.getData('text/plain')); 
 
             //widget formiframe
-            window.WidgetFormIframe.show(dataTransferJson.widgetName, dataTransferJson.widgetId, dataTransferJson.widgetTemplateId);
+            WidgetFormIframe.show(dataTransferJson.widgetName, dataTransferJson.widgetId, dataTransferJson.widgetTemplateId);
 
-            
         });
     }
 
@@ -192,7 +191,7 @@ class ZoneWidget {
      * @param {string} html
      */
     setWidgetHtmlTemplate = (html) => {
-        window.HelperFunction.stopSpinner(this.Widget);
+        HelperFunction.stopSpinner(this.Widget);
         this.Widget.innerHTML = "";
         this.Widget.innerHTML = html;
     }
@@ -212,7 +211,7 @@ class ZoneWidget {
         }).then(html => {
             this.setWidgetHtmlTemplate(html);
         }).catch(error => {
-            alert("Beklenmedik bir hata oluştu !");
+            alert("Beklenmedik bir hata oluştu ! getWidgetTemplateAsync");
         })
     }
 
@@ -222,19 +221,3 @@ class ZoneWidget {
 }
 
 
-class WidgetForms {
-
-    constructor() {
-
-    }
-
-    showWidggetFormModal = () => {
-
-    }
-
-
-    execute = () => {
-
-    }
-
-}

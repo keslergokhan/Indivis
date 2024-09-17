@@ -27,8 +27,8 @@
 
             <div class="widget-form-iframe__footer">
                 <div class="widget-form-iframe__buttons">
-                    <button class="cms-btn cms-btn-danger js-widget-form-iframe-close" >İptal</button>
-                    <button class="cms-btn cms-btn-success js-widget-form-iframe-submit">Kaydet</button>
+                    <button type="reset" class="cms-btn cms-btn-danger js-widget-form-iframe-close" >İptal</button>
+                    <button type="submit" class="cms-btn cms-btn-success js-widget-form-iframe-submit">Kaydet</button>
                 </div>
             </div>
         </div>
@@ -120,8 +120,8 @@
 
     </div>
 
+    <!script src="/lib/justvalidate/dist/just-validate.production.min.js"></!script>
     <!script src="_content/Indivis.Presentation.WebUI.Views/lib/bootstrap/js/bootstrap.bundle.min.js"></!script>
-    <!script type="module" src="worker-assets/services/helpers/HelperFunctions.js?v=@DateTime.Now.ToString("FFFFFFF")"></!script>
     <!script type="module" src="worker-assets/pages/CmsEditPage.js?v=@DateTime.Now.ToString("FFFFFFF")"></!script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

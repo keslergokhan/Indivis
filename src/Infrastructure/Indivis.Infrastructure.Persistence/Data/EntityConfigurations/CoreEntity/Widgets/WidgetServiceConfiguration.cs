@@ -21,6 +21,8 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
                 .HasMaxLength(EntityConfigurationConstants.MaxStringLv4)
                 .IsRequired(true)
                 .HasColumnOrder(1);
+
+            builder.HasMany(x=>x.WidgetForms).WithOne(x=>x.WidgetService).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
