@@ -4,6 +4,7 @@ using Indivis.Infrastructure.Persistence.Data.IndivisContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Indivis.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IndivisContext))]
-    partial class IndivisContextModelSnapshot : ModelSnapshot
+    [Migration("20240919222314_UpdatePageWidgetSettingsFix")]
+    partial class UpdatePageWidgetSettingsFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -462,7 +465,8 @@ namespace Indivis.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PageZoneId");
 
-                    b.HasIndex("WidgetId");
+                    b.HasIndex("WidgetId")
+                        .IsUnique();
 
                     b.ToTable("PageWidget", (string)null);
                 });
@@ -1166,8 +1170,8 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Widgets.Widget", "Widget")
-                        .WithMany()
-                        .HasForeignKey("WidgetId")
+                        .WithOne()
+                        .HasForeignKey("Indivis.Core.Domain.Entities.CoreEntities.Widgets.PageWidget", "WidgetId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 

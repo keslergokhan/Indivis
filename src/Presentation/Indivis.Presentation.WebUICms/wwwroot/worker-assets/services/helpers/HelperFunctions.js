@@ -206,20 +206,86 @@ class CmsModal {
     
 }
 
-class WidgetForms {
-   
 
-    widgetFormSettingsHandler = () => {
-        const formData = new FormData(WidgetFormIframe.SettingsForm);
-        console.log(HelperFunction.formDataToJsonObject(formData));
+class WidgetFormRequest {
+    constructor(widgetSetting, widgetData) {
+        this.WidgetSetting = widgetSetting;
+        this.WidgetData = widgetData;
+    }
+}
+
+/**
+ * Eklenmek istenen widget form yapısını oluşturan ve yöneten sınıf
+ */
+class WidgetForms {
+
+    constructor() {
+        this.AddWidgetUrl = "/api/WidgetFormApi/add-widget";
     }
 
+    /**
+     * Widget ayarlar form süreçleri
+     * @returns {object}
+     */
+    widgetFormSettingsHandler = () => {
+        if (WidgetFormIframe.DropDataTransferData == null) {
+            console.error("WidgetFromIframe drop json ulaşılamadı");
+            alert("Teknik bir problem yaşandı lütfen daha sonra tekrar deneyin ! widgetFormSubmitEventHandler");
+        }
+        const formData = new FormData(WidgetFormIframe.SettingsForm);
+
+        formData.append("widgetTemplateId", WidgetFormIframe.DropDataTransferData.widgetTemplateId);
+        formData.append("pageId", WidgetFormIframe.DropDataTransferData.pageId);
+        formData.append("pageZoneId", WidgetFormIframe.DropDataTransferData.pageZoneId);
+        formData.append("widgetId", WidgetFormIframe.DropDataTransferData.widgetId);
+        return HelperFunction.formDataToJsonObject(formData);
+    }
+
+    /**
+     * Dinamik widget form süreçleri
+     * * @returns {object}
+     */
     widgetFormDataHandler = () => {
 
         const formData = new FormData(WidgetFormIframe.DataForm);
-        console.log(HelperFunction.formDataToJsonObject(formData));
+        return HelperFunction.formDataToJsonObject(formData);
     }
 
+    /**
+     * Yeni bir widget ekle
+     * @param {WidgetFormRequest} widgetFormRequest
+     */
+    addWidgetAsync = async (widgetFormRequest) => {
+
+       
+
+        if (widgetFormRequest.WidgetSetting.IsShow == "1") {
+            widgetFormRequest.WidgetSetting.IsShow = true;
+        } else {
+            widgetFormRequest.WidgetSetting.IsShow = false;
+        }
+
+        
+
+
+        const settings = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(widgetFormRequest)
+        };
+
+
+        await fetch(this.AddWidgetUrl, settings).then(res => res.json()).then(json => {
+            console.log(json);
+        }).catch(x => {
+            alert("Beklenmedik bir problem yaşandı addWidgetAsync");
+            console.error(x);
+        })
+    }
+
+    
 
     widgetFormDataResetButtonHandler = () => {
         WidgetFormIframe.IframeContent.querySelector(`[type="reset"]`).addEventListener('click', (e) => {
@@ -228,15 +294,24 @@ class WidgetForms {
         });
     }
 
+    /**
+     * Widget ıframe dinamik form kaydet eventi
+     */
     widgetFormSubmitEventHandler = () => {
-        WidgetFormIframe.IframeContent.querySelector(`[type="submit"]`).addEventListener('click', (e) => {
-            e.preventDefault();
+        if (WidgetFormIframe.IframeContent) {
+            WidgetFormIframe.IframeContent.querySelector(`[type="submit"]`).addEventListener('click', async (e) => {
+                e.preventDefault();
 
+                
 
-            this.widgetFormSettingsHandler();
-            this.widgetFormDataHandler();
+                const setting = this.widgetFormSettingsHandler();
+                const data = this.widgetFormDataHandler();
 
-        });
+                await this.addWidgetAsync(new WidgetFormRequest(setting, data));
+
+            });
+        }
+        
     }
 
 
@@ -245,22 +320,22 @@ class WidgetForms {
     }
 }
 
+
 export class WidgetFormIframe {
 
-    
     static isExecute = false;
     static IframeContent = document.querySelector(".js-widget-form-iframe");
     static SettingsForm = null;
     static DataForm = null;
+    static DropDataTransferData = null;
     static WidgetForms = null;
     static IframeFormsSumitHandlerCallBack = null;
     
-    
-
     static getIframe = () => {
         return this.IframeContent.querySelector("iframe");
     }
 
+    
     static closeButtonEvent = () => {
         if (this.IframeContent) {
             this.IframeContent.querySelector(".js-widget-form-iframe-close").addEventListener('click', () => {
@@ -269,6 +344,9 @@ export class WidgetFormIframe {
         }
     }
 
+    /**
+     * IFrame içeriği yüklendiğinde çalıştırılacak işler
+     */
     static IframeLoadHandler = () => {
         
         this.getIframe().addEventListener('load', () => {
@@ -296,16 +374,22 @@ export class WidgetFormIframe {
         return this.IframeContent.querySelector("iframe").src = ``;
     }
 
+    
+
     /**
-     * WidgetFormIframe tasarımını aktifet
+     * WidgetFormIframe tasarımını göster
      * @param {string} title
      * @param {string} widgetId
      * @param {string} widgetTemplateId
      */
-    static show = (title,widgetId,widgetTemplateId) => {
+    static show = (dropDataTransferData) => {
+
+        const { widgetName, widgetId, widgetTemplateId } = dropDataTransferData;
+        this.DropDataTransferData = dropDataTransferData;
+
         this.IframeContent.classList.add("widget-form-iframe--show");
-        if (title) {
-            this.IframeContent.querySelector(".widget-form-iframe__header-title").innerHTML = title;
+        if (widgetName) {
+            this.IframeContent.querySelector(".widget-form-iframe__header-title").innerHTML = widgetName;
         }
         if (!widgetId || !widgetTemplateId) {
             alert("Teknik bir problem yaşandı lütfen daha sonra tekrar deneyiniz !");
@@ -317,9 +401,14 @@ export class WidgetFormIframe {
         document.body.style.overflow = "hidden";
     }
 
+
+    /**
+     * WidgetFormIFrame tasarımını hizle
+     */
     static hide = () => {
         this.IframeContent.classList.remove("widget-form-iframe--show");
         document.body.style.overflow = "auto";
+        this.DropDataTransferData = null;
     }
 
     static execute() {
@@ -332,4 +421,6 @@ export class WidgetFormIframe {
     }
 }
 
-WidgetFormIframe.execute();
+if (WidgetFormIframe.IframeContent) {
+    WidgetFormIframe.execute();
+}

@@ -38,8 +38,8 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
                 .HasDefaultValue<bool>(false);
 
             builder.HasOne(x => x.WidgetTemplate)
-                .WithOne()
-                .HasForeignKey<PageWidgetSetting>(x => x.WidgetTemplateId)
+                .WithMany()
+                .HasForeignKey(x => x.WidgetTemplateId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             base.OrderConfigure(builder);

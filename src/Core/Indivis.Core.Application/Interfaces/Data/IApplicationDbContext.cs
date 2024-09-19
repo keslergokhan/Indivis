@@ -31,7 +31,7 @@ namespace Indivis.Core.Application.Interfaces.Data
         public DbSet<WidgetFormInput> WidgetFormInputs { get; }
 
 
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
     }
 }

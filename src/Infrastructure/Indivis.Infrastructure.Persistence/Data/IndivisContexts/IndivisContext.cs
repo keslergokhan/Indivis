@@ -31,6 +31,7 @@ namespace Indivis.Infrastructure.Persistence.Data.IndivisContexts
             base.OnModelCreating(modelBuilder);
         }
 
+
         #region CoreEntity
         public DbSet<Language> Languages => Set<Language>();
         public DbSet<Url> Urls => Set<Url>();

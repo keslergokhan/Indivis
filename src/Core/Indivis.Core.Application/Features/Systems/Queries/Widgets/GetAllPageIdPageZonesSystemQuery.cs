@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads;
+using Indivis.Core.Application.Enums.Systems;
 using Indivis.Core.Application.Interfaces.Data;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
@@ -38,7 +39,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Widgets
 
             try
             {
-                List<PageZone> pageZones = await this._applicationDbContext.PageZones.Where(x => x.PageId == request.PageId)
+                List<PageZone> pageZones = await this._applicationDbContext.PageZones.Where(x => x.PageId == request.PageId && x.State == (int)StateEnum.Online)
                 .Include(x => x.PageWidgets)
                 .ThenInclude(x => x.Widget)
                 .ThenInclude(x => x.WidgetTemplates)

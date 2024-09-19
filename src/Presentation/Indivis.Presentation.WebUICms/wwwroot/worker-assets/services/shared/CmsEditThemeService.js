@@ -69,7 +69,9 @@ class PageZone {
         this.Widgets = [];
     }
 
-
+    GetZonePageId = () => {
+        return this.Zone.getAttribute("data-zone-page-id");
+    }
     getZoneId = () => {
         return this.Zone.getAttribute("data-zone-id");
     }
@@ -127,9 +129,14 @@ class PageZone {
 
             // Sürüklenen widget elementin transferedilen verileri
             const dataTransferJson = JSON.parse(event.dataTransfer.getData('text/plain')); 
+            const currentZoneData = {
+                pageZoneId : this.getZoneId(),
+                pageId : this.GetZonePageId(),
+            }
+
 
             //widget formiframe
-            WidgetFormIframe.show(dataTransferJson.widgetName, dataTransferJson.widgetId, dataTransferJson.widgetTemplateId);
+            WidgetFormIframe.show({ ...dataTransferJson, ...currentZoneData });
 
         });
     }

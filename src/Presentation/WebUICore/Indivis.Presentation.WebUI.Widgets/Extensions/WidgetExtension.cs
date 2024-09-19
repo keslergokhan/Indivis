@@ -50,8 +50,14 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
                 return new HtmlString(writer.ToString());
             }
 
-            
-            foreach (ReadPageWidgetDto pageWidget in pageZone.PageWidgets.Where(x=>x.PageWidgetSetting.IsShow == true).OrderBy(x=>x.PageWidgetSetting.Order))
+            List<ReadPageWidgetDto> pageWidgets = new List<ReadPageWidgetDto>();
+
+            if (currentResposne.EditMode)
+                pageWidgets = pageZone.PageWidgets.OrderBy(x => x.PageWidgetSetting.Order).ToList();
+            else
+                pageWidgets = pageZone.PageWidgets.Where(x => x.PageWidgetSetting.IsShow == true).OrderBy(x => x.PageWidgetSetting.Order).ToList();
+
+            foreach (ReadPageWidgetDto pageWidget in pageWidgets)
             {
                 TagBuilder div = new TagBuilder("div");
                 div.AddCssClass(pageWidget.PageWidgetSetting.Grid);
@@ -85,7 +91,12 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
             return result;
         }
 
-
+        /// <summary>
+        /// Html widget tasarımı döner
+        /// </summary>
+        /// <param name="viewComponent"></param>
+        /// <param name="pageWidget"></param>
+        /// <returns></returns>
         public static async Task<IHtmlContent> Widget(this IViewComponentHelper viewComponent,ReadPageWidgetDto pageWidget)
         {
             using (StringWriter writer = new StringWriter())
