@@ -82,18 +82,11 @@
 
     @RenderBody()
    
-
-    
-    
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - Indivis.Presentation.WebUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-
-
-    
-    
 
     <div class="cms-modal" id="widget-list">
 
@@ -123,6 +116,8 @@
     <!script src="/lib/justvalidate/dist/just-validate.production.min.js"></!script>
     <!script src="_content/Indivis.Presentation.WebUI.Views/lib/bootstrap/js/bootstrap.bundle.min.js"></!script>
     <!script type="module" src="worker-assets/pages/CmsEditPage.js?v=@DateTime.Now.ToString("FFFFFFF")"></!script>
+    <!script src="/lib/sweetalert/sweetalert2.all.min.js"></!script>
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

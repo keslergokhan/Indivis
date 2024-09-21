@@ -228,3 +228,20 @@ body {
         scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
     }
 }
+
+.swal-custom{
+    width:340px;
+}
+.swal-custom .swal2-title {
+    padding:0px;
+}
+
+.swal-custom .swal2-title {
+    font-size: 20px;
+}
+
+.swal-custom .swal2-actions{
+    padding: 0px;
+    margin: 0px;
+}
+

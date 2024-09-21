@@ -32,7 +32,7 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
         {
             IResultDataControl<WidgetFormApiAddWidgetResModel> model = new ResultDataControl<WidgetFormApiAddWidgetResModel>();
             WidgetFormApiAddWidgetResModel data = new WidgetFormApiAddWidgetResModel();
-
+            
 
             string jsonData = JsonSerializer.Serialize(req.WidgetData);
 
@@ -77,7 +77,7 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
                 model.SuccessSetData(data);
             }
             
-
+            model.SetData(data);
             return Ok(model);
         }
 

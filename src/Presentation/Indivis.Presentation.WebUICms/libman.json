@@ -26,6 +26,13 @@
       "files": [
         "dist/just-validate.production.min.js"
       ]
+    },
+    {
+      "library": "sweetalert2@11.14.0",
+      "destination": "wwwroot/lib/sweetalert",
+      "files": [
+        "sweetalert2.all.min.js"
+      ]
     }
   ]
 }
