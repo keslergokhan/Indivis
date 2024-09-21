@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Common.BaseClasses.Results
@@ -14,6 +15,7 @@ namespace Indivis.Core.Application.Common.BaseClasses.Results
         public bool IsSuccess => _isSuccess;
 
         private IExceptionResult _error;
+        [JsonIgnore]
         public IExceptionResult Error => _error;
 
         public BaseResultControl()
@@ -35,12 +37,14 @@ namespace Indivis.Core.Application.Common.BaseClasses.Results
         public IResultControl Fail(string title, string message)
         {
             this._isSuccess = false;
+            _error = new ExceptionResult(title, message);
             return this;
         }
 
         public IResultControl Fail(string title, string message, Exception exception)
         {
             this._isSuccess = false;
+            _error = new ExceptionResult(title, message, exception);
             return this;
         }
 

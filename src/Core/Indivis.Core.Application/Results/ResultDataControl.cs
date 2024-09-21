@@ -10,6 +10,16 @@ namespace Indivis.Core.Application.Results
 {
     public class ResultDataControl<T> : BaseResultControl, IResultDataControl<T>
     {
+        public ResultDataControl()
+        {
+            
+        }
+
+        public ResultDataControl(T d)
+        {
+            this._data = d;
+        }
+
         private T _data;
         public T Data => _data;
 

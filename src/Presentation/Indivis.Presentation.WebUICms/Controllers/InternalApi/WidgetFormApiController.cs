@@ -4,6 +4,7 @@ using Indivis.Core.Application.Exceptions;
 using Indivis.Core.Application.Features.Systems.Commands.Widgets;
 using Indivis.Core.Application.Features.Systems.Queries.Widgets;
 using Indivis.Core.Application.Interfaces.Results;
+using Indivis.Core.Application.Results;
 using Indivis.Presentation.WebUICms.Helpers;
 using Indivis.Presentation.WebUICms.Models.InternalApiModels.WidgetFormModels;
 using MediatR;
@@ -29,6 +30,10 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
         [Route("add-widget")]
         public async Task<IActionResult> AddWidget([FromBody] WidgetFormApiAddWidgetReqModel req)
         {
+            IResultDataControl<WidgetFormApiAddWidgetResModel> model = new ResultDataControl<WidgetFormApiAddWidgetResModel>();
+            WidgetFormApiAddWidgetResModel data = new WidgetFormApiAddWidgetResModel();
+
+
             string jsonData = JsonSerializer.Serialize(req.WidgetData);
 
 
@@ -62,7 +67,18 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
 
             IResultDataControl<ReadPageWidgetDto> addPageWidgetResult = await this._mediator.Send(addWidgetCommand);
 
-            return Ok("{}");
+            if (!addPageWidgetResult.IsSuccess)
+            {
+                model.Fail(addPageWidgetResult.Error);
+            }
+            else
+            {
+                data.PageWidget = addPageWidgetResult.Data;
+                model.SuccessSetData(data);
+            }
+            
+
+            return Ok(model);
         }
 
         [HttpGet]

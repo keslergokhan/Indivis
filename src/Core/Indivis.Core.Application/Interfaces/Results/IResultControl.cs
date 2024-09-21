@@ -13,6 +13,7 @@ namespace Indivis.Core.Application.Interfaces.Results
 
         public IResultControl Success();
         public IResultControl Fail();
+        public IResultControl Fail(string title,string message);
         public IResultControl Fail(Exception exception);
         public IResultControl Fail(IExceptionResult error);
     }
