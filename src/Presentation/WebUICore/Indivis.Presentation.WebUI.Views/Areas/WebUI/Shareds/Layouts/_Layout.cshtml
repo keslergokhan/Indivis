@@ -7,6 +7,9 @@
     <title>@ViewData["Title"] - Indivis.Presentation.WebUI</title>
     <!link rel="stylesheet" href="_content/Indivis.Presentation.WebUI.Views/lib/bootstrap/css/bootstrap.min.css" />
     @await RenderSectionAsync("Head", required: false)
+    @{
+        await Html.RenderPartialAsync("~/Areas/WebUI/Shareds/Partials/_WidgetStyleAssetPartial.cshtml");
+    }
 </head>
 <body>
 
@@ -59,5 +62,8 @@
 
     <!script src="_content/Indivis.Presentation.WebUI.Views/lib/bootstrap/js/bootstrap.bundle.min.js"></!script>
     @await RenderSectionAsync("Scripts", required: false)
+    @{
+        await Html.RenderPartialAsync("~/Areas/WebUI/Shareds/Partials/_WidgetScriptAssetPartial.cshtml");
+    }
 </body>
 </html>

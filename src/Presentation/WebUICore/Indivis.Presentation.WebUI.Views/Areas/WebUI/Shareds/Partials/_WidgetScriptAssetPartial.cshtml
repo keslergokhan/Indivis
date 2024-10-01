@@ -1,0 +1,34 @@
+@using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads
+@using Indivis.Core.Application.Interfaces.Data.Presentation
+@inject ICurrentResponse currentResponse
+
+@if (currentResponse.EditMode == false)
+{
+    List<string> widgetLibrary = new();
+    foreach (ReadPageZoneDto zone in currentResponse.CurrentPage.PageZones)
+    {
+        if (zone.PageWidgets.Count > 0)
+        {
+            
+            foreach (ReadPageWidgetDto pageWidget in zone.PageWidgets)
+            {
+                string widgetFileName = System.IO.Path.GetFileNameWithoutExtension(pageWidget.PageWidgetSetting.WidgetTemplate.Template);
+
+                if (pageWidget.PageWidgetSetting.WidgetTemplate.HasScript && !widgetLibrary.Any(x => x == widgetFileName))
+                {
+                    widgetLibrary.Add(widgetFileName);
+                }
+            }
+
+            
+        }
+    }
+
+    if (widgetLibrary.Count > 0)
+    {
+        foreach (string item in widgetLibrary)
+        {
+            <script src="_content/Indivis.Presentation.WebUI.Views/assets/areas/widgets/@item/@string.Concat(item,".js")"></script>
+        }
+    }
+}

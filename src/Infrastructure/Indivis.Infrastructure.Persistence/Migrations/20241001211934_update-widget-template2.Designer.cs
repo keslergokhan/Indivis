@@ -4,6 +4,7 @@ using Indivis.Infrastructure.Persistence.Data.IndivisContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Indivis.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IndivisContext))]
-    partial class IndivisContextModelSnapshot : ModelSnapshot
+    [Migration("20241001211934_update-widget-template2")]
+    partial class updatewidgettemplate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -752,12 +755,12 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     b.Property<bool>("HasScript")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasDefaultValue(true);
 
                     b.Property<bool>("HasStyle")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Image")
                         .HasMaxLength(500)

@@ -15,6 +15,8 @@ namespace Indivis.Core.Domain.Entities.CoreEntities.Widgets
         public string Title { get; set; }
         public string Description { get; set; }
         public string Template { get; set; }
+        public bool HasStyle { get; set; }
+        public bool HasScript { get; set; }
         public bool IsDefault { get; set; }
     }
 

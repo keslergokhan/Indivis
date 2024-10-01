@@ -18,6 +18,8 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads
         public string Description { get; set; }
         public string Template { get; set; }
         public bool IsDefault { get; set; }
+        public bool HasStyle { get; set; }
+        public bool HasScript { get; set; }
     }
 
     public partial class ReadWidgetTemplateDto : IEntityImageDto

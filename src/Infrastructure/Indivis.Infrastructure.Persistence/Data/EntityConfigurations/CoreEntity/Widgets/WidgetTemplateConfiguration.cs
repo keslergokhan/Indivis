@@ -16,6 +16,7 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
         {
             base.Configure(builder);
 
+            base.ImageConfigure(builder);
 
 
             builder.Property(x => x.Title)
@@ -38,7 +39,11 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
                 .HasColumnOrder(4)
                 .HasDefaultValue<bool>(true);
 
-            base.ImageConfigure(builder);
+            builder.Property(x=>x.HasScript)
+                .HasDefaultValue<bool>(false);
+
+            builder.Property(x => x.HasStyle)
+                .HasDefaultValue<bool>(true);
 
 
             builder.HasOne(x => x.Widget).WithMany(x=>x.WidgetTemplates).HasForeignKey(x=>x.WidgetId)
