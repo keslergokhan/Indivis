@@ -319,6 +319,29 @@
     justify-content: flex-end;
 }
 
+.widget-buttons {
+    max-height: 40px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+    padding-right:15px;
+}
+.widget-order-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.widget-order-buttons > button{
+    height:20px;
+    width:auto;
+    font-size:15px;
+    text-align:center;
+    line-height:15px;
+    border:solid 1px;
+    background:#ffc107;
+    border-radius:3px;
+    margin-top:1px;
+}
 
 @media (max-width: 768px) {
     .cms-editpage-top__menu {

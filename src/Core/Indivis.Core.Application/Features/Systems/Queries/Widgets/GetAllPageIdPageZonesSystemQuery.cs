@@ -40,11 +40,11 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Widgets
             try
             {
                 List<PageZone> pageZones = await this._applicationDbContext.PageZones.Where(x => x.PageId == request.PageId && x.State == (int)StateEnum.Online)
-                .Include(x => x.PageWidgets)
+                .Include(x => x.PageWidgets.Where(i => i.State == (int)StateEnum.Online))
                 .ThenInclude(x => x.Widget)
                 .ThenInclude(x => x.WidgetTemplates)
                 .ThenInclude(x => x.WidgetService)
-                .Include(x => x.PageWidgets)
+                .Include(x => x.PageWidgets.Where(i=>i.State == (int)StateEnum.Online))
                 .ThenInclude(x => x.PageWidgetSetting)
                 .ToListAsync();
 

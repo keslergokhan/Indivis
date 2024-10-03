@@ -8,12 +8,14 @@ using Indivis.Core.Application.Results;
 using Indivis.Presentation.WebUICms.Helpers;
 using Indivis.Presentation.WebUICms.Models.InternalApiModels.WidgetFormModels;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
 namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
 {
+    [Authorize(Roles = "BaseAdmin")]
     [Route("api/[controller]")]
     [ApiController]
     public class WidgetFormApiController : Controller
@@ -23,6 +25,18 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
         public WidgetFormApiController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+
+        [HttpPost]
+        [Route("update-widget")]
+        public async Task<IActionResult> UpdateWidget([FromBody] WidgetFormApiUpdateWidgetReqModel req)
+        {
+            IResultDataControl<WidgetFormApiUpdateWidgetResModel> model = new ResultDataControl<WidgetFormApiUpdateWidgetResModel>();
+            WidgetFormApiUpdateWidgetResModel data = new WidgetFormApiUpdateWidgetResModel();
+
+            model.SetData(data);
+            return View(model);
         }
 
 
@@ -79,6 +93,14 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
             
             model.SetData(data);
             return Ok(model);
+        }
+
+
+        [HttpGet]
+        [Route("getUpdateform/{pageWidgetId:guid}")]
+        public async Task<IActionResult> GetUpdateFrom(Guid pageWidgetId)
+        {
+            return View("~/Views/WidgetForm/UpdateWidgetFormBodyView.cshtml");
         }
 
         [HttpGet]

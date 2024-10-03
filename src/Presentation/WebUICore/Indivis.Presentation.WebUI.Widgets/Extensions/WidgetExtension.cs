@@ -28,11 +28,6 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
 
             TagBuilder zone = new TagBuilder("section");
 
-            TagBuilder zoneBtn = new TagBuilder("div");
-            zoneBtn.AddCssClass("zone-buttons");
-            zoneBtn.MergeAttribute("data-zone-buttons", "");
-            zone.InnerHtml.AppendHtml(zoneBtn);
-
             zone.AddCssClass("row");
             zone.AddCssClass("zone-section");
             zone.MergeAttribute("data-zone-id", pageZone.Id.ToString());
@@ -63,6 +58,9 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
                 div.AddCssClass(pageWidget.PageWidgetSetting.Grid);
                 div.AddCssClass(pageWidget.PageWidgetSetting.ClassCustom);
                 div.MergeAttribute("data-page-widget-id", pageWidget.Id.ToString());
+                div.MergeAttribute("data-widget-id", pageWidget.WidgetId.ToString());
+                div.MergeAttribute("data-widget-templage-id", pageWidget.PageWidgetSetting.WidgetTemplateId.ToString());
+                
 
                 IHtmlContent content = null;
 

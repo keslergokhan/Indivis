@@ -31,14 +31,40 @@ export class CmsEditThemeService {
      * @param {string} zoneWidgetId
      * @param {string} grid
      */
-    static addPageZoneNewWidget = (pageZoneId, zoneWidgetId, grid) => {
+    static addPageZoneNewWidget = (newWidgetData) => {
+
+        const pageZoneId = newWidgetData.pageWidget.pageZoneId;
+        const zoneWidgetId = newWidgetData.pageWidget.id;
+        const grid = newWidgetData.pageWidget.pageWidgetSetting.Grid;
+        const widgetId = newWidgetData.pageWidget.WidgetId;
+        const widgetTemplateId = newWidgetData.pageWidget.pageWidgetSetting.WidgetTemplateId;
+
 
         /** @type {PageZone} */
         const pageZoneResult = CmsEditThemeService.PageZones.find(x => x.getZoneId() == pageZoneId);
 
         if (pageZoneResult) {
-            pageZoneResult.addNewWidget(zoneWidgetId,grid);
+            /*
+                db yeni eklenen kayıt için html içine boş bir Widget tasarımı eklendi ve ilgili zone restart edildi
+                bu şekilde tasarımda bilgiler eklenmiş olan widget için tasarım çekildi
+            */
+            pageZoneResult.addNewWidget(zoneWidgetId, grid, widgetId, widgetTemplateId);
             pageZoneResult.execute();
+        }
+    }
+
+
+    /**
+     * Mevcut zone yeniden başlat.
+     * @param {guid} pageZoneId
+     */
+    static pageZoneRestart = (pageZoneId) => {
+
+        /** @type {PageZone} */
+        const pageZoneResult = CmsEditThemeService.PageZones.find(x => x.getZoneId() == pageZoneId);
+
+        if (pageZoneResult) {
+            pageZone.execute();
         }
     }
 
@@ -111,7 +137,7 @@ class PageZone {
 
         if (zoneWidgetList.length > 0) {
             zoneWidgetList.forEach(x => {
-                this.Widgets.push(new ZoneWidget(x));
+                this.Widgets.push(new ZoneWidget(x,this));
             });
         }
 
@@ -125,9 +151,11 @@ class PageZone {
      * @param {string} zoneWidgetId
      * @param {string} grid
      */
-    addNewWidget = (zoneWidgetId,grid) => {
-        this.getZoneWidgetContainer().insertAdjacentHTML('beforeend', ZoneWidget.getWidgetHTMLElement(grid, zoneWidgetId));
+    addNewWidget = (zoneWidgetId,grid,widgetId,widgetTemplateId) => {
+        this.getZoneWidgetContainer().insertAdjacentHTML('beforeend', ZoneWidget.getWidgetHTMLElement(grid, zoneWidgetId, widgetId, widgetTemplateId));
     }
+
+    
 
     pageZoneDragStartStyle = () => {
         this.pageZoneDragEndStyle();
@@ -158,14 +186,21 @@ class PageZone {
             this.pageZoneDragEndStyle();
 
             // Sürüklenen widget elementin transferedilen verileri
-            const dataTransferJson = JSON.parse(event.dataTransfer.getData('text/plain')); 
-            const currentZoneData = {
-                pageZoneId : this.getZoneId(),
-                pageId : this.GetZonePageId(),
-            }
 
+
+            const dataTransferJson = JSON.parse(event.dataTransfer.getData('text/plain')); 
+
+            const widgetFormIframeShowData = new WidgetFormIframeShowData(
+                this.getZoneId(),
+                dataTransferJson.widgetId,
+                dataTransferJson.widgetName,
+                dataTransferJson.widgetTemplateId,
+                this.GetZonePageId(),
+            );
+
+            widgetFormIframeShowData.setIsUpdateIframe(false);
             //widget formiframe
-            WidgetFormIframe.show({ ...dataTransferJson, ...currentZoneData });
+            WidgetFormIframe.show(widgetFormIframeShowData);
 
         });
     }
@@ -182,12 +217,11 @@ class PageZone {
     }
 
     execute = () => {
+       
         this.createPageZoneWidgets();
         this.pageZoneDragoverHandler();
         this.pageZoneDropHandler();
         this.pageZoneDragleaveHandler();
-        console.log("calisti");
-        console.log(this);
     }
 }
 
@@ -195,19 +229,20 @@ class PageZone {
 class ZoneWidget {
 
     /**
-     * 
      * @param {Element} widget
+     * @param {Element} pageZone
      */
-    constructor(widget) {
-        this.Widget = widget;
-    }
+    constructor(widget, pageZone) {
 
-    /**
-     * 
-     * @returns {string}
-     */
-    getPageWidgetId = () => {
-        return this.Widget.getAttribute("data-page-widget-id");
+        /**
+         * @type {Element}
+         */
+        this.Widget = widget;
+
+        /**
+         * @type {Element}
+         */
+        this.PageZone = pageZone;
     }
 
     /**
@@ -220,10 +255,154 @@ class ZoneWidget {
         return `${path}?pageWidgetId=${id}`;
     }
 
-    static getWidgetHTMLElement = (grid, pageWidgetId) => {
+
+    /**
+     * PageWidgetId değerini getir
+     * @returns {string}
+     */
+    getPageWidgetId = () => {
+        return this.Widget.getAttribute("data-page-widget-id");
+    }
+
+    /**
+     * WidgetTemplateId değerini getir.
+     * @returns
+     */
+    getWidgetTemplateId = () => {
+        return this.Widget.getAttribute("data-widget-templage-id");
+    }
+
+    /**
+     * Widget değerini getir
+     * @returns {string}
+     */
+    getWidgetId = () => {
+        return this.Widget.getAttribute("data-widget-id");
+    }
+
+    /**
+     * Widget güncelleme buttonu
+     * @returns {ParentNode}
+     */
+    getWidgetUpdateBtn = () => {
+        return this.Widget.querySelector(".js-update-widget");
+    }
+
+    /**
+     * Widget  Sil Buttonu
+     * @returns {ParentNode}
+     */
+    getWidgetRemoveBtn = () => {
+        return this.Widget.querySelector(".js-remove-widget");
+    }
+
+    /**
+     * Widget yukarı taşı buttonu
+     * @returns
+     */
+    getWidgetUpBtn = () => {
+        return this.Widget.querySelector(".js-up-widget");
+    }
+
+    /**
+     * Widget aşağı taşı buttonu
+     * @returns
+     */
+    getWidgetUpBtn = () => {
+        return this.Widget.querySelector(".js-down-widget");
+    }
+
+    widgetUpdateBtnHandlerAsync = async () => {
+
+        this.getWidgetUpdateBtn().addEventListener('click', async () => {
+
+            const widgetFromIframeData = new WidgetFormIframeShowData(
+                this.PageZone.getZoneId(),
+                this.getWidgetId(),
+                "Güncelle",
+                this.getWidgetTemplateId(),
+                this.PageZone.GetZonePageId(),
+                
+            );
+
+            widgetFromIframeData.setPageWidgetId(this.getPageWidgetId());
+            widgetFromIframeData.setIsUpdateIframe(true);
+
+            WidgetFormIframe.show(widgetFromIframeData);
+            WidgetFormIframe.updateBtn();
+        });
+    }
+
+
+    
+
+
+    /**
+     * widget sil api isteği
+     * @returns {string}
+     */
+    removePageWidgetFetchAsync = async () => {
+
+        const settings = {
+            method: "POST",
+            body: JSON.stringify({ pageWidgetId: this.getPageWidgetId() }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }
+
+        let jsonData;
+        await fetch('/api/widgetApi/remove-widget', settings).then(x => {
+            jsonData = x.json();
+        });
+
+        return jsonData;
+    }
+
+    /**
+     * Widget sil button süreçleri
+     */
+    widgetRemoveBtnHandlerAsync = async () => {
+
+        this.getWidgetRemoveBtn().addEventListener('click', () => {
+
+            Swal.fire({
+                title: "Sil !",
+                text: "Seçilen tasarımın silmek istediğinizden emin misiniz !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Evet Sil!",
+                cancelButtonText:"Hayır"
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+
+                    const removeResult = await this.removePageWidgetFetchAsync();
+                    if (removeResult.isSuccess) {
+                        CmsAlert.success("İşlem Başarılı", "Tasarım kaldırıldı !");
+                        this.PageZone.execute();
+                        this.Widget.remove();
+                    } else {
+                        CmsAlert.error("Hata !", "Beklenmedik teknik bir prob")
+                    }
+
+                }
+            });
+        });
+        
+    }
+
+    /**
+     * Boş widget şablonu
+     * @param {string} grid
+     * @param {string} pageWidgetId
+     * @returns {string}
+     */
+    static getWidgetHTMLElement = (grid, pageWidgetId,widgetId,widgetTemplateId) => {
         return `
-            <div class="${grid} empty-widget cms-spinner-border" data-page-widget-id="${pageWidgetId}">
-            yeni element eklendi
+            <div class="${grid} empty-widget cms-spinner-border" data-widet-template-id="${widgetTemplateId}" data-widget-id="${widgetId}" data-page-widget-id="${pageWidgetId}">
+            
             </div>
         `;
     }
@@ -259,6 +438,8 @@ class ZoneWidget {
 
     execute = async () => {
         await this.getWidgetTemplateAsync();
+        await this.widgetRemoveBtnHandlerAsync();
+        await this.widgetUpdateBtnHandlerAsync();
     }
 }
 
@@ -277,6 +458,7 @@ class WidgetForms {
 
     constructor() {
         this.AddWidgetUrl = "/api/WidgetFormApi/add-widget";
+        this.UpdateWidgetUrl = '/api/widgetFormApi/update-widget';
     }
 
     /**
@@ -290,10 +472,10 @@ class WidgetForms {
         }
         const formData = new FormData(WidgetFormIframe.SettingsForm);
 
-        formData.append("widgetTemplateId", WidgetFormIframe.DropDataTransferData.widgetTemplateId);
-        formData.append("pageId", WidgetFormIframe.DropDataTransferData.pageId);
-        formData.append("pageZoneId", WidgetFormIframe.DropDataTransferData.pageZoneId);
-        formData.append("widgetId", WidgetFormIframe.DropDataTransferData.widgetId);
+        formData.append("WidgetTemplateId", WidgetFormIframe.DropDataTransferData.WidgetTemplateId);
+        formData.append("PageId", WidgetFormIframe.DropDataTransferData.PageId);
+        formData.append("PageZoneId", WidgetFormIframe.DropDataTransferData.PageZoneId);
+        formData.append("WidgetId", WidgetFormIframe.DropDataTransferData.WidgetId);
         return HelperFunction.formDataToJsonObject(formData);
     }
 
@@ -330,11 +512,11 @@ class WidgetForms {
 
         await fetch(this.AddWidgetUrl, settings).then(res => res.json()).then(json => {
             if (json.isSuccess) {
-                console.log(json);
                 WidgetFormIframe.hide();
                 CmsAlert.successTopEnd(`${widgetFormRequest.WidgetSetting.Name}, başarıyla eklendi`);
 
-                CmsEditThemeService.addPageZoneNewWidget(json.data.pageWidget.pageZoneId, json.data.pageWidget.id, json.data.pageWidget.pageWidgetSetting);
+                CmsEditThemeService.addPageZoneNewWidget(json.data);
+
             } else {
                 CmsAlert.error("Hata", "Beklenmedik teknik bir problem yaşandı lütfen daha sonra tekrar deneyiniz !");
                 console.error("Widget ekleme sürecinde teknik bir problem yaşandı !");
@@ -381,6 +563,33 @@ class WidgetForms {
     }
 }
 
+export class WidgetFormIframeShowData {
+    /**
+     * 
+     * @param {any} pageZoneId
+     * @param {any} widgetId
+     * @param {any} widgetName
+     * @param {any} widgetTemplateId
+     * @param {any} pageId
+     */
+    constructor(pageZoneId,widgetId,widgetName,widgetTemplateId,pageId) {
+        this.PageZoneId = pageZoneId;
+        this.PageId = pageId;
+        this.WidgetId = widgetId;
+        this.WidgetName = widgetName;
+        this.WidgetTemplateId = widgetTemplateId;
+        this.PageWidgetId = null;
+        this.IsUpdateIframe = false;
+    }
+
+    setPageWidgetId = (pageWidgetId) => {
+        this.PageWidgetId = pageWidgetId;
+    }
+
+    setIsUpdateIframe = (state) => {
+        this.IsUpdateIframe = state;
+    }
+}
 
 export class WidgetFormIframe {
 
@@ -388,6 +597,8 @@ export class WidgetFormIframe {
     static IframeContent = document.querySelector(".js-widget-form-iframe");
     static SettingsForm = null;
     static DataForm = null;
+
+    /** @type {WidgetFormIframeShowData} */
     static DropDataTransferData = null;
     static WidgetForms = null;
     static IframeFormsSumitHandlerCallBack = null;
@@ -431,33 +642,55 @@ export class WidgetFormIframe {
         return this.IframeContent.querySelector("iframe").src = `/api/widgetformapi/getform/${widgetId}/${widgetTemplateId}`;
     }
 
+    /**
+     * WidgetFormUpdate yapısını getiren iframe src düzenle
+     * @param {string} pageWidgetId
+     * @returns
+     */
+    static setUpdateIframeSrc = (pageWidgetId) => {
+        return this.IframeContent.querySelector("iframe").src = `/api/widgetformapi/getUpdateform/${pageWidgetId}`;
+    }
+
+
     static setIframeSrcEmpty = () => {
         return this.IframeContent.querySelector("iframe").src = ``;
     }
 
 
+    static updateBtn = () => {
+        this.IframeContent.querySelector(".js-widget-form-iframe-update-submit").style.display = "inline-block";
+        this.IframeContent.querySelector(".js-widget-form-iframe-submit").style.display = "none";
+    }
+
+    static addBtn = () => {
+        this.IframeContent.querySelector(".js-widget-form-iframe-update-submit").style.display = "none";
+        this.IframeContent.querySelector(".js-widget-form-iframe-submit").style.display = "inline-block";
+    }
 
     /**
-     * WidgetFormIframe tasarımını göster
-     * @param {string} title
-     * @param {string} widgetId
-     * @param {string} widgetTemplateId
+     * 
+     * @param {WidgetFormIframeShowData} WidgetFormIframeData
      */
-    static show = (dropDataTransferData) => {
+    static show = (WidgetFormIframeData) => {
 
-        const { widgetName, widgetId, widgetTemplateId } = dropDataTransferData;
-        this.DropDataTransferData = dropDataTransferData;
+        this.addBtn();
+        this.DropDataTransferData = WidgetFormIframeData;
 
         this.IframeContent.classList.add("widget-form-iframe--show");
-        if (widgetName) {
-            this.IframeContent.querySelector(".widget-form-iframe__header-title").innerHTML = widgetName;
+        if (WidgetFormIframeData.WidgetName) {
+            this.IframeContent.querySelector(".widget-form-iframe__header-title").innerHTML = WidgetFormIframeData.WidgetName;
         }
-        if (!widgetId || !widgetTemplateId) {
+        if (!WidgetFormIframeData.WidgetId || !WidgetFormIframeData.WidgetTemplateId) {
             alert("Teknik bir problem yaşandı lütfen daha sonra tekrar deneyiniz !");
             console.error("Sürüklenen widget settings değerlerine ulaşılamadı !");
         }
 
-        this.setIframeSrc(widgetId, widgetTemplateId);
+
+        if (WidgetFormIframeData.IsUpdateIframe) {
+            this.setUpdateIframeSrc(WidgetFormIframeData.PageWidgetId);
+        } else {
+            this.setIframeSrc(WidgetFormIframeData.WidgetId, WidgetFormIframeData.WidgetTemplateId);
+        }
 
         document.body.style.overflow = "hidden";
     }

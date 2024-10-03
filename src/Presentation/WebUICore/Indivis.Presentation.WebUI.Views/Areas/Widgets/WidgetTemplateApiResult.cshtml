@@ -9,7 +9,17 @@
 @{
     if (Model.IsSuccess)
     {
-        @await Component.Widget(Model.Data);
+        <div>
+            <div class="widget-buttons" >
+                <button type="button" title="Widget Ayarlarını Güncelle" class="cms-btn cms-btn-success js-update-widget">Güncelle</button>
+                <button type="button" title="Widget Sil" class="cms-btn cms-btn-danger js-remove-widget">Sil</button>
+                <div class="widget-order-buttons">
+                    <button class="js-up-widget" title="Widget konumunu yukarı taşı" type="button">∧</button>
+                    <button class="js-down-widget " title="Widget konumunu aşağı taşı" type="button">∨</button>
+                </div>
+            </div>
+            @await Component.Widget(Model.Data)
+        </div>
     }
 
 }

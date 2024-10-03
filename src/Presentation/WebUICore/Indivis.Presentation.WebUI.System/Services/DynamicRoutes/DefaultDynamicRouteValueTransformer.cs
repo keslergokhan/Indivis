@@ -34,7 +34,7 @@ namespace Indivis.Presentation.WebUI.System.Services.DynamicRoutes
             _requestService = requestService;
         }
 
-        public void CreateLanguageCookie(HttpContext httpContext, ReadLanguageDto readLanguageDto)
+        private void CreateLanguageCookie(HttpContext httpContext, ReadLanguageDto readLanguageDto)
         {
             httpContext.Response.Cookies.Append("language", JsonSerializer.Serialize(readLanguageDto));
         }

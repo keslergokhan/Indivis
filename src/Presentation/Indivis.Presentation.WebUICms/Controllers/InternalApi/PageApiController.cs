@@ -7,12 +7,14 @@ using Indivis.Core.Application.Results;
 using Indivis.Presentation.WebUICms.Common;
 using Indivis.Presentation.WebUICms.Helpers;
 using Indivis.Presentation.WebUICms.Models.InternalApiModels.PageModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
 {
+    [Authorize(Roles = "BaseAdmin")]
     [Route("api/[controller]")]
     [ApiController]
     public class PageApiController : BaseApiController

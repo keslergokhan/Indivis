@@ -13,13 +13,13 @@ namespace Indivis.Presentation.WebUICms.Models.InternalApiModels.WidgetFormModel
     {
         public string Name { get; set; }
         public string Grid { get; set; }
-        [JsonPropertyName("widgetTemplateId")]
+        [JsonPropertyName("WidgetTemplateId")]
         public Guid WidgetTemplateId { get; set; }
         public bool IsShow { get; set; }
-        [JsonPropertyName("pageId")]
+        [JsonPropertyName("PageId")]
         public Guid PageId { get; set; }
         public Guid WidgetId { get; set; }
-        [JsonPropertyName("pageZoneId")]
+        [JsonPropertyName("PageZoneId")]
         public Guid PageZoneId { get; set; }
     }
 }
