@@ -1,6 +1,8 @@
 ﻿@using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads
 @using Indivis.Presentation.WebUICms.Models.InternalApiModels.WidgetFormModels
-@model WidgetFormApiGetFormResModel
+@using Indivis.Presentation.WebUICms.Models.ViewComponents
+@using Indivis.Presentation.WebUICms.Models.ViewComponents.WidgetFormInputs
+@model WidgetFormApiGetDynamicFormResModel
 
 @{
     Layout = null;
@@ -74,7 +76,11 @@
                             <hr />
                             foreach (ReadWidgetForm_WidgetFormInputDto input in form.WidgetForm_WidgetFormInputs)
                             {
-                                @await Component.InvokeAsync(input.WidgetFormInput.InputComponentName,input.WidgetFormInput);
+                                @await Component.InvokeAsync(input.WidgetFormInput.InputComponentName,new WidgetInputComponentReqModel()
+                                {
+                                    Input = input.WidgetFormInput,
+                                })
+
                             }
                         }
                     </div>

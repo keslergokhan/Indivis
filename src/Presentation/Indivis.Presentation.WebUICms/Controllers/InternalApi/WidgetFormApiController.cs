@@ -5,6 +5,7 @@ using Indivis.Core.Application.Features.Systems.Commands.Widgets;
 using Indivis.Core.Application.Features.Systems.Queries.Widgets;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
+using Indivis.Core.Domain.Entities.CoreEntities.Widgets;
 using Indivis.Presentation.WebUICms.Helpers;
 using Indivis.Presentation.WebUICms.Models.InternalApiModels.WidgetFormModels;
 using MediatR;
@@ -34,6 +35,9 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
         {
             IResultDataControl<WidgetFormApiUpdateWidgetResModel> model = new ResultDataControl<WidgetFormApiUpdateWidgetResModel>();
             WidgetFormApiUpdateWidgetResModel data = new WidgetFormApiUpdateWidgetResModel();
+
+
+
 
             model.SetData(data);
             return View(model);
@@ -100,14 +104,42 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
         [Route("getUpdateform/{pageWidgetId:guid}")]
         public async Task<IActionResult> GetUpdateFrom(Guid pageWidgetId)
         {
-            return View("~/Views/WidgetForm/UpdateWidgetFormBodyView.cshtml");
+            WidgetFormApiGetDynamicUpdateFormResModel model = new WidgetFormApiGetDynamicUpdateFormResModel();
+
+            
+            IResultDataControl<ReadPageWidgetDto> resultPageWidget = await this._mediator.Send(new GetByIdPageWidgetSystemQuery()
+            {
+                Id = pageWidgetId
+            });
+
+            if (!resultPageWidget.IsSuccess)
+            {
+                throw new ArgumentNullException($"{nameof(GetByIdPageWidgetSystemQuery)} result not null !");
+            }
+            
+
+            model.PageWidget = resultPageWidget.Data;
+
+            
+            IResultDataControl<List<ReadWidgetFormDto>> widgetFormResult = await this._mediator.Send(new GetAllWidgetFormAndWidgetFormInputQuery()
+            {
+                LanguageId = HttpContext.GetCurrentLanguageId(),
+                State = Core.Application.Enums.Systems.StateEnum.Online,
+                WidgetTemplateId = model.PageWidget.PageWidgetSetting.WidgetTemplateId,
+                WidgetId = model.PageWidget.WidgetId,
+            });
+
+            model.WidgetForms = widgetFormResult.Data;
+
+
+            return View("~/Views/WidgetForm/UpdateWidgetFormBodyView.cshtml",model);
         }
 
         [HttpGet]
         [Route("getform/{widgetId:guid}/{widgetTemplateId:guid}")]
         public async Task<IActionResult> GetForm(Guid widgetId,Guid widgetTemplateId)
         {
-            WidgetFormApiGetFormResModel model = new WidgetFormApiGetFormResModel();
+            WidgetFormApiGetDynamicFormResModel model = new WidgetFormApiGetDynamicFormResModel();
 
             IResultDataControl<List<ReadWidgetFormDto>> widgetFormResult = await this._mediator.Send(new GetAllWidgetFormAndWidgetFormInputQuery()
             {

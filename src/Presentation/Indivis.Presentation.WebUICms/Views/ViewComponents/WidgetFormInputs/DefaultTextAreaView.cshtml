@@ -1,13 +1,19 @@
-﻿@model Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads.ReadWidgetFormInputDto
+﻿@using Indivis.Presentation.WebUICms.Models.ViewComponents.WidgetFormInputs
+@model WidgetTextInputComponentResModel
 
 @{
-    string Id = string.Concat(Model.Name, "_");
+    string Id = string.Concat(Model.Input.Name, "_");
 }
 
 
 <div class="mb-3">
-    <label for="@Id" class="form-label">@Model.Label</label>
-    <textarea class="form-control" placeholder="@Model.Label" name="@Model.Name" id="@Id" style="height: 100px"></textarea>
+    <label for="@Id" class="form-label">@Model.Input.Label</label>
+    <textarea class="form-control" placeholder="@Model.Input.Label" name="@Model.Input.Name" id="@Id" style="height: 100px">
+        @if (!string.IsNullOrEmpty(Model.Value))
+        {
+            @Model.Value
+        }
+    </textarea>
 </div>
 
 
