@@ -308,7 +308,7 @@ class ZoneWidget {
      * Widget aşağı taşı buttonu
      * @returns
      */
-    getWidgetUpBtn = () => {
+    getWidgetDownBtn = () => {
         return this.Widget.querySelector(".js-down-widget");
     }
 
@@ -336,7 +336,6 @@ class ZoneWidget {
 
     
 
-
     /**
      * widget sil api isteği
      * @returns {string}
@@ -352,7 +351,7 @@ class ZoneWidget {
         }
 
         let jsonData;
-        await fetch('/api/widgetApi/remove-widget', settings).then(x => {
+        await fetch('/api/widgetFormApi/remove-widget', settings).then(x => {
             jsonData = x.json();
         });
 
@@ -407,6 +406,50 @@ class ZoneWidget {
         `;
     }
 
+    upWidgetBtnHandlerAsync = async () => {
+        this.getWidgetUpBtn().addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            const id = this.getWidgetUpBtn().getAttribute("data-page-widget-setting-id");
+
+            await fetch('/api/widgetFormApi/up-widget', {
+                method: "POST",
+                body: JSON.stringify(id),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(res => res.json())
+            .then(json => {
+                if (json.isSuccess) {
+                    this.PageZone.execute();
+                }
+            })
+        })
+    }
+
+    downWidgetBtnHandlerAsync = async () => {
+        this.getWidgetDownBtn().addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            const id = this.getWidgetUpBtn().getAttribute("data-page-widget-setting-id");
+
+            await fetch('/api/widgetFormApi/down-widget', {
+                method: "POST",
+                body: JSON.stringify(id),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(res => res.json())
+            .then(json => {
+                if (json.isSuccess) {
+                    this.PageZone.execute();
+                }
+            })
+        })
+    }
+
     /**
      * Widget tasarımım gelene kadar Spinner çıkart
      * @param {string} html
@@ -440,6 +483,8 @@ class ZoneWidget {
         await this.getWidgetTemplateAsync();
         await this.widgetRemoveBtnHandlerAsync();
         await this.widgetUpdateBtnHandlerAsync();
+        await this.upWidgetBtnHandlerAsync();
+        await this.downWidgetBtnHandlerAsync();
     }
 }
 
@@ -466,18 +511,26 @@ class WidgetForms {
      * @returns {object}
      */
     widgetFormSettingsHandler = () => {
-        if (WidgetFormIframe.DropDataTransferData == null) {
+        if (WidgetFormIframe.WidgetFormIframaData == null) {
             console.error("WidgetFromIframe drop json ulaşılamadı");
             alert("Teknik bir problem yaşandı lütfen daha sonra tekrar deneyin ! widgetFormSubmitEventHandler");
         }
         const formData = new FormData(WidgetFormIframe.SettingsForm);
 
-        formData.append("WidgetTemplateId", WidgetFormIframe.DropDataTransferData.WidgetTemplateId);
-        formData.append("PageId", WidgetFormIframe.DropDataTransferData.PageId);
-        formData.append("PageZoneId", WidgetFormIframe.DropDataTransferData.PageZoneId);
-        formData.append("WidgetId", WidgetFormIframe.DropDataTransferData.WidgetId);
+        formData.append("WidgetTemplateId", WidgetFormIframe.WidgetFormIframaData.WidgetTemplateId);
+        formData.append("PageId", WidgetFormIframe.WidgetFormIframaData.PageId);
+        formData.append("PageZoneId", WidgetFormIframe.WidgetFormIframaData.PageZoneId);
+        formData.append("WidgetId", WidgetFormIframe.WidgetFormIframaData.WidgetId);
+
+        if (WidgetFormIframe.WidgetFormIframaData.IsUpdateIframe) {
+            //güncellenecek olan PageWidgetId değerini form attr al
+            formData.append("PageWidgetId", WidgetFormIframe.SettingsForm.getAttribute("data-page-widget-id"));
+        }
+
         return HelperFunction.formDataToJsonObject(formData);
     }
+
+   
 
     /**
      * Dinamik widget form süreçleri
@@ -488,6 +541,9 @@ class WidgetForms {
         const formData = new FormData(WidgetFormIframe.DataForm);
         return HelperFunction.formDataToJsonObject(formData);
     }
+
+
+    
 
     /**
      * Yeni bir widget ekle
@@ -530,6 +586,43 @@ class WidgetForms {
     }
 
 
+    /**
+     * Yeni bir widget ekle
+     * @param {WidgetFormRequest} widgetFormRequest
+     */
+    updateWidgetAsync = async (widgetFormRequest) => {
+        if (widgetFormRequest.WidgetSetting.IsShow == "1") {
+            widgetFormRequest.WidgetSetting.IsShow = true;
+        } else {
+            widgetFormRequest.WidgetSetting.IsShow = false;
+        }
+
+        const settings = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(widgetFormRequest)
+        };
+
+        await fetch(this.UpdateWidgetUrl, settings).then(res => res.json()).then(json => {
+            if (json.isSuccess) {
+                WidgetFormIframe.hide();
+                CmsAlert.successTopEnd(`${widgetFormRequest.WidgetSetting.Name}, başarıyla eklendi`);
+
+                CmsEditThemeService.addPageZoneNewWidget(json.data);
+
+            } else {
+                CmsAlert.error("Hata", "Beklenmedik teknik bir problem yaşandı lütfen daha sonra tekrar deneyiniz !");
+                console.error("Widget güncelleme sürecinde teknik bir problem yaşandı !");
+                console.error(json);
+            }
+            WidgetFormIframe.hide();
+        }).catch(x => {
+            alert("Beklenmedik bir problem yaşandı addWidgetAsync");
+            console.error(x);
+        })
+    }
 
     widgetFormDataResetButtonHandler = () => {
         WidgetFormIframe.IframeContent.querySelector(`[type="reset"]`).addEventListener('click', (e) => {
@@ -539,12 +632,11 @@ class WidgetForms {
     }
 
     /**
-     * Widget iframe dinamik form submit event
      * Yeni widget ekleme
      */
     widgetFormSubmitEventHandler = () => {
         if (WidgetFormIframe.IframeContent) {
-            WidgetFormIframe.IframeContent.querySelector(`[type="submit"]`).addEventListener('click', async (e) => {
+            WidgetFormIframe.IframeContent.querySelector(`.js-widget-form-iframe-submit`).addEventListener('click', async (e) => {
                 e.preventDefault();
 
                 const setting = this.widgetFormSettingsHandler();
@@ -554,12 +646,28 @@ class WidgetForms {
 
             });
         }
+    }
 
+    /**
+     * Mevcut widget güncelle
+     */
+    widgetUpdateFormSubmitEventHandler = () => {
+        if (WidgetFormIframe.IframeContent) {
+            WidgetFormIframe.IframeContent.querySelector(`.js-widget-form-iframe-update-submit`).addEventListener('click', async (e) => {
+                e.preventDefault();
+
+                const setting = this.widgetFormSettingsHandler();
+                const data = this.widgetFormDataHandler();
+
+                await this.updateWidgetAsync(new WidgetFormRequest(setting, data));
+            });
+        }
     }
 
 
     execute = () => {
         this.widgetFormSubmitEventHandler();
+        this.widgetUpdateFormSubmitEventHandler();
     }
 }
 
@@ -595,11 +703,13 @@ export class WidgetFormIframe {
 
     static isExecute = false;
     static IframeContent = document.querySelector(".js-widget-form-iframe");
+    /**  Widget Settins Form @type {Element}*/
     static SettingsForm = null;
+    /**  Widget Dynamic Input Form @type {Element} */
     static DataForm = null;
 
     /** @type {WidgetFormIframeShowData} */
-    static DropDataTransferData = null;
+    static WidgetFormIframaData = null;
     static WidgetForms = null;
     static IframeFormsSumitHandlerCallBack = null;
 
@@ -674,7 +784,7 @@ export class WidgetFormIframe {
     static show = (WidgetFormIframeData) => {
 
         this.addBtn();
-        this.DropDataTransferData = WidgetFormIframeData;
+        this.WidgetFormIframaData = WidgetFormIframeData;
 
         this.IframeContent.classList.add("widget-form-iframe--show");
         if (WidgetFormIframeData.WidgetName) {
@@ -702,7 +812,7 @@ export class WidgetFormIframe {
     static hide = () => {
         this.IframeContent.classList.remove("widget-form-iframe--show");
         document.body.style.overflow = "auto";
-        this.DropDataTransferData = null;
+        this.WidgetFormIframaData = null;
     }
 
     static execute() {

@@ -2,6 +2,7 @@
 using Indivis.Infrastructure.Persistence.Commons.EntityFramework.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,11 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
                 .HasMaxLength(Constans.EntityConfigurationConstants.MaxStringLv5)
                 .HasColumnOrder(1)
                 .IsRequired(false);
+
+            builder.Property<string>(x => x.Name)
+                .IsRequired(true)
+                .HasDefaultValue<string>("Tasarım")
+                .HasMaxLength(Constans.EntityConfigurationConstants.MaxStringLv4);
 
             builder.Property(x => x.Grid)
                 .HasMaxLength(Constans.EntityConfigurationConstants.MaxStringLv4)

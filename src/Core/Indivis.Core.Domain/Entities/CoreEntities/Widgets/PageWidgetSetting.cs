@@ -11,6 +11,7 @@ namespace Indivis.Core.Domain.Entities.CoreEntities.Widgets
 {
     public partial class PageWidgetSetting : BaseEntity, IEntity
     {
+        public string Name { get; set; }
         public string ClassCustom { get; set; }
         public string Grid { get; set; }
         public bool IsAsync { get; set; }

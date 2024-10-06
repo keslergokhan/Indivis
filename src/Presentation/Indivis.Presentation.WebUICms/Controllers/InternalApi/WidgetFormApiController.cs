@@ -8,6 +8,7 @@ using Indivis.Core.Application.Results;
 using Indivis.Core.Domain.Entities.CoreEntities.Widgets;
 using Indivis.Presentation.WebUICms.Helpers;
 using Indivis.Presentation.WebUICms.Models.InternalApiModels.WidgetFormModels;
+using Indivis.Presentation.WebUICms.Models.InternalApiModels.WidgetModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,11 +37,66 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
             IResultDataControl<WidgetFormApiUpdateWidgetResModel> model = new ResultDataControl<WidgetFormApiUpdateWidgetResModel>();
             WidgetFormApiUpdateWidgetResModel data = new WidgetFormApiUpdateWidgetResModel();
 
+            string jsonData = JsonSerializer.Serialize(req.WidgetData);
 
 
+            UpdatePageWidgetSystemCommend addWidgetCommand = new UpdatePageWidgetSystemCommend()
+            {
+                PageWidget = new Core.Application.Dtos.CoreEntityDtos.Widgets.Writes.WritePageWidgetDto
+                {
+                    Id = req.WidgetSetting.PageWidgetId,
+                    State = (int)StateEnum.Online,
+                    WidgetId = req.WidgetSetting.WidgetId,
+                    WidgetJsonData = JsonSerializer.Serialize(req.WidgetData),
+                    LanguageId = HttpContext.GetCurrentLanguageId(),
+                    PageZoneId = req.WidgetSetting.PageZoneId,
+                    ModifiedDate = null,
+                    CreateDate = DateTime.Now,
+                    PageWidgetSetting = new Core.Application.Dtos.CoreEntityDtos.Widgets.Writes.WritePageWidgetSettingDto
+                    {
+                        Name = req.WidgetSetting.Name,
+                        Grid = req.WidgetSetting.Grid,
+                        IsAsync = false,
+                        Order = 1,
+                        State = (int)StateEnum.Online,
+                        IsShow = false,
+                        ClassCustom = "",
+                        WidgetTemplateId = req.WidgetSetting.WidgetTemplateId,
+                        CreateDate = DateTime.Now
+
+                    }
+
+                }
+            };
+
+            IResultDataControl<ReadPageWidgetDto> addPageWidgetResult = await this._mediator.Send(addWidgetCommand);
+
+            if (!addPageWidgetResult.IsSuccess)
+            {
+                model.Fail(addPageWidgetResult.Error);
+            }
+            else
+            {
+                data.PageWidget = addPageWidgetResult.Data;
+                model.SuccessSetData(data);
+            }
 
             model.SetData(data);
-            return View(model);
+            return Ok(model);
+
+
+        }
+
+        [Route("remove-widget")]
+        [HttpPost]
+        public async Task<IActionResult> RemoveWidget([FromBody] WidgetRemoveApiReqModel req)
+        {
+            IResultControl removeResult = await this._mediator.Send(new RemovePageWidgetSystemCommand()
+            {
+                PageWidgetId = req.PageWidgetId
+            });
+
+            return Ok(removeResult);
         }
 
 
@@ -100,6 +156,33 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
         }
 
 
+        [HttpPost]
+        [Route("up-widget")]
+        public async Task<IActionResult> UpWidget([FromBody] Guid pageWidgetSettingId)
+        {
+
+            IResultControl plusControl = await this._mediator.Send(new UpdatePageWidgetSettingOrderPlusCommand()
+            {
+                PageWidgetSettingId = pageWidgetSettingId
+            });
+
+            return Ok(plusControl);
+        }
+
+
+        [HttpPost]
+        [Route("down-widget")]
+        public async Task<IActionResult> DownWidget([FromBody] Guid pageWidgetSettingId)
+        {
+            IResultControl plusControl = await this._mediator.Send(new UpdatePageWidgetSettingOrderMinusCommand()
+            {
+                PageWidgetSettingId = pageWidgetSettingId
+            });
+
+            return Ok(plusControl);
+        }
+
+        #region IFrameForm
         [HttpGet]
         [Route("getUpdateform/{pageWidgetId:guid}")]
         public async Task<IActionResult> GetUpdateFrom(Guid pageWidgetId)
@@ -116,10 +199,8 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
             {
                 throw new ArgumentNullException($"{nameof(GetByIdPageWidgetSystemQuery)} result not null !");
             }
-            
 
             model.PageWidget = resultPageWidget.Data;
-
             
             IResultDataControl<List<ReadWidgetFormDto>> widgetFormResult = await this._mediator.Send(new GetAllWidgetFormAndWidgetFormInputQuery()
             {
@@ -130,6 +211,7 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
             });
 
             model.WidgetForms = widgetFormResult.Data;
+
 
 
             return View("~/Views/WidgetForm/UpdateWidgetFormBodyView.cshtml",model);
@@ -158,5 +240,7 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
 
             return View("~/Views/WidgetForm/WidgetFormBodyView.cshtml",model);
         }
+
+        #endregion IFrameForm End
     }
 }

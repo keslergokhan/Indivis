@@ -4,5 +4,6 @@ namespace Indivis.Presentation.WebUICms.Models.InternalApiModels.WidgetFormModel
 {
     public class WidgetFormApiUpdateWidgetResModel
     {
+        public ReadPageWidgetDto PageWidget { get; set; }
     }
 }
