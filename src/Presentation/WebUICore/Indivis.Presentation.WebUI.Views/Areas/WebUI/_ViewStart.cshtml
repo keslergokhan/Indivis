@@ -1,5 +1,8 @@
-﻿@{
-    @if (User.Identity.IsAuthenticated)
+﻿@using Indivis.Core.Application.Interfaces.Data.Presentation
+@inject ICurrentRequest req;
+
+@{
+    @if (User.Identity.IsAuthenticated && req.EditMode)
     {
         Layout = "~/Views/Shareds/_LayoutCmsEditPage.cshtml";
     }

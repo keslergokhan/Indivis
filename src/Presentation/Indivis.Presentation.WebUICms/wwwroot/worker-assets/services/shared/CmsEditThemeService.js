@@ -64,7 +64,7 @@ export class CmsEditThemeService {
         const pageZoneResult = CmsEditThemeService.PageZones.find(x => x.getZoneId() == pageZoneId);
 
         if (pageZoneResult) {
-            pageZone.execute();
+            pageZoneResult.execute();
         }
     }
 
@@ -128,22 +128,46 @@ class PageZone {
     }
 
 
+
+
     /**
      * Zone yapısı içindeki widget nesnelerini oluştur ve çalıştır.
      */
-    createPageZoneWidgets = () => {
+    createPageZoneWidgetsAsync = async () => {
         this.Widgets = [];
-        const zoneWidgetList = this.Zone.querySelectorAll(`[data-page-widget-id]`);
+        
 
-        if (zoneWidgetList.length > 0) {
-            zoneWidgetList.forEach(x => {
-                this.Widgets.push(new ZoneWidget(x,this));
+        await fetch(`/api/widgetApi/get-all-page-zone-widgets/${this.getZoneId()}`).then(res => res.json())
+        .then(json => {
+
+            /** @type {Array} */
+            
+            if (json.isSuccess && json.data != null) {
+                const pageWidgetList = json.data.pageWidget;
+                this.getZoneWidgetContainer().innerHTML = "";
+                for (const pageWidget of pageWidgetList) {
+                    this.getZoneWidgetContainer().insertAdjacentHTML('beforeend', ZoneWidget.getWidgetHTMLElement(pageWidget.pageWidgetSetting.grid, pageWidget.id, pageWidget.widgetId, pageWidget.pageWidgetSetting.widgetTemplateId));
+                }
+
+                
+            }
+        }).then(x => {
+
+            const zoneWidgetList = this.Zone.querySelectorAll(`[data-page-widget-id]`);
+            if (zoneWidgetList.length > 0) {
+                
+                zoneWidgetList.forEach(x => {
+                    this.Widgets.push(new ZoneWidget(x, this));
+                });
+            }
+
+            this.Widgets.forEach(x => {
+                x.execute();
             });
-        }
 
-        this.Widgets.forEach(x => {
-            x.execute();
-        });
+        })
+
+        
     }
 
     /**
@@ -216,9 +240,9 @@ class PageZone {
         });
     }
 
-    execute = () => {
-       
-        this.createPageZoneWidgets();
+    execute = async () => {
+
+        await this.createPageZoneWidgetsAsync();
         this.pageZoneDragoverHandler();
         this.pageZoneDropHandler();
         this.pageZoneDragleaveHandler();
@@ -230,7 +254,7 @@ class ZoneWidget {
 
     /**
      * @param {Element} widget
-     * @param {Element} pageZone
+     * @param {PageZone} pageZone
      */
     constructor(widget, pageZone) {
 
@@ -240,7 +264,7 @@ class ZoneWidget {
         this.Widget = widget;
 
         /**
-         * @type {Element}
+         * @type {PageZone}
          */
         this.PageZone = pageZone;
     }
@@ -269,7 +293,7 @@ class ZoneWidget {
      * @returns
      */
     getWidgetTemplateId = () => {
-        return this.Widget.getAttribute("data-widget-templage-id");
+        return this.Widget.getAttribute("data-widget-template-id");
     }
 
     /**
@@ -400,7 +424,7 @@ class ZoneWidget {
      */
     static getWidgetHTMLElement = (grid, pageWidgetId,widgetId,widgetTemplateId) => {
         return `
-            <div class="${grid} empty-widget cms-spinner-border" data-widet-template-id="${widgetTemplateId}" data-widget-id="${widgetId}" data-page-widget-id="${pageWidgetId}">
+            <div class="${grid} empty-widget cms-spinner-border" data-widget-template-id="${widgetTemplateId}" data-widget-id="${widgetId}" data-page-widget-id="${pageWidgetId}">
             
             </div>
         `;
@@ -410,11 +434,13 @@ class ZoneWidget {
         this.getWidgetUpBtn().addEventListener('click', async (e) => {
             e.preventDefault();
 
-            const id = this.getWidgetUpBtn().getAttribute("data-page-widget-setting-id");
+            const pageSettingId = this.getWidgetUpBtn().getAttribute("data-page-widget-setting-id");
+            const pageZoneId = this.PageZone.getZoneId();
+
 
             await fetch('/api/widgetFormApi/up-widget', {
                 method: "POST",
-                body: JSON.stringify(id),
+                body: JSON.stringify({ PageZoneId: pageZoneId, PageWidgetSettingId: pageSettingId }),
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -432,17 +458,19 @@ class ZoneWidget {
         this.getWidgetDownBtn().addEventListener('click', async (e) => {
             e.preventDefault();
 
-            const id = this.getWidgetUpBtn().getAttribute("data-page-widget-setting-id");
+            const pageSettingId = this.getWidgetUpBtn().getAttribute("data-page-widget-setting-id");
+            const pageZoneId = this.PageZone.getZoneId();
 
             await fetch('/api/widgetFormApi/down-widget', {
                 method: "POST",
-                body: JSON.stringify(id),
+                body: JSON.stringify({ PageZoneId: pageZoneId, PageWidgetSettingId: pageSettingId }),
                 headers: {
                     'Content-Type': 'application/json',
                 }
             })
             .then(res => res.json())
-            .then(json => {
+                .then(json => {
+                    
                 if (json.isSuccess) {
                     this.PageZone.execute();
                 }
@@ -525,6 +553,7 @@ class WidgetForms {
         if (WidgetFormIframe.WidgetFormIframaData.IsUpdateIframe) {
             //güncellenecek olan PageWidgetId değerini form attr al
             formData.append("PageWidgetId", WidgetFormIframe.SettingsForm.getAttribute("data-page-widget-id"));
+            formData.append("PageWidgetSettingId", WidgetFormIframe.SettingsForm.getAttribute("data-page-widget-setting-id"));
         }
 
         return HelperFunction.formDataToJsonObject(formData);
@@ -551,8 +580,8 @@ class WidgetForms {
      */
     addWidgetAsync = async (widgetFormRequest) => {
 
-
-        if (widgetFormRequest.WidgetSetting.IsShow == "1") {
+        
+        if (widgetFormRequest.WidgetSetting.IsShow == "1" || widgetFormRequest.WidgetSetting.IsShow == 1) {
             widgetFormRequest.WidgetSetting.IsShow = true;
         } else {
             widgetFormRequest.WidgetSetting.IsShow = false;
@@ -591,7 +620,8 @@ class WidgetForms {
      * @param {WidgetFormRequest} widgetFormRequest
      */
     updateWidgetAsync = async (widgetFormRequest) => {
-        if (widgetFormRequest.WidgetSetting.IsShow == "1") {
+
+        if (widgetFormRequest.WidgetSetting.IsShow == "1" || widgetFormRequest.WidgetSetting.IsShow == 1) {
             widgetFormRequest.WidgetSetting.IsShow = true;
         } else {
             widgetFormRequest.WidgetSetting.IsShow = false;

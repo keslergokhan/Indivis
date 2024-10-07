@@ -54,12 +54,13 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
                     CreateDate = DateTime.Now,
                     PageWidgetSetting = new Core.Application.Dtos.CoreEntityDtos.Widgets.Writes.WritePageWidgetSettingDto
                     {
+                        Id = req.WidgetSetting.PageWidgetSettingId,
                         Name = req.WidgetSetting.Name,
                         Grid = req.WidgetSetting.Grid,
                         IsAsync = false,
                         Order = 1,
                         State = (int)StateEnum.Online,
-                        IsShow = false,
+                        IsShow = req.WidgetSetting.IsShow,
                         ClassCustom = "",
                         WidgetTemplateId = req.WidgetSetting.WidgetTemplateId,
                         CreateDate = DateTime.Now
@@ -158,12 +159,13 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
 
         [HttpPost]
         [Route("up-widget")]
-        public async Task<IActionResult> UpWidget([FromBody] Guid pageWidgetSettingId)
+        public async Task<IActionResult> UpWidget([FromBody] WidgetFormApiUpAndDownReqModel req)
         {
 
             IResultControl plusControl = await this._mediator.Send(new UpdatePageWidgetSettingOrderPlusCommand()
             {
-                PageWidgetSettingId = pageWidgetSettingId
+                PageWidgetSettingId = req.PageWidgetSettingId,
+                PageZoneId = req.PageZoneId,
             });
 
             return Ok(plusControl);
@@ -172,11 +174,12 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
 
         [HttpPost]
         [Route("down-widget")]
-        public async Task<IActionResult> DownWidget([FromBody] Guid pageWidgetSettingId)
+        public async Task<IActionResult> DownWidget([FromBody] WidgetFormApiUpAndDownReqModel req)
         {
             IResultControl plusControl = await this._mediator.Send(new UpdatePageWidgetSettingOrderMinusCommand()
             {
-                PageWidgetSettingId = pageWidgetSettingId
+                PageWidgetSettingId = req.PageWidgetSettingId,
+                PageZoneId = req.PageZoneId,
             });
 
             return Ok(plusControl);

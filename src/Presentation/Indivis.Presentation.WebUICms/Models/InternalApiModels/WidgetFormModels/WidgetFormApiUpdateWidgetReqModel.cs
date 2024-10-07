@@ -11,6 +11,8 @@ namespace Indivis.Presentation.WebUICms.Models.InternalApiModels.WidgetFormModel
 
     public class WidgetFormApiUpdateWidgetReqSettingModel
     {
+        [JsonPropertyName("PageWidgetSettingId")]
+        public Guid PageWidgetSettingId { get; set; }
         [JsonPropertyName("PageWidgetId")]
         public Guid PageWidgetId { get; set; }
         public string Name { get; set; }

@@ -52,35 +52,39 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
             else
                 pageWidgets = pageZone.PageWidgets.Where(x => x.PageWidgetSetting.IsShow == true).OrderBy(x => x.PageWidgetSetting.Order).ToList();
 
-            foreach (ReadPageWidgetDto pageWidget in pageWidgets)
+            if (!currentResposne.EditMode)
             {
-                TagBuilder div = new TagBuilder("div");
-                div.AddCssClass(pageWidget.PageWidgetSetting.Grid);
-                div.AddCssClass(pageWidget.PageWidgetSetting.ClassCustom);
-                div.MergeAttribute("data-page-widget-id", pageWidget.Id.ToString());
-                div.MergeAttribute("data-widget-id", pageWidget.WidgetId.ToString());
-                div.MergeAttribute("data-widget-templage-id", pageWidget.PageWidgetSetting.WidgetTemplateId.ToString());
-                
-
-                IHtmlContent content = null;
-
-                if (!currentResposne.EditMode)
+                foreach (ReadPageWidgetDto pageWidget in pageWidgets)
                 {
-                    content = await viewComponent.InvokeAsync(nameof(DefaultWidgetComponent), new DefaultViewComponentInModel
+                    TagBuilder div = new TagBuilder("div");
+                    div.AddCssClass(pageWidget.PageWidgetSetting.Grid);
+                    div.AddCssClass(pageWidget.PageWidgetSetting.ClassCustom);
+                    div.MergeAttribute("data-page-widget-id", pageWidget.Id.ToString());
+                    div.MergeAttribute("data-widget-id", pageWidget.WidgetId.ToString());
+                    div.MergeAttribute("data-widget-templage-id", pageWidget.PageWidgetSetting.WidgetTemplateId.ToString());
+
+
+                    IHtmlContent content = null;
+
+                    if (!currentResposne.EditMode)
                     {
-                        PageWidget = pageWidget
-                    });
-                }
-                else
-                {
-                    div.AddCssClass("empty-widget cms-spinner-border");
-                }
-               
+                        content = await viewComponent.InvokeAsync(nameof(DefaultWidgetComponent), new DefaultViewComponentInModel
+                        {
+                            PageWidget = pageWidget
+                        });
+                    }
+                    else
+                    {
+                        div.AddCssClass("empty-widget cms-spinner-border");
+                    }
 
-                div.InnerHtml.AppendHtml(content);
-                baseDiv.InnerHtml.AppendHtml(div);
-                
+
+                    div.InnerHtml.AppendHtml(content);
+                    baseDiv.InnerHtml.AppendHtml(div);
+
+                }
             }
+            
             zone.InnerHtml.AppendHtml(baseDiv);
             zone.WriteTo(writer, HtmlEncoder.Default);
             HtmlString result = new HtmlString(writer.ToString());

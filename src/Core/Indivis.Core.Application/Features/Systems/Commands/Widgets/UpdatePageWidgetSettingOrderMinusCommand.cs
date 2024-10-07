@@ -15,6 +15,7 @@ namespace Indivis.Core.Application.Features.Systems.Commands.Widgets
     public class UpdatePageWidgetSettingOrderMinusCommand : IRequest<IResultControl>
     {
         public Guid PageWidgetSettingId { get; set; }
+        public Guid PageZoneId { get; set; }
     }
 
     public class UpdatePageWidgetSettingOrderMinusCommandHandler : IRequestHandler<UpdatePageWidgetSettingOrderMinusCommand, IResultControl>
@@ -29,12 +30,35 @@ namespace Indivis.Core.Application.Features.Systems.Commands.Widgets
         public async Task<IResultControl> Handle(UpdatePageWidgetSettingOrderMinusCommand request, CancellationToken cancellationToken)
         {
             IResultControl model = new ResultControl();
+
+            List<PageWidgetSetting> pageWidgetSettings = await this._applicationDbContext.PageWidgets
+                .Where(x => x.PageZoneId == request.PageZoneId)
+                .Select(x => x.PageWidgetSetting).OrderBy(x => x.Order).ToListAsync();
+
             PageWidgetSetting setting = await this._applicationDbContext.PageWidgetSettings.SingleAsync(x => x.Id == request.PageWidgetSettingId);
 
-            if (setting.Order >= 0)
+
+            int index = pageWidgetSettings.IndexOf(setting);
+
+
+            if (pageWidgetSettings.Count == setting.Order)
             {
-                setting.Order = setting.Order + 1;
+                model.Success();
+                return model;
             }
+            else
+            {
+                int newIndex = (index + 1);
+                if (pageWidgetSettings.Count >= newIndex)
+                {
+                    int order = setting.Order;
+                    PageWidgetSetting updateSetting = pageWidgetSettings[newIndex];
+                    setting.Order = updateSetting.Order;
+                    updateSetting.Order = order;
+                }
+
+            }
+
 
             int resutl = await this._applicationDbContext.SaveChangesAsync();
 
