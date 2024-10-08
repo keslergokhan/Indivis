@@ -39,7 +39,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Widgets
             {
                 List<PageWidget> pageWidgetList = await this._applicationDbContext.PageWidgets
                     .Where(x => x.PageZoneId == request.PageZoneId && x.State == (int)StateEnum.Online)
-                    .Include(x=>x.PageWidgetSetting)
+                    .Include(x=>x.PageWidgetSetting).ThenInclude(x=>x.WidgetTemplate)
                     .Include(x=>x.Widget)
                     .OrderBy(x=>x.PageWidgetSetting.Order)
                     .ToListAsync();

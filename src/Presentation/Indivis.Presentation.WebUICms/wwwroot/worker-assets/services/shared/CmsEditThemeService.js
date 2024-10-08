@@ -151,13 +151,19 @@ class PageZone {
 
                 
             }
-        }).then(x => {
+            return json.data;
+            
+        }).then(data => {
 
             const zoneWidgetList = this.Zone.querySelectorAll(`[data-page-widget-id]`);
             if (zoneWidgetList.length > 0) {
                 
                 zoneWidgetList.forEach(x => {
-                    this.Widgets.push(new ZoneWidget(x, this));
+
+                    const pageWidgetId = x.getAttribute("data-page-widget-id");
+
+                    const widgetApiData = data.pageWidget.find(x => x.id == pageWidgetId);
+                    this.Widgets.push(new ZoneWidget(x, this, widgetApiData));
                 });
             }
 
@@ -166,7 +172,6 @@ class PageZone {
             });
 
         })
-
         
     }
 
@@ -255,8 +260,9 @@ class ZoneWidget {
     /**
      * @param {Element} widget
      * @param {PageZone} pageZone
+     *  @param {any} widgetApiData
      */
-    constructor(widget, pageZone) {
+    constructor(widget, pageZone,widgetApiData) {
 
         /**
          * @type {Element}
@@ -267,6 +273,10 @@ class ZoneWidget {
          * @type {PageZone}
          */
         this.PageZone = pageZone;
+        /**
+         * @type {WidgetApiData} Db PageWidget verisi
+         */
+        this.WidgetApiData = widgetApiData;
     }
 
     /**
@@ -334,6 +344,35 @@ class ZoneWidget {
      */
     getWidgetDownBtn = () => {
         return this.Widget.querySelector(".js-down-widget");
+    }
+
+    /**
+     * 
+     * @param {string} fileName Dosya adı
+     * @param {string} extension Dosya uzantısı
+     * @returns {string}
+     */
+    getWidgetLibraryRoute = (fileName, extension) => {
+        return `_content/Indivis.Presentation.WebUI.Views/assets/areas/widgets/${fileName}/${fileName}.${extension}`;
+    }
+
+    widgetLibraryHandlerAsync = async () => {
+
+        if (this.WidgetApiData == null) {
+            console.error("Api bilgilerine ulaşılamadı !");
+            CmsAlert.error("Beklenmedik teknik bir problem yaşandı !");
+            return;
+        }
+
+        if (this.WidgetApiData.pageWidgetSetting.widgetTemplate.hasScript) {
+            console.log(this.getWidgetLibraryRoute(this.WidgetApiData.pageWidgetSetting.widgetTemplate.templateFileName,"js"));
+        }
+
+        if (this.WidgetApiData.pageWidgetSetting.widgetTemplate.hasStyle) {
+            console.log(this.getWidgetLibraryRoute(this.WidgetApiData.pageWidgetSetting.widgetTemplate.templateFileName, "css"));
+        }
+
+       
     }
 
     widgetUpdateBtnHandlerAsync = async () => {
@@ -513,6 +552,7 @@ class ZoneWidget {
         await this.widgetUpdateBtnHandlerAsync();
         await this.upWidgetBtnHandlerAsync();
         await this.downWidgetBtnHandlerAsync();
+        await this.widgetLibraryHandlerAsync();
     }
 }
 

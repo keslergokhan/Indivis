@@ -3,6 +3,7 @@ using Indivis.Infrastructure.Persistence;
 using Indivis.Presentation.WebUI.Controllers;
 using Indivis.Presentation.WebUI.Widgets;
 using Indivis.Presentation.WebUICms.Middleware;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,12 @@ builder.Services.AddWebUIWidgets();
 
 builder.Services.AddScoped<CmsLanguageControlMiddleware>();
 
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.WriteIndented = true;
+    });
 
 var app = builder.Build();
 

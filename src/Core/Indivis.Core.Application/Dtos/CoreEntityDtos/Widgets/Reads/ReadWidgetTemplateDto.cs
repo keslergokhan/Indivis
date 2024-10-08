@@ -17,6 +17,13 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads
         public string Title { get; set; }
         public string Description { get; set; }
         public string Template { get; set; }
+        public string TemplateFileName
+        {
+            get
+            {
+                return Path.GetFileNameWithoutExtension(this.Template);
+            }
+        }
         public bool IsDefault { get; set; }
         public bool HasStyle { get; set; }
         public bool HasScript { get; set; }
