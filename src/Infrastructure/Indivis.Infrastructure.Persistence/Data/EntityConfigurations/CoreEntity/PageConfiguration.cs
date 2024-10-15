@@ -42,6 +42,8 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
                 .HasForeignKey(x => x.ParentPageId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.NoAction);
+
+
         }
     }
 }

@@ -356,7 +356,11 @@ class ZoneWidget {
         return `_content/Indivis.Presentation.WebUI.Views/assets/areas/widgets/${fileName}/${fileName}.${extension}`;
     }
 
-    widgetLibraryHandlerAsync = async () => {
+    /**
+     * Widget library yükleme
+     * @returns
+     */
+    widgetLibraryHandlerAsync = async (type) => {
 
         if (this.WidgetApiData == null) {
             console.error("Api bilgilerine ulaşılamadı !");
@@ -364,15 +368,37 @@ class ZoneWidget {
             return;
         }
 
-        if (this.WidgetApiData.pageWidgetSetting.widgetTemplate.hasScript) {
-            console.log(this.getWidgetLibraryRoute(this.WidgetApiData.pageWidgetSetting.widgetTemplate.templateFileName,"js"));
-        }
+        if (type=="js") {
+            if (this.WidgetApiData.pageWidgetSetting.widgetTemplate.hasScript) {
+                const jsLib = this.getWidgetLibraryRoute(this.WidgetApiData.pageWidgetSetting.widgetTemplate.templateFileName, "js");
 
-        if (this.WidgetApiData.pageWidgetSetting.widgetTemplate.hasStyle) {
-            console.log(this.getWidgetLibraryRoute(this.WidgetApiData.pageWidgetSetting.widgetTemplate.templateFileName, "css"));
-        }
+                if (!document.body.querySelector(`[src="${jsLib}"]`)) {
 
-       
+                    const script = document.createElement('script');
+                    script.src = jsLib;  // Eklemek istediğiniz scriptin yolunu buraya ekleyin
+                    script.type = 'text/javascript';
+                    script.async = false;
+                    document.body.insertAdjacentElement("beforeend", script);
+                }
+            }
+        }
+        
+
+        if (type == "css") {
+            if (this.WidgetApiData.pageWidgetSetting.widgetTemplate.hasStyle) {
+                const cssLib = this.getWidgetLibraryRoute(this.WidgetApiData.pageWidgetSetting.widgetTemplate.templateFileName, "css");
+
+                if (!document.head.querySelector(`[href="${cssLib}"]`)) {
+
+                    const link = document.createElement('link');
+                    link.href = cssLib;  // Eklemek istediğiniz scriptin yolunu buraya ekleyin
+                    link.rel = 'stylesheet';
+                    link.async = false;
+
+                    document.head.insertAdjacentElement("beforeend", link);
+                }
+            }
+        }
     }
 
     widgetUpdateBtnHandlerAsync = async () => {
@@ -547,12 +573,13 @@ class ZoneWidget {
     }
 
     execute = async () => {
+        await this.widgetLibraryHandlerAsync("css");
         await this.getWidgetTemplateAsync();
         await this.widgetRemoveBtnHandlerAsync();
         await this.widgetUpdateBtnHandlerAsync();
         await this.upWidgetBtnHandlerAsync();
         await this.downWidgetBtnHandlerAsync();
-        await this.widgetLibraryHandlerAsync();
+        await this.widgetLibraryHandlerAsync("js");
     }
 }
 

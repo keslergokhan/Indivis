@@ -32,6 +32,7 @@ namespace Indivis.Core.Domain.Entities.CoreEntities
 
         public ICollection<PageZone> PageZones { get; set; }
         public ICollection<Page> SubPages { get; set; }
+        public ICollection<Localization> Localizations { get; set; }
     }
 
    

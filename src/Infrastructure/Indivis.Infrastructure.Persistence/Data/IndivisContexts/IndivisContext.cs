@@ -52,17 +52,15 @@ namespace Indivis.Infrastructure.Persistence.Data.IndivisContexts
         public DbSet<WidgetService> WidgetServices => Set<WidgetService>();
         public DbSet<WidgetTemplate> WidgetTemplates => Set<WidgetTemplate>();
         public DbSet<DataProtectionKey> DataProtectionKeys => Set<DataProtectionKey>();
-
         public DbSet<WidgetForm> WidgetForm => Set<WidgetForm>();
         public DbSet<WidgetFormInput> WidgetFormInput => Set<WidgetFormInput>();
         public DbSet<WidgetForm_WidgetFormInput> WidgetForm_WidgetFormInput => Set<WidgetForm_WidgetFormInput>();
-
         public DbSet<WidgetForm> WidgetForms => Set<WidgetForm>();
-
         public DbSet<WidgetFormInput> WidgetFormInputs => Set<WidgetFormInput>();
+        public DbSet<Localization> Localization => Set<Localization>();
+        public DbSet<LocalizationRegion> LocalizationRegions => Set<LocalizationRegion>();
 
         #endregion EndCoreWidgetEntity
-
 
     }
 }
