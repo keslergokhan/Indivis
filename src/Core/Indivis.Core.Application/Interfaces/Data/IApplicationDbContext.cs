@@ -29,7 +29,8 @@ namespace Indivis.Core.Application.Interfaces.Data
         public DbSet<WidgetTemplate> WidgetTemplates { get; }
         public DbSet<WidgetForm> WidgetForms { get; }
         public DbSet<WidgetFormInput> WidgetFormInputs { get; }
-
+        public DbSet<Localization> Localization { get; }
+        public DbSet<LocalizationRegion> LocalizationRegions { get; }
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
