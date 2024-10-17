@@ -1,4 +1,5 @@
 ﻿using Indivis.Core.Application.Common.SystemInitializers;
+using Indivis.Core.Application.Helpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -28,9 +29,11 @@ namespace Indivis.Core.Application
             services.AddSystemCoreEntityFeatures(Assembly.GetExecutingAssembly());
             services.AddAssemblySystemEntityFeatures(Assembly.GetExecutingAssembly());
             services.AddAssemblyFeatureQueryFactory(Assembly.GetExecutingAssembly());
+            LocalizationHelper.Initialize(services.BuildServiceProvider());
 
 
-			return services;
+
+            return services;
         }
     }
 }

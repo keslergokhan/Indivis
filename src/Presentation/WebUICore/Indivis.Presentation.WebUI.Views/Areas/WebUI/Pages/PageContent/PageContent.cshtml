@@ -1,6 +1,7 @@
 ﻿@using Indivis.Core.Application.Interfaces.Data.Presentation
 @using System.Reflection
 @using Indivis.Presentation.WebUI.Widgets.Extensions;
+@using Indivis.Presentation.WebUI.Views.Extensions;
 @inject ICurrentResponse res;
 
 
@@ -13,6 +14,8 @@
     @await Component.Zone("widget-about-top-widgets", res)
     @await Component.Zone("widget-about-center-widgets", res)
     @await Component.Zone("widget-about-footer-widgets", res)
+    @await Html.PageLocalization("about-button",res,"Bu bir deneme")
+
 </div>
 
 

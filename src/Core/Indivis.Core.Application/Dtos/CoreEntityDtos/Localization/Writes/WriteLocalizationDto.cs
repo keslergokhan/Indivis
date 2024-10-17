@@ -1,4 +1,5 @@
 ﻿using Indivis.Core.Application.Attributes.Systems;
+using Indivis.Core.Application.Common.BaseClasses.Dtos.CoreEntities;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Localization.Reads;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Pages.Reads;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Localization.Writes
 {
     [CreateMap(typeof(Indivis.Core.Domain.Entities.CoreEntities.Localization))]
-    public partial class WriteLocalizationDto
+    public partial class WriteLocalizationDto : BaseWriteEntityDto
     {
         public string Key { get; set; }
         public string DefaultValue { get; set; }

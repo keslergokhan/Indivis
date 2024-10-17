@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Interfaces.Data
 {
-    public interface IApplicationDbContext
+    public interface IApplicationDbContext : IDisposable
     {
         new DbSet<TEntity> Set<TEntity>() where TEntity : class;
         public DbSet<Language> Languages { get; }

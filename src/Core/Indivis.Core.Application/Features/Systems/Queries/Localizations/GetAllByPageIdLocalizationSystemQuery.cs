@@ -2,6 +2,7 @@
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Localization.Reads;
 using Indivis.Core.Application.Enums.Systems;
 using Indivis.Core.Application.Interfaces.Data;
+using Indivis.Core.Application.Interfaces.Features;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
 using Indivis.Core.Domain.Entities.CoreEntities;
@@ -15,9 +16,12 @@ using System.Threading.Tasks;
 
 namespace Indivis.Core.Application.Features.Systems.Queries.Localizations
 {
-    public class GetAllByPageIdLocalizationSystemQuery : IRequest<IResultDataControl<List<ReadLocalizationDto>>>
+    public class GetAllByPageIdLocalizationSystemQuery : 
+        IRequest<IResultDataControl<List<ReadLocalizationDto>>>,
+        ILanguageFilterQuery
     {
         public Guid PageId { get; set; }
+        public Guid LanguageId { get; set; }
     }
 
     public class GetAllByPageIdLocalizationSystemQueryHandler :
@@ -40,7 +44,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Localizations
             {
                 List<Localization> localizationList = await this._applicationDbContext.Localization
                     .Where(x => x.PageId == request.PageId && x.State == (int)StateEnum.Online)
-                    .Include(x => x.Region.Where(i => i.State == (int)StateEnum.Online))
+                    .Include(x => x.Region.Where(i => i.State == (int)StateEnum.Online && i.LocalizationId == request.LanguageId))
                     .ToListAsync();
 
                 model.SuccessSetData(this._mapper.Map<List<ReadLocalizationDto>>(localizationList));

@@ -1,7 +1,10 @@
-﻿using Indivis.Core.Application.Dtos.CoreEntityDtos.Pages.Reads;
+﻿using Indivis.Core.Application.Dtos.CoreEntityDtos.Language.Reads;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.Localization.Reads;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.Pages.Reads;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads;
 using Indivis.Core.Application.Enums.Systems;
 using Indivis.Core.Application.Exceptions.Systems;
+using Indivis.Core.Application.Features.Systems.Queries.Localizations;
 using Indivis.Core.Application.Features.Systems.Queries.Pages;
 using Indivis.Core.Application.Features.Systems.Queries.Widgets;
 using Indivis.Core.Application.Interfaces.Data;
@@ -44,10 +47,16 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
                 this.CurrentResponse.CurrentPage = getUrlIdResult.Data;
 
                 IResultDataControl<List<ReadPageZoneDto>> pageZones = await this.GetByPageIdZoneAsync(getUrlIdResult.Data.Id);
+                IResultDataControl<List<ReadLocalizationDto>> localizations = await this.GetAllPageLocalizationAsync(getUrlIdResult.Data);
 
                 if (pageZones.IsSuccess)
                 {
                     this.CurrentResponse.CurrentPage.PageZones = pageZones.Data;
+                }
+
+                if (localizations.IsSuccess)
+                {
+                    this.CurrentResponse.CurrentPage.Localization = localizations.Data;
                 }
             }
             else
@@ -68,6 +77,15 @@ namespace Indivis.Presentation.WebUI.System.Common.BaseClasses.RequestWorkers
                 x.UrlId = urlId;
                 x.State = StateEnum.Online;
             }));
+        }
+
+        public Task<IResultDataControl<List<ReadLocalizationDto>>> GetAllPageLocalizationAsync(ReadPageDto page)
+        {
+            return this.Mediator.Send(new GetAllByPageIdLocalizationSystemQuery()
+            {
+                PageId = page.Id,
+                LanguageId = page.LanguageId,
+            });
         }
 
         public Task<IResultDataControl<List<ReadPageZoneDto>>> GetByPageIdZoneAsync(Guid pageId)

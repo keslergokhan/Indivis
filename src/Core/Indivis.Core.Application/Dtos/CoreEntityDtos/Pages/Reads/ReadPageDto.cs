@@ -1,5 +1,6 @@
 ﻿using Indivis.Core.Application.Attributes.Systems;
 using Indivis.Core.Application.Common.BaseClasses.Dtos.CoreEntities;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.Localization.Reads;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.PageSystems.Reads;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Urls.Reads;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads;
@@ -19,6 +20,7 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Pages.Reads
         public ReadPageDto()
         {
             this.PageZones = new List<ReadPageZoneDto>();
+            this.Localization = new List<ReadLocalizationDto>();
         }
 
         public string Name { get; set; }
@@ -39,5 +41,6 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Pages.Reads
     {
         public List<ReadPageZoneDto> PageZones { get; set; }
         public List<ReadPageDto> SubPages { get; set; }
+        public List<ReadLocalizationDto> Localization { get; set; }
     }
 }

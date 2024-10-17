@@ -14,7 +14,6 @@ builder.Services
     .AddApplication(builder.Configuration)
     .AddWebUIController();
 
-builder.Services.AddWebUIWidgets();
 
 builder.Services.AddScoped<CmsLanguageControlMiddleware>();
 

@@ -54,6 +54,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Widgets
             {
                 model.Fail(exception);
             }
+    
             
 
             return model;
