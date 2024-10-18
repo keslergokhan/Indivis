@@ -58,13 +58,13 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
                         Name = req.WidgetSetting.Name,
                         Grid = req.WidgetSetting.Grid,
                         IsAsync = false,
-                        Order = 1,
+                        Order = req.WidgetSetting.Order,
                         State = (int)StateEnum.Online,
                         IsShow = req.WidgetSetting.IsShow,
                         ClassCustom = "",
                         WidgetTemplateId = req.WidgetSetting.WidgetTemplateId,
-                        CreateDate = DateTime.Now
-
+                        CreateDate = DateTime.Now,
+                        
                     }
 
                 }

@@ -25,5 +25,6 @@ namespace Indivis.Presentation.WebUICms.Models.InternalApiModels.WidgetFormModel
         public Guid WidgetId { get; set; }
         [JsonPropertyName("PageZoneId")]
         public Guid PageZoneId { get; set; }
+        public int Order { get; set; }
     }
 }

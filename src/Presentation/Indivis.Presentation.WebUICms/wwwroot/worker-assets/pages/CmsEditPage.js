@@ -1,13 +1,13 @@
-﻿import { CmsEditThemeService } from '../services/shared/CmsEditThemeService.js'
+﻿import { CmsEditPageService } from '../services/EditPage/CmsEditPageService.js'
 import { HelperFunction } from '../services/helpers/HelperFunctions.js'
 
 export class CmsEditPage {
 
     constructor() {
         /**
-         * @type {CmsEditThemeService}
+         * @type {CmsEditPageService}
          */
-        this._CmsEditThemeService = new CmsEditThemeService();
+        this._CmsEditPageService = new CmsEditPageService();
     }
 
     /**
@@ -15,8 +15,8 @@ export class CmsEditPage {
      */
     createObjectZone = () => {
         window.addEventListener('load', (e) => {
-            this._CmsEditThemeService.createObjectZone(e);
-            this._CmsEditThemeService.pageZoneExecute();
+            this._CmsEditPageService.createObjectZone(e);
+            this._CmsEditPageService.pageZoneExecute();
         });
     }
 
@@ -53,13 +53,13 @@ export class CmsEditPage {
         for (const item of widgetDraggableItem) {
 
             item.addEventListener('dragstart', (event) => {
-                this._CmsEditThemeService.pageZoneDragStartStyle();
+                this._CmsEditPageService.pageZoneDragStartStyle();
                 /*sürüklenen elementin ayarlarını transferet*/
                 event.dataTransfer.setData('text/plain', item.getAttribute("data-widget-settings"));
             });
 
             item.addEventListener('dragend', () => {
-                this._CmsEditThemeService.pageZoneDragEndStyle();
+                this._CmsEditPageService.pageZoneDragEndStyle();
             });
         }
     }

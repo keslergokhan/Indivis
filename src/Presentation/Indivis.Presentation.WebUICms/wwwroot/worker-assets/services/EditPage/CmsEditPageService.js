@@ -1,6 +1,6 @@
-﻿import { HelperFunction,CmsAlert } from '../helpers/HelperFunctions.js';
+﻿import { HelperFunction, CmsAlert } from '../helpers/HelperFunctions.js';
 
-export class CmsEditThemeService {
+export class CmsEditPageService {
 
     static PageZones = [];
     constructor() {
@@ -16,12 +16,11 @@ export class CmsEditThemeService {
         /** @type {NodeListOf}  */
         const zoneList = document.querySelectorAll(".zone-section");
 
-        zoneList.forEach((x) => 
-        {
+        zoneList.forEach((x) => {
             if (x) {
-                CmsEditThemeService.PageZones.push(new PageZone(x));
+                CmsEditPageService.PageZones.push(new PageZone(x));
             }
-                
+
         })
     }
 
@@ -41,7 +40,7 @@ export class CmsEditThemeService {
 
 
         /** @type {PageZone} */
-        const pageZoneResult = CmsEditThemeService.PageZones.find(x => x.getZoneId() == pageZoneId);
+        const pageZoneResult = CmsEditPageService.PageZones.find(x => x.getZoneId() == pageZoneId);
 
         if (pageZoneResult) {
             /*
@@ -61,20 +60,20 @@ export class CmsEditThemeService {
     static pageZoneRestart = (pageZoneId) => {
 
         /** @type {PageZone} */
-        const pageZoneResult = CmsEditThemeService.PageZones.find(x => x.getZoneId() == pageZoneId);
+        const pageZoneResult = CmsEditPageService.PageZones.find(x => x.getZoneId() == pageZoneId);
 
         if (pageZoneResult) {
             pageZoneResult.execute();
         }
     }
 
-    
+
 
     /**
      * Yüklenen zone nesnelerini çalıştır.
      */
     pageZoneExecute = () => {
-        CmsEditThemeService.PageZones.forEach(pageZone => {
+        CmsEditPageService.PageZones.forEach(pageZone => {
             pageZone.execute();
         })
     }
@@ -83,7 +82,7 @@ export class CmsEditThemeService {
      * Widget eklemek için element sürüklendiğine zone yapılarını göster
      */
     pageZoneDragStartStyle = () => {
-        CmsEditThemeService.PageZones.forEach(x => {
+        CmsEditPageService.PageZones.forEach(x => {
             x.pageZoneDragStartStyle()
         });
     }
@@ -92,7 +91,7 @@ export class CmsEditThemeService {
      * Widget eklemek için element sürükleme bırakıldığında zone yapılarını gizle
      */
     pageZoneDragEndStyle = () => {
-        CmsEditThemeService.PageZones.forEach(x => {
+        CmsEditPageService.PageZones.forEach(x => {
             x.pageZoneDragEndStyle()
         });
     }
@@ -135,44 +134,44 @@ class PageZone {
      */
     createPageZoneWidgetsAsync = async () => {
         this.Widgets = [];
-        
+
 
         await fetch(`/api/widgetApi/get-all-page-zone-widgets/${this.getZoneId()}`).then(res => res.json())
-        .then(json => {
+            .then(json => {
 
-            /** @type {Array} */
-            
-            if (json.isSuccess && json.data != null) {
-                const pageWidgetList = json.data.pageWidget;
-                this.getZoneWidgetContainer().innerHTML = "";
-                for (const pageWidget of pageWidgetList) {
-                    this.getZoneWidgetContainer().insertAdjacentHTML('beforeend', ZoneWidget.getWidgetHTMLElement(pageWidget.pageWidgetSetting.grid, pageWidget.id, pageWidget.widgetId, pageWidget.pageWidgetSetting.widgetTemplateId));
+                /** @type {Array} */
+
+                if (json.isSuccess && json.data != null) {
+                    const pageWidgetList = json.data.pageWidget;
+                    this.getZoneWidgetContainer().innerHTML = "";
+                    for (const pageWidget of pageWidgetList) {
+                        this.getZoneWidgetContainer().insertAdjacentHTML('beforeend', ZoneWidget.getWidgetHTMLElement(pageWidget.pageWidgetSetting.grid, pageWidget.id, pageWidget.widgetId, pageWidget.pageWidgetSetting.widgetTemplateId));
+                    }
+
+
+                }
+                return json.data;
+
+            }).then(data => {
+
+                const zoneWidgetList = this.Zone.querySelectorAll(`[data-page-widget-id]`);
+                if (zoneWidgetList.length > 0) {
+
+                    zoneWidgetList.forEach(x => {
+
+                        const pageWidgetId = x.getAttribute("data-page-widget-id");
+
+                        const widgetApiData = data.pageWidget.find(x => x.id == pageWidgetId);
+                        this.Widgets.push(new ZoneWidget(x, this, widgetApiData));
+                    });
                 }
 
-                
-            }
-            return json.data;
-            
-        }).then(data => {
-
-            const zoneWidgetList = this.Zone.querySelectorAll(`[data-page-widget-id]`);
-            if (zoneWidgetList.length > 0) {
-                
-                zoneWidgetList.forEach(x => {
-
-                    const pageWidgetId = x.getAttribute("data-page-widget-id");
-
-                    const widgetApiData = data.pageWidget.find(x => x.id == pageWidgetId);
-                    this.Widgets.push(new ZoneWidget(x, this, widgetApiData));
+                this.Widgets.forEach(x => {
+                    x.execute();
                 });
-            }
 
-            this.Widgets.forEach(x => {
-                x.execute();
-            });
+            })
 
-        })
-        
     }
 
     /**
@@ -180,11 +179,11 @@ class PageZone {
      * @param {string} zoneWidgetId
      * @param {string} grid
      */
-    addNewWidget = (zoneWidgetId,grid,widgetId,widgetTemplateId) => {
+    addNewWidget = (zoneWidgetId, grid, widgetId, widgetTemplateId) => {
         this.getZoneWidgetContainer().insertAdjacentHTML('beforeend', ZoneWidget.getWidgetHTMLElement(grid, zoneWidgetId, widgetId, widgetTemplateId));
     }
 
-    
+
 
     pageZoneDragStartStyle = () => {
         this.pageZoneDragEndStyle();
@@ -217,7 +216,7 @@ class PageZone {
             // Sürüklenen widget elementin transferedilen verileri
 
 
-            const dataTransferJson = JSON.parse(event.dataTransfer.getData('text/plain')); 
+            const dataTransferJson = JSON.parse(event.dataTransfer.getData('text/plain'));
 
             const widgetFormIframeShowData = new WidgetFormIframeShowData(
                 this.getZoneId(),
@@ -262,7 +261,7 @@ class ZoneWidget {
      * @param {PageZone} pageZone
      *  @param {any} widgetApiData
      */
-    constructor(widget, pageZone,widgetApiData) {
+    constructor(widget, pageZone, widgetApiData) {
 
         /**
          * @type {Element}
@@ -368,7 +367,7 @@ class ZoneWidget {
             return;
         }
 
-        if (type=="js") {
+        if (type == "js") {
             if (this.WidgetApiData.pageWidgetSetting.widgetTemplate.hasScript) {
                 const jsLib = this.getWidgetLibraryRoute(this.WidgetApiData.pageWidgetSetting.widgetTemplate.templateFileName, "js");
 
@@ -382,7 +381,7 @@ class ZoneWidget {
                 }
             }
         }
-        
+
 
         if (type == "css") {
             if (this.WidgetApiData.pageWidgetSetting.widgetTemplate.hasStyle) {
@@ -411,7 +410,7 @@ class ZoneWidget {
                 "Güncelle",
                 this.getWidgetTemplateId(),
                 this.PageZone.GetZonePageId(),
-                
+
             );
 
             widgetFromIframeData.setPageWidgetId(this.getPageWidgetId());
@@ -423,7 +422,7 @@ class ZoneWidget {
     }
 
 
-    
+
 
     /**
      * widget sil api isteği
@@ -462,7 +461,7 @@ class ZoneWidget {
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Evet Sil!",
-                cancelButtonText:"Hayır"
+                cancelButtonText: "Hayır"
             }).then(async (result) => {
                 if (result.isConfirmed) {
 
@@ -478,7 +477,7 @@ class ZoneWidget {
                 }
             });
         });
-        
+
     }
 
     /**
@@ -487,7 +486,7 @@ class ZoneWidget {
      * @param {string} pageWidgetId
      * @returns {string}
      */
-    static getWidgetHTMLElement = (grid, pageWidgetId,widgetId,widgetTemplateId) => {
+    static getWidgetHTMLElement = (grid, pageWidgetId, widgetId, widgetTemplateId) => {
         return `
             <div class="${grid} empty-widget cms-spinner-border" data-widget-template-id="${widgetTemplateId}" data-widget-id="${widgetId}" data-page-widget-id="${pageWidgetId}">
             
@@ -510,12 +509,12 @@ class ZoneWidget {
                     'Content-Type': 'application/json',
                 }
             })
-            .then(res => res.json())
-            .then(json => {
-                if (json.isSuccess) {
-                    this.PageZone.execute();
-                }
-            })
+                .then(res => res.json())
+                .then(json => {
+                    if (json.isSuccess) {
+                        this.PageZone.execute();
+                    }
+                })
         })
     }
 
@@ -533,13 +532,13 @@ class ZoneWidget {
                     'Content-Type': 'application/json',
                 }
             })
-            .then(res => res.json())
+                .then(res => res.json())
                 .then(json => {
-                    
-                if (json.isSuccess) {
-                    this.PageZone.execute();
-                }
-            })
+
+                    if (json.isSuccess) {
+                        this.PageZone.execute();
+                    }
+                })
         })
     }
 
@@ -626,7 +625,7 @@ class WidgetForms {
         return HelperFunction.formDataToJsonObject(formData);
     }
 
-   
+
 
     /**
      * Dinamik widget form süreçleri
@@ -639,7 +638,7 @@ class WidgetForms {
     }
 
 
-    
+
 
     /**
      * Yeni bir widget ekle
@@ -647,7 +646,7 @@ class WidgetForms {
      */
     addWidgetAsync = async (widgetFormRequest) => {
 
-        
+
         if (widgetFormRequest.WidgetSetting.IsShow == "1" || widgetFormRequest.WidgetSetting.IsShow == 1) {
             widgetFormRequest.WidgetSetting.IsShow = true;
         } else {
@@ -667,7 +666,7 @@ class WidgetForms {
                 WidgetFormIframe.hide();
                 CmsAlert.successTopEnd(`${widgetFormRequest.WidgetSetting.Name}, başarıyla eklendi`);
 
-                CmsEditThemeService.addPageZoneNewWidget(json.data);
+                CmsEditPageService.addPageZoneNewWidget(json.data);
 
             } else {
                 CmsAlert.error("Hata", "Beklenmedik teknik bir problem yaşandı lütfen daha sonra tekrar deneyiniz !");
@@ -707,7 +706,7 @@ class WidgetForms {
                 WidgetFormIframe.hide();
                 CmsAlert.successTopEnd(`${widgetFormRequest.WidgetSetting.Name}, başarıyla eklendi`);
 
-                CmsEditThemeService.addPageZoneNewWidget(json.data);
+                CmsEditPageService.addPageZoneNewWidget(json.data);
 
             } else {
                 CmsAlert.error("Hata", "Beklenmedik teknik bir problem yaşandı lütfen daha sonra tekrar deneyiniz !");
@@ -777,7 +776,7 @@ export class WidgetFormIframeShowData {
      * @param {any} widgetTemplateId
      * @param {any} pageId
      */
-    constructor(pageZoneId,widgetId,widgetName,widgetTemplateId,pageId) {
+    constructor(pageZoneId, widgetId, widgetName, widgetTemplateId, pageId) {
         this.PageZoneId = pageZoneId;
         this.PageId = pageId;
         this.WidgetId = widgetId;
