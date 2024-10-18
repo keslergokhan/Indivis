@@ -28,9 +28,9 @@ namespace Indivis.Core.Application.Helpers
             return LocalizationHelper._serviceProvider.GetService<T>();
         }
 
-        private static Task<IResultDataControl<ReadLocalizationDto>> AddPageLocalizationAsync(string key, string defaultValue, ICurrentResponse currentResponse)
+        private static async Task<IResultDataControl<ReadLocalizationDto>> AddPageLocalizationAsync(string key, string defaultValue, ICurrentResponse currentResponse)
         {
-            return LocalizationHelper.AddLocalizationAsync(key, new WriteLocalizationDto()
+            return await LocalizationHelper.AddLocalizationAsync(key, new WriteLocalizationDto()
             {
                 DefaultValue = defaultValue,
                 IsBackendLocalization = false,
@@ -41,11 +41,11 @@ namespace Indivis.Core.Application.Helpers
             }, currentResponse);
         }
 
-        private static Task<IResultDataControl<ReadLocalizationDto>> AddLocalizationAsync(string key, WriteLocalizationDto localizaton, ICurrentResponse currentResponse)
+        private static async Task<IResultDataControl<ReadLocalizationDto>> AddLocalizationAsync(string key, WriteLocalizationDto localizaton, ICurrentResponse currentResponse)
         {
             IMediator mediator = LocalizationHelper._serviceProvider.GetService<IMediator>();
 
-            return mediator.Send(new AddLocalizationSystemCommand()
+            return await mediator.Send(new AddLocalizationSystemCommand()
             {
                 Localization = localizaton
             });

@@ -72,10 +72,10 @@ export class PageWidgetTemplateService {
     /**
      * Yüklenen zone nesnelerini çalıştır.
      */
-    pageZoneExecute = () => {
-        PageWidgetTemplateService.PageZones.forEach(pageZone => {
-            pageZone.execute();
-        })
+    pageZoneExecuteAsync = async () => {
+        for (const pageZone of PageWidgetTemplateService.PageZones) {
+            await pageZone.execute();
+        }
     }
 
     /**
@@ -152,7 +152,7 @@ class PageZone {
                 }
                 return json.data;
 
-            }).then(data => {
+            }).then(async data => {
 
                 const zoneWidgetList = this.Zone.querySelectorAll(`[data-page-widget-id]`);
                 if (zoneWidgetList.length > 0) {
@@ -166,9 +166,9 @@ class PageZone {
                     });
                 }
 
-                this.Widgets.forEach(x => {
-                    x.execute();
-                });
+                for (const x of this.Widgets) {
+                    await x.execute();
+                }
 
             })
 

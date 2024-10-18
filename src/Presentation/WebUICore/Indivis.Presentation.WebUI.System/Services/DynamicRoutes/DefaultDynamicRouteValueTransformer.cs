@@ -74,8 +74,17 @@ namespace Indivis.Presentation.WebUI.System.Services.DynamicRoutes
             this._currentRequest.FullPath = $"{context.Request.Scheme}://{context.Request.Host}{this._currentRequest.Path}";
             this._currentRequest.BaseUrl = $"{context.Request.Scheme}://{context.Request.Host}";
 
-            if (context.Request.Path.HasValue && context.Request.Path.Value.StartsWith(WebUISystemContant.CmsPageEditRoute) 
-                && context.Request.Path.Value.Contains(WebUISystemContant.CmsPageEditRoute))
+            if (
+                context.Request.Path.HasValue 
+                && 
+                    (
+                        (context.Request.Path.Value.StartsWith(WebUISystemContant.CmsPageEditRoute) 
+                        && context.Request.Path.Value.Contains(WebUISystemContant.CmsPageEditRoute))
+                        ||
+                        (context.Request.Path.Value.StartsWith(WebUISystemContant.CmsWidgetTemplateRoute)
+                        && context.Request.Path.Value.Contains(WebUISystemContant.CmsWidgetTemplateRoute))
+                    )
+                )
             {
                 this._currentRequest.EditMode = true;
                 this._currentResponse.EditMode = true;
@@ -88,7 +97,9 @@ namespace Indivis.Presentation.WebUI.System.Services.DynamicRoutes
 
             await UrlSystemTypeInvokerAsync(context);
 
-            if (context.Request.Path.HasValue && context.Request.Path.Value.StartsWith(WebUISystemContant.CmsWidgetTemplateRoute)
+            if (
+                context.Request.Path.HasValue 
+                && context.Request.Path.Value.StartsWith(WebUISystemContant.CmsWidgetTemplateRoute)
                 && context.Request.Path.Value.Contains(WebUISystemContant.CmsWidgetTemplateRoute))
             {
                 values["controller"] = "PageZoneApi";

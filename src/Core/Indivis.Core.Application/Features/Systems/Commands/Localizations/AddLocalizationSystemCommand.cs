@@ -6,6 +6,7 @@ using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
 using Indivis.Core.Domain.Entities.CoreEntities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,13 @@ namespace Indivis.Core.Application.Features.Systems.Commands.Localizations
             IResultDataControl<ReadLocalizationDto> model = new ResultDataControl<ReadLocalizationDto>();
             try
             {
-                Localization localizaton = this._mapper.Map<Localization>(request.Localization); 
+                Localization localizaton = this._mapper.Map<Localization>(request.Localization);
+
+                
+                if (this._applicationDbContext.Localization.Any(x=>x.Key == request.Localization.Key))
+                {
+                    return model.SuccessSetData(this._mapper.Map<ReadLocalizationDto>(this._applicationDbContext.Localization.FirstOrDefaultAsync(x => x.Key == request.Localization.Key)));
+                }
 
                 EntityEntry<Localization> addResult = this._applicationDbContext.Localization.Add(localizaton);
 

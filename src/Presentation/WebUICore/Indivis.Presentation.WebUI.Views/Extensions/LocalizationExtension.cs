@@ -25,7 +25,7 @@ namespace Indivis.Presentation.WebUI.Views.Extensions
     public static class LocalizationExtension
     {
 
-        public static async Task<IHtmlContent> PageLocalization(this IHtmlHelper htmlHelper, string key, ICurrentResponse currentResposne,string defautlValue = null)
+        public static async Task<IHtmlContent> PageLocalizationAsync(this IHtmlHelper htmlHelper, string key, ICurrentResponse currentResposne,string defautlValue = null)
         {
             ReadLocalizationDto localization = await LocalizationHelper.GetLocalizationAsync(key ,currentResposne,defautlValue);
 
@@ -55,7 +55,8 @@ namespace Indivis.Presentation.WebUI.Views.Extensions
                 baseSpan.InnerHtml.AppendHtml(value);
                 baseSpan.Attributes.Add("data-loc-key",key);
                 baseSpan.Attributes.Add("data-loc-id",localization.Id.ToString());
-                baseSpan.AddCssClass("cms-loc-key");
+                
+                baseSpan.AddCssClass("cms-loc-key js-cms-loc-key");
 
                 baseSpan.WriteTo(writer, HtmlEncoder.Default);
                 return htmlHelper.Raw(writer.ToString());

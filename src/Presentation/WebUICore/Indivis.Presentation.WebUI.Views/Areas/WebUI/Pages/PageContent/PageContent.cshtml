@@ -11,7 +11,7 @@
         @res.CurrentPage.Name
     </section>
 
-    @await Html.PageLocalization("about-button", res, "Bu bir deneme") @await Html.PageLocalization("about-button-2", res, "Merhaba benim adım gökhan kesler")
+    @await Html.PageLocalizationAsync("about-button", res, "Bu bir deneme") @await Html.PageLocalizationAsync("about-button-2", res, "Merhaba benim adım gökhan kesler")
     @await Component.Zone("widget-about-top-widgets", res)
     @await Component.Zone("widget-about-center-widgets", res)
     @await Component.Zone("widget-about-footer-widgets", res)

@@ -1,4 +1,5 @@
 ﻿import { PageWidgetTemplateService } from '../services/EditPage/PageWidgetTemplateService.js'
+import { LocalizationService } from '../services/EditPage/LocalizationService.js'
 import { HelperFunction } from '../services/helpers/HelperFunctions.js'
 
 export class CmsEditPage {
@@ -8,15 +9,20 @@ export class CmsEditPage {
          * @type {PageWidgetTemplateService}
          */
         this._PageWidgetTemplateService = new PageWidgetTemplateService();
+        /**
+         * @type {LocalizationService}
+         */
+        this._Localization = new LocalizationService();
     }
 
     /**
      * Zone nesnelerini oluştur
      */
     createObjectZone = () => {
-        window.addEventListener('load', (e) => {
+        window.addEventListener('load', async (e) => {
             this._PageWidgetTemplateService.createObjectZone(e);
-            this._PageWidgetTemplateService.pageZoneExecute();
+            await this._PageWidgetTemplateService.pageZoneExecuteAsync();
+            this._Localization.execute();
         });
     }
 
