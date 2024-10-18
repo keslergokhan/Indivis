@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUI.Views.Extensions
@@ -28,15 +29,42 @@ namespace Indivis.Presentation.WebUI.Views.Extensions
         {
             ReadLocalizationDto localization = await LocalizationHelper.GetLocalizationAsync(key ,currentResposne,defautlValue);
 
+
+            
+            string value = string.Empty;
+
             if (localization!=null)
             {
                 if (localization.Region.Any())
-                    return htmlHelper.Raw(localization.Region.FirstOrDefault());
+                {
+                    value = localization.Region.FirstOrDefault().Value;
+                }
                 else
-                    return htmlHelper.Raw(localization.DefaultValue);
+                {
+                    value = localization.DefaultValue;
+                }
+                    
             }
 
-            return htmlHelper.Raw(key);
+            if (currentResposne.EditMode)
+            {
+                using StringWriter writer = new StringWriter();
+
+                TagBuilder baseSpan = new TagBuilder("span");
+
+                baseSpan.InnerHtml.AppendHtml(value);
+                baseSpan.Attributes.Add("data-loc-key",key);
+                baseSpan.Attributes.Add("data-loc-id",localization.Id.ToString());
+                baseSpan.AddCssClass("cms-loc-key");
+
+                baseSpan.WriteTo(writer, HtmlEncoder.Default);
+                return htmlHelper.Raw(writer.ToString());
+            }
+            else
+            {
+                return htmlHelper.Raw(value);
+            }
+            
         }
     }
 }
