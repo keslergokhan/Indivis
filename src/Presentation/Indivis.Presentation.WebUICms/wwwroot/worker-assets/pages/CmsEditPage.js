@@ -1,13 +1,13 @@
-﻿import { CmsEditPageService } from '../services/EditPage/CmsEditPageService.js'
+﻿import { PageWidgetTemplateService } from '../services/EditPage/PageWidgetTemplateService.js'
 import { HelperFunction } from '../services/helpers/HelperFunctions.js'
 
 export class CmsEditPage {
 
     constructor() {
         /**
-         * @type {CmsEditPageService}
+         * @type {PageWidgetTemplateService}
          */
-        this._CmsEditPageService = new CmsEditPageService();
+        this._PageWidgetTemplateService = new PageWidgetTemplateService();
     }
 
     /**
@@ -15,8 +15,8 @@ export class CmsEditPage {
      */
     createObjectZone = () => {
         window.addEventListener('load', (e) => {
-            this._CmsEditPageService.createObjectZone(e);
-            this._CmsEditPageService.pageZoneExecute();
+            this._PageWidgetTemplateService.createObjectZone(e);
+            this._PageWidgetTemplateService.pageZoneExecute();
         });
     }
 
@@ -53,13 +53,13 @@ export class CmsEditPage {
         for (const item of widgetDraggableItem) {
 
             item.addEventListener('dragstart', (event) => {
-                this._CmsEditPageService.pageZoneDragStartStyle();
+                this._PageWidgetTemplateService.pageZoneDragStartStyle();
                 /*sürüklenen elementin ayarlarını transferet*/
                 event.dataTransfer.setData('text/plain', item.getAttribute("data-widget-settings"));
             });
 
             item.addEventListener('dragend', () => {
-                this._CmsEditPageService.pageZoneDragEndStyle();
+                this._PageWidgetTemplateService.pageZoneDragEndStyle();
             });
         }
     }

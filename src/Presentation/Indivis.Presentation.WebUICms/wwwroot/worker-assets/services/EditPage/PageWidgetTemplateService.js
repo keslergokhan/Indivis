@@ -1,6 +1,6 @@
 ﻿import { HelperFunction, CmsAlert } from '../helpers/HelperFunctions.js';
 
-export class CmsEditPageService {
+export class PageWidgetTemplateService {
 
     static PageZones = [];
     constructor() {
@@ -18,7 +18,7 @@ export class CmsEditPageService {
 
         zoneList.forEach((x) => {
             if (x) {
-                CmsEditPageService.PageZones.push(new PageZone(x));
+                PageWidgetTemplateService.PageZones.push(new PageZone(x));
             }
 
         })
@@ -40,7 +40,7 @@ export class CmsEditPageService {
 
 
         /** @type {PageZone} */
-        const pageZoneResult = CmsEditPageService.PageZones.find(x => x.getZoneId() == pageZoneId);
+        const pageZoneResult = PageWidgetTemplateService.PageZones.find(x => x.getZoneId() == pageZoneId);
 
         if (pageZoneResult) {
             /*
@@ -60,7 +60,7 @@ export class CmsEditPageService {
     static pageZoneRestart = (pageZoneId) => {
 
         /** @type {PageZone} */
-        const pageZoneResult = CmsEditPageService.PageZones.find(x => x.getZoneId() == pageZoneId);
+        const pageZoneResult = PageWidgetTemplateService.PageZones.find(x => x.getZoneId() == pageZoneId);
 
         if (pageZoneResult) {
             pageZoneResult.execute();
@@ -73,7 +73,7 @@ export class CmsEditPageService {
      * Yüklenen zone nesnelerini çalıştır.
      */
     pageZoneExecute = () => {
-        CmsEditPageService.PageZones.forEach(pageZone => {
+        PageWidgetTemplateService.PageZones.forEach(pageZone => {
             pageZone.execute();
         })
     }
@@ -82,7 +82,7 @@ export class CmsEditPageService {
      * Widget eklemek için element sürüklendiğine zone yapılarını göster
      */
     pageZoneDragStartStyle = () => {
-        CmsEditPageService.PageZones.forEach(x => {
+        PageWidgetTemplateService.PageZones.forEach(x => {
             x.pageZoneDragStartStyle()
         });
     }
@@ -91,7 +91,7 @@ export class CmsEditPageService {
      * Widget eklemek için element sürükleme bırakıldığında zone yapılarını gizle
      */
     pageZoneDragEndStyle = () => {
-        CmsEditPageService.PageZones.forEach(x => {
+        PageWidgetTemplateService.PageZones.forEach(x => {
             x.pageZoneDragEndStyle()
         });
     }
@@ -666,7 +666,7 @@ class WidgetForms {
                 WidgetFormIframe.hide();
                 CmsAlert.successTopEnd(`${widgetFormRequest.WidgetSetting.Name}, başarıyla eklendi`);
 
-                CmsEditPageService.addPageZoneNewWidget(json.data);
+                PageWidgetTemplateService.addPageZoneNewWidget(json.data);
 
             } else {
                 CmsAlert.error("Hata", "Beklenmedik teknik bir problem yaşandı lütfen daha sonra tekrar deneyiniz !");
@@ -706,7 +706,7 @@ class WidgetForms {
                 WidgetFormIframe.hide();
                 CmsAlert.successTopEnd(`${widgetFormRequest.WidgetSetting.Name}, başarıyla eklendi`);
 
-                CmsEditPageService.addPageZoneNewWidget(json.data);
+                PageWidgetTemplateService.addPageZoneNewWidget(json.data);
 
             } else {
                 CmsAlert.error("Hata", "Beklenmedik teknik bir problem yaşandı lütfen daha sonra tekrar deneyiniz !");
