@@ -17,7 +17,7 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
     [Authorize(Roles = "BaseAdmin")]
     [Route("api/[controller]")]
     [ApiController]
-    public class PageApiController : BaseApiController
+    public class PageCmsApiController : BaseApiController
     {
 
 

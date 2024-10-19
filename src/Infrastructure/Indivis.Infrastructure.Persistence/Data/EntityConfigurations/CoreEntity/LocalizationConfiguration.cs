@@ -28,6 +28,8 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
 
             builder.Property(x=>x.IsPageLocalization).HasDefaultValue<bool>(false);
 
+            builder.Property(x=>x.IsHtmlEditor).HasDefaultValue<bool>(false);
+
             builder.Property(x=>x.IsBackendLocalization).HasDefaultValue<bool>(false);
 
             builder.HasOne(x => x.Page)

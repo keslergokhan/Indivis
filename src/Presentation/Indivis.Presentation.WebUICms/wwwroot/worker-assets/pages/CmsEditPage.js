@@ -22,7 +22,7 @@ export class CmsEditPage {
         window.addEventListener('load', async (e) => {
             this._PageWidgetTemplateService.createObjectZone(e);
             await this._PageWidgetTemplateService.pageZoneExecuteAsync();
-            this._Localization.execute();
+            await this._Localization.executeAsync();
         });
     }
 

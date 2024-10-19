@@ -15,6 +15,7 @@ namespace Indivis.Core.Domain.Entities.CoreEntities
         public Page Page { get; set; }
         public bool IsPageLocalization { get; set; }
         public bool IsBackendLocalization { get; set; }
+        public bool IsHtmlEditor { get; set; }
     }
 
     public partial class Localization

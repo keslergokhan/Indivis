@@ -20,11 +20,11 @@ namespace Indivis.Presentation.WebUICms.Controllers.InternalApi
     [Authorize(Roles = "BaseAdmin")]
     [Route("api/[controller]")]
     [ApiController]
-    public class WidgetFormApiController : Controller
+    public class WidgetFormCmsApiController : Controller
     {
         private readonly IMediator _mediator;
 
-        public WidgetFormApiController(IMediator mediator)
+        public WidgetFormCmsApiController(IMediator mediator)
         {
             _mediator = mediator;
         }

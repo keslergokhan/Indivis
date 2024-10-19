@@ -136,7 +136,7 @@ class PageZone {
         this.Widgets = [];
 
 
-        await fetch(`/api/widgetApi/get-all-page-zone-widgets/${this.getZoneId()}`).then(res => res.json())
+        await fetch(`/api/widgetCmsApi/get-all-page-zone-widgets/${this.getZoneId()}`).then(res => res.json())
             .then(json => {
 
                 /** @type {Array} */
@@ -167,7 +167,7 @@ class PageZone {
                 }
 
                 for (const x of this.Widgets) {
-                    await x.execute();
+                    await x.executeAsync();
                 }
 
             })
@@ -439,7 +439,7 @@ class ZoneWidget {
         }
 
         let jsonData;
-        await fetch('/api/widgetFormApi/remove-widget', settings).then(x => {
+        await fetch('/api/widgetFormCmsApi/remove-widget', settings).then(x => {
             jsonData = x.json();
         });
 
@@ -502,7 +502,7 @@ class ZoneWidget {
             const pageZoneId = this.PageZone.getZoneId();
 
 
-            await fetch('/api/widgetFormApi/up-widget', {
+            await fetch('/api/widgetFormCmsApi/up-widget', {
                 method: "POST",
                 body: JSON.stringify({ PageZoneId: pageZoneId, PageWidgetSettingId: pageSettingId }),
                 headers: {
@@ -525,7 +525,7 @@ class ZoneWidget {
             const pageSettingId = this.getWidgetUpBtn().getAttribute("data-page-widget-setting-id");
             const pageZoneId = this.PageZone.getZoneId();
 
-            await fetch('/api/widgetFormApi/down-widget', {
+            await fetch('/api/widgetFormCmsApi/down-widget', {
                 method: "POST",
                 body: JSON.stringify({ PageZoneId: pageZoneId, PageWidgetSettingId: pageSettingId }),
                 headers: {
@@ -571,7 +571,7 @@ class ZoneWidget {
         })
     }
 
-    execute = async () => {
+    executeAsync = async () => {
         await this.widgetLibraryHandlerAsync("css");
         await this.getWidgetTemplateAsync();
         await this.widgetRemoveBtnHandlerAsync();
@@ -596,8 +596,8 @@ class WidgetFormRequest {
 class WidgetForms {
 
     constructor() {
-        this.AddWidgetUrl = "/api/WidgetFormApi/add-widget";
-        this.UpdateWidgetUrl = '/api/widgetFormApi/update-widget';
+        this.AddWidgetUrl = "/api/widgetFormCmsApi/add-widget";
+        this.UpdateWidgetUrl = '/api/widgetFormCmsApi/update-widget';
     }
 
     /**
@@ -730,7 +730,7 @@ class WidgetForms {
     /**
      * Yeni widget ekleme
      */
-    widgetFormSubmitEventHandler = () => {
+    widgetFormSubmitEventHandlerAsync = async () => {
         if (WidgetFormIframe.IframeContent) {
             WidgetFormIframe.IframeContent.querySelector(`.js-widget-form-iframe-submit`).addEventListener('click', async (e) => {
                 e.preventDefault();
@@ -747,7 +747,7 @@ class WidgetForms {
     /**
      * Mevcut widget güncelle
      */
-    widgetUpdateFormSubmitEventHandler = () => {
+    widgetUpdateFormSubmitEventHandlerAsync = async () => {
         if (WidgetFormIframe.IframeContent) {
             WidgetFormIframe.IframeContent.querySelector(`.js-widget-form-iframe-update-submit`).addEventListener('click', async (e) => {
                 e.preventDefault();
@@ -761,9 +761,9 @@ class WidgetForms {
     }
 
 
-    execute = () => {
-        this.widgetFormSubmitEventHandler();
-        this.widgetUpdateFormSubmitEventHandler();
+    executeAsync = async () => {
+        await this.widgetFormSubmitEventHandlerAsync();
+        await this.widgetUpdateFormSubmitEventHandlerAsync();
     }
 }
 
@@ -845,7 +845,7 @@ export class WidgetFormIframe {
      * @returns
      */
     static setIframeSrc = (widgetId, widgetTemplateId) => {
-        return this.IframeContent.querySelector("iframe").src = `/api/widgetformapi/getform/${widgetId}/${widgetTemplateId}`;
+        return this.IframeContent.querySelector("iframe").src = `/api/widgetFormCmsApi/getform/${widgetId}/${widgetTemplateId}`;
     }
 
     /**
@@ -854,7 +854,7 @@ export class WidgetFormIframe {
      * @returns
      */
     static setUpdateIframeSrc = (pageWidgetId) => {
-        return this.IframeContent.querySelector("iframe").src = `/api/widgetformapi/getUpdateform/${pageWidgetId}`;
+        return this.IframeContent.querySelector("iframe").src = `/api/widgetFormCmsApi/getUpdateform/${pageWidgetId}`;
     }
 
 
@@ -911,10 +911,10 @@ export class WidgetFormIframe {
         this.WidgetFormIframaData = null;
     }
 
-    static execute() {
+    static executeAsync = async () => {
         if (this.WidgetForms === null) {
             this.WidgetForms = new WidgetForms();
-            this.WidgetForms.execute();
+            await this.WidgetForms.executeAsync();
         }
         this.closeButtonEvent();
         this.IframeLoadHandler();
@@ -922,5 +922,5 @@ export class WidgetFormIframe {
 }
 
 if (WidgetFormIframe.IframeContent) {
-    WidgetFormIframe.execute();
+    WidgetFormIframe.executeAsync();
 }

@@ -34,9 +34,7 @@ namespace Indivis.Infrastructure.Persistence
             
             services.AddDbContext<IndivisContext>(x=>x.UseSqlServer(configuration.GetConnectionString("default2")));
 
-            services.AddScoped<IApplicationDbContext>(
-                sp => sp.GetRequiredService<IndivisContext>()
-            );
+            services.AddScoped<IApplicationDbContext, IndivisContext>();
 
             services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<IndivisContext>().AddDefaultTokenProviders();
 

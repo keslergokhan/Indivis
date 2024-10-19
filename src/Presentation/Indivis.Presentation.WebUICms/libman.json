@@ -20,6 +20,14 @@
       ]
     },
     {
+      "library": "ckeditor5@43.2.0",
+      "destination": "wwwroot/lib/ckeditor/",
+      "files": [
+        "ckeditor.js",
+        "translations/tr.js"
+      ]
+    },
+    {
       "provider": "unpkg",
       "library": "just-validate@4.3.0",
       "destination": "wwwroot/lib/justvalidate",

@@ -48,6 +48,10 @@ namespace Indivis.Presentation.WebUI.Views.Extensions
 
             if (currentResposne.EditMode)
             {
+                Random random = new Random();
+
+                int randomNumber = random.Next(1000000, 9999999);
+
                 using StringWriter writer = new StringWriter();
 
                 TagBuilder baseSpan = new TagBuilder("span");
@@ -55,7 +59,11 @@ namespace Indivis.Presentation.WebUI.Views.Extensions
                 baseSpan.InnerHtml.AppendHtml(value);
                 baseSpan.Attributes.Add("data-loc-key",key);
                 baseSpan.Attributes.Add("data-loc-id",localization.Id.ToString());
-                
+                baseSpan.Attributes.Add("id",$"loc-key-{randomNumber.ToString()}");
+                baseSpan.Attributes.Add("data-is-page", localization.IsPageLocalization.ToString());
+                baseSpan.Attributes.Add("data-is-backend", localization.IsBackendLocalization.ToString());
+                baseSpan.Attributes.Add("data-is-htmleditor", localization.IsHtmlEditor.ToString());
+
                 baseSpan.AddCssClass("cms-loc-key js-cms-loc-key");
 
                 baseSpan.WriteTo(writer, HtmlEncoder.Default);
