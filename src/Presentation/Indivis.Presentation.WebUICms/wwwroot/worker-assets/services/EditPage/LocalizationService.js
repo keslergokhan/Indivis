@@ -4,27 +4,41 @@ export class LocalizationService {
 
     constructor() {
         /** @type {Array<Localization>} */
-        this.Localizations = []
+        this.Localizations = [];
     }
 
     /**
      * Yeni localization nesneleri oluştur.
      */
-    createLocalizatonObject = () => {
+    createPageLocalizatonObject = () => {
         document.querySelectorAll(".js-cms-loc-key").forEach(loc => {
             this.Localizations.push(new Localization(loc));
         });
     }
 
-    
+    createPageWidgetLocalizationObject = () => {
+        document.querySelectorAll(".js-cms-widget-loc-key").forEach(loc => {
+            const newArray = this.Localizations.filter(x => x.key != loc.key);
+            this.WidgetLocalization = newArray;
+        });
+    }
+
+    executeWidgetAsync = () => {
+        this.createPageWidgetLocalizationObject();
+        setTimeout(async () => {
+            for (const loc of this.WidgetLocalization) {
+                await loc.executeAsync();
+            }
+        },500)
+    }
 
     executeAsync = async () => {
-        this.createLocalizatonObject();
+        this.createPageLocalizatonObject();
         setTimeout(async () => {
             for (const loc of this.Localizations) {
                 await loc.executeAsync();
             }
-        }, 1000);
+        }, 500);
     }
 }
 
@@ -90,7 +104,7 @@ class Localization {
      */
     localizationClickHandlerAsync = async () => {
         this.LocalizationElement.addEventListener('click', () => {
-
+            this.localizationCkEditorHandlerAsync();
         })
     }
 
@@ -109,6 +123,8 @@ class Localization {
                 console.error(x);
                 console.log("getLocalizationDbDataAsync");
             })
+
+            
     }
 
     /**
@@ -117,19 +133,44 @@ class Localization {
      * @returns
      */
     getCreateCkEditorObject = (id) => {
-        /*
-        this.CkEditorObject = CKEDITOR.replace('editor', {
-            height: 300, // Editör yüksekliği
-            toolbar: [
-                { name: 'document', items: ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print'] },
-                { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'Undo', 'Redo'] },
-                { name: 'editing', items: ['Find', 'Replace'] },
-                { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline'] },
-                { name: 'paragraph', items: ['NumberedList', 'BulletedList'] },
-                { name: 'insert', items: ['Image', 'Table'] },
-            ]
+        this.CkEditorObject = CKEDITOR.replace(`${id}`, {
+            height: 75,
+            width: 'auto'
         });
-        */
+
+        this.ckEditorSaveButton();
+        this.ckEditorCloseButton();
+        
+    }
+
+    ckEditorSaveButton = () => {
+        this.CkEditorObject.addCommand('LocalizationSaveHandler', {
+            exec: function (edit) {
+                alert("sdfsdf");
+            }
+        });
+
+        this.CkEditorObject.ui.addButton('LocalizationSave', {
+            label: "Kaydet",
+            command: "LocalizationSaveHandler",
+            toolbar: 'insert',
+            icon: '/styles-assets/media/floppy-disk.svg'
+        });
+    }
+
+    ckEditorCloseButton = () => {
+        this.CkEditorObject.addCommand('LocalizationCloseHandler', {
+            exec: () => {
+                this.CkEditorObject.destroy();
+            }
+        });
+
+        this.CkEditorObject.ui.addButton('LocalizationClose', {
+            label: "İptal",
+            command: "LocalizationCloseHandler",
+            toolbar: 'insert',
+            icon: '/styles-assets/media/xmark.svg'
+        });
     }
 
     localizationCkEditorHandlerAsync = async () => {
@@ -140,9 +181,11 @@ class Localization {
         await this.getLocalizationDbDataAsync();
         await this.localizationClickHandlerAsync();
         if (this.LocalizationData.IsHtmlEditor) {
-            this.localizationCkEditorHandlerAsync();
+            
         } else {
 
         }
+
+        
     }
 }

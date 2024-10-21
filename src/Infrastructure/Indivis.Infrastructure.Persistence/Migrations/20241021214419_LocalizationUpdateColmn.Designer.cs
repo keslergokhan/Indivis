@@ -4,6 +4,7 @@ using Indivis.Infrastructure.Persistence.Data.IndivisContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Indivis.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IndivisContext))]
-    partial class IndivisContextModelSnapshot : ModelSnapshot
+    [Migration("20241021214419_LocalizationUpdateColmn")]
+    partial class LocalizationUpdateColmn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,6 +264,9 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                     b.Property<Guid?>("PageId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("PageWidgetId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<byte>("State")
                         .HasColumnType("tinyint")
                         .HasColumnOrder(9999);
@@ -271,6 +277,8 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         .IsUnique();
 
                     b.HasIndex("PageId");
+
+                    b.HasIndex("PageWidgetId");
 
                     b.ToTable("Localization", (string)null);
                 });
@@ -1179,7 +1187,14 @@ namespace Indivis.Infrastructure.Persistence.Migrations
                         .HasForeignKey("PageId")
                         .OnDelete(DeleteBehavior.NoAction);
 
+                    b.HasOne("Indivis.Core.Domain.Entities.CoreEntities.Widgets.PageWidget", "PageWidget")
+                        .WithMany("Localizations")
+                        .HasForeignKey("PageWidgetId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Page");
+
+                    b.Navigation("PageWidget");
                 });
 
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.LocalizationRegion", b =>
@@ -1468,6 +1483,11 @@ namespace Indivis.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Url", b =>
                 {
                     b.Navigation("SubUrls");
+                });
+
+            modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Widgets.PageWidget", b =>
+                {
+                    b.Navigation("Localizations");
                 });
 
             modelBuilder.Entity("Indivis.Core.Domain.Entities.CoreEntities.Widgets.PageZone", b =>

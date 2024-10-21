@@ -8,15 +8,9 @@
 {
     <div class="test-widget">
         <div class="card">
-            -
-            @await Html.PageLocalizationAsync("widget-default", res, "Widget için deneme")
-
-            @await Html.PageLocalizationAsync("widget-default-2", res, "Widget için deneme test")
-
-            @await Html.PageLocalizationAsync("widget-default-5", res, "Widget için deneme test 55555")
             <h1>@Model.Data.Title</h1>
             <p> @Model.Data.Description Bu, basit bir HTML ve CSS örneğidir. CSS ile tasarımınızı güzelleştirebilirsiniz.</p>
-            <button>Başlayın</button>
+            <button>@await Html.PageWidgetLocalizationAsync("widget-default", res, "Widget için deneme")</button>
         </div>
     </div>
     

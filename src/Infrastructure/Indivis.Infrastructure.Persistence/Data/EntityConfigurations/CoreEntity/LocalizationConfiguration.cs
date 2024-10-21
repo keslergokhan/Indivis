@@ -32,6 +32,8 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
 
             builder.Property(x=>x.IsBackendLocalization).HasDefaultValue<bool>(false);
 
+            builder.Property(x => x.IsWidget).HasDefaultValue<bool>(false);
+
             builder.HasOne(x => x.Page)
                 .WithMany(x => x.Localizations)
                 .HasForeignKey(x => x.PageId)

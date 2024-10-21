@@ -365,6 +365,7 @@
     padding: 0px 10px 3px 10px;
     cursor: pointer;
     position: relative;
+    display:inline-block;
 }
 
 .cms-loc-key:hover:after{
@@ -390,12 +391,29 @@
     border-radius:30px;
 }
 
+/**CkEditor*/
+.cke_button__localizationsave .cke_button_icon {
+    display: inline; /* İkonun ve metnin yan yana görünmesi için */
+    margin-right: 5px; /* İkon ile metin arasında boşluk bırak */
+}
 
+.cke_button__localizationsave .cke_button_label {
+    display: inline; /* Metni sürekli görünür hale getir */
+    font-weight: bold; /* Metnin daha belirgin olmasını sağla */
+    color: green;
+}
 
+.cke_button__localizationclose .cke_button_icon {
+    display: inline; /* İkonun ve metnin yan yana görünmesi için */
+    margin-right: 5px; /* İkon ile metin arasında boşluk bırak */
+    margin:0px;
+}
 
-
-
-
+.cke_button__localizationclose .cke_button_label {
+    display: inline; /* Metni sürekli görünür hale getir */
+    font-weight: bold; /* Metnin daha belirgin olmasını sağla */
+    color: red;
+}
 
 
 

@@ -18,6 +18,7 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Localization.Writes
         public Guid? PageId { get; set; }
         public bool IsPageLocalization { get; set; }
         public bool IsBackendLocalization { get; set; }
+        public bool IsWidget { get; set; }
     }
 
     public partial class WriteLocalizationDto

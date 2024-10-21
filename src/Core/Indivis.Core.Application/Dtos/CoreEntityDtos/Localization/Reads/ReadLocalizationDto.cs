@@ -19,6 +19,7 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Localization.Reads
         public bool IsPageLocalization { get; set; }
         public bool IsBackendLocalization { get; set; }
         public bool IsHtmlEditor { get; set; }
+        public bool IsWidget { get; set; }
     }
 
     public partial class ReadLocalizationDto

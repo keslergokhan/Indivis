@@ -1,4 +1,5 @@
 ﻿using Indivis.Core.Domain.Commons.CoreEntities;
+using Indivis.Core.Domain.Entities.CoreEntities.Widgets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Indivis.Core.Domain.Entities.CoreEntities
         public bool IsPageLocalization { get; set; }
         public bool IsBackendLocalization { get; set; }
         public bool IsHtmlEditor { get; set; }
+        public bool IsWidget { get; set; }
     }
 
     public partial class Localization

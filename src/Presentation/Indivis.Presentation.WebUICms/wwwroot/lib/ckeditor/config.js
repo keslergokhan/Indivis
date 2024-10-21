@@ -8,27 +8,15 @@ CKEDITOR.editorConfig = function( config ) {
 	// For complete reference see:
 	// https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html
 
-	config.extraPlugins = 'colorbutton,font,justify';
+	config.extraPlugins = 'colorbutton,font,justify,autogrow';
+	config.autoGrow_minHeight = 100; // Minimum yükseklik
+	config.autoGrow_maxHeight = 600; // Maksimum yükseklik
+	config.autoGrow_bottomSpace = 50; // Alt boþluk miktarý
 
-	// The toolbar groups arrangement, optimized for two toolbar rows.
-	config.toolbarGroups = [
-		{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
-		{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
-		{ name: 'links' },
-		{ name: 'insert' },
-		{ name: 'forms' },
-		{ name: 'tools' },
-		{ name: 'document',	   groups: [ 'mode', 'document', 'doctools' ] },
-		{ name: 'others' },
-		'/',
-		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-		{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
-		{ name: 'styles' },
-		{ name: 'colors' },
-		{ name: 'about' }
-	];
-
+	
 	config.toolbar = [
+		{ name: 'editing', items: ['find', 'selection'] },
+		{ name: 'basicstyles', items: ['Bold', 'Italic'] },
 		{ name: 'document', items: ['NewPage', 'Preview', 'Print', 'Save', 'Templates'] },
 		{ name: 'clipboard', items: ['-', 'Undo', 'Redo'] },
 		{ name: 'editing', items: ['Find', 'Replace', '-', 'SelectAll'] },
@@ -36,9 +24,9 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'colors', items: ['TextColor', 'BGColor'] }, // Yazý ve arka plan renklerini ayarlamak için
 		{ name: 'tools', items: ['Maximize', 'ShowBlocks'] },
 		{ name: 'paragraph', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] }, // Metni hizalama araçlarý
-        { name: 'about', items: ['About'] },
-        { name: "colorbutton", items: ["colorbutton"]},
-		{ name: 'others', items: ['-'] }, // Ayýrýcý ekleme
+		{ name: "colorbutton", items: ["colorbutton"] },
+		{ name: "Localization", items: ["LocalizationSave","LocalizationClose"]}
+
 	];
 
 	// Remove some buttons provided by the standard plugins, which are
@@ -53,4 +41,5 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
+
 };

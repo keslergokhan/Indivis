@@ -83,10 +83,6 @@
 
     @RenderBody()
 
-    <textarea name="content" id="editor">
-        <p>This is some sample content!</p>
-    </textarea>
-   
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - Indivis.Presentation.WebUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -125,11 +121,6 @@
     <!script src="_content/Indivis.Presentation.WebUI.Views/lib/bootstrap/js/bootstrap.bundle.min.js"></!script>
     <!script type="module" src="worker-assets/pages/CmsEditPage.js?v=@DateTime.Now.ToString("FFFFFFF")"></!script>
     <!script src="/lib/sweetalert/sweetalert2.all.min.js"></!script>
-
- 
-    <script>
-        CKEDITOR.replace('editor');
-    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
