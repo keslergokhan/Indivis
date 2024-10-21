@@ -120,16 +120,17 @@
 
     
 
+    <script src="~/lib/ckeditor/ckeditor.js"></script>
     <!script src="/lib/justvalidate/dist/just-validate.production.min.js"></!script>
     <!script src="_content/Indivis.Presentation.WebUI.Views/lib/bootstrap/js/bootstrap.bundle.min.js"></!script>
     <!script type="module" src="worker-assets/pages/CmsEditPage.js?v=@DateTime.Now.ToString("FFFFFFF")"></!script>
     <!script src="/lib/sweetalert/sweetalert2.all.min.js"></!script>
-    <!script src="/lib/ckeditor/ckeditor.js"></!script>
 
+ 
     <script>
-        
+        CKEDITOR.replace('editor');
     </script>
-    
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -20,11 +20,11 @@
       ]
     },
     {
-      "library": "ckeditor5@43.2.0",
-      "destination": "wwwroot/lib/ckeditor/",
-      "files": [
-        "ckeditor.js",
-        "translations/tr.js"
+      "library": "ckeditor@4.20.0",
+      "destination": "wwwroot/lib/ckeditor",
+      "exclude": [
+        "adapters/jquery.js",
+        "adapters/jquery.min.js"
       ]
     },
     {

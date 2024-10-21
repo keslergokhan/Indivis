@@ -1,24 +1,9 @@
-﻿using Indivis.Core.Application.Common.Data.Presentation;
-using Indivis.Core.Application.Dtos.CoreEntityDtos.Language.Reads;
-using Indivis.Core.Application.Dtos.CoreEntityDtos.Localization.Reads;
-using Indivis.Core.Application.Dtos.CoreEntityDtos.Localization.Writes;
-using Indivis.Core.Application.Features.Systems.Commands.Localizations;
-using Indivis.Core.Application.Features.Systems.Queries.Localizations;
+﻿using Indivis.Core.Application.Dtos.CoreEntityDtos.Localization.Reads;
 using Indivis.Core.Application.Helpers;
 using Indivis.Core.Application.Interfaces.Data.Presentation;
-using Indivis.Core.Application.Interfaces.Results;
-using MediatR;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 
 namespace Indivis.Presentation.WebUI.Views.Extensions
 {

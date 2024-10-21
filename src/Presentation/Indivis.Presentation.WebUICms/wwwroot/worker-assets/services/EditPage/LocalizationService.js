@@ -1,4 +1,6 @@
-﻿export class LocalizationService {
+﻿import { CmsAlert } from "../helpers/HelperFunctions.js";
+
+export class LocalizationService {
 
     constructor() {
         /** @type {Array<Localization>} */
@@ -27,66 +29,107 @@
 }
 
 
+class LocalizationData {
+    constructor({ id, key, defaultValue, isHtmlEditor,region }) {
+        /** @type {string} */
+        this.Id = id;
+        /**  Varsayılan değer @type {string} */
+        this.DefaultValue = defaultValue;
+        /** CkEditor @type {boolean}*/
+        this.IsHtmlEditor = isHtmlEditor;
+        /** @type {string} Benzersiz key*/
+        this.Key = key;
+        /** Diğer Diller @type {Array<LocalizationData>}*/
+        this.Region = region;
+    }
 
+    /**
+     * 
+     * @param {Array<LocalizationData>} regions
+     */
+    setRegion = (regions) => {
+        this.Region.push(regions)
+    }
+}
 class Localization {
 
     constructor(localizationElement) {
         /** @type {Element} */
         this.LocalizationElement = localizationElement;
+        /** @type {LocalizationData} */
+        this.LocalizationData = null;
+        this.CkEditorObject = null;
     }
 
+    /**
+     * Localization key döndürür
+     * @returns {string}
+     */
     getLocalizationKey = () => {
         return this.LocalizationElement.getAttribute("data-loc-key");
     }
 
+    /**
+     *  Localization Id(Guid) döndürür
+     * @returns {string}
+     */
     getLocalizationDbId = () => {
         return this.LocalizationElement.getAttribute("data-loc-id");
     }
 
+    /**
+     * Elementin Id değerini döndürür.
+     * @returns {string}
+     */
     getLocalizationId = () => {
         return this.LocalizationElement.getAttribute("id");
     }
-   
+
+    /**
+     * Localization click event
+     */
     localizationClickHandlerAsync = async () => {
         this.LocalizationElement.addEventListener('click', () => {
 
         })
     }
 
-
+    /**
+     * Localization db data
+     */
     getLocalizationDbDataAsync = async () => {
-        fetch(`/api/LocalizationCmsApi/get-localization/${this.getLocalizationKey()}`)
+        await fetch(`/api/LocalizationCmsApi/get-localization/${this.getLocalizationKey()}`)
             .then(res => res.json())
             .then(json => {
                 if (json.isSuccess) {
-                    console.log(json.data);
+                    this.LocalizationData = new LocalizationData(json.data);
                 }
+            }).catch(x => {
+                CmsAlert.error("Uyarı", "Beklenmedik teknik bir problem yaşandı, lütfen daha sonra tekrar deneyiniz !");
+                console.error(x);
+                console.log("getLocalizationDbDataAsync");
             })
     }
 
+    /**
+     * CkEditor nesnesi döndürür.
+     * @param {any} id
+     * @returns
+     */
     getCreateCkEditorObject = (id) => {
-        return ClassicEditor
-            .create(document.querySelector(`#${id}`), {
-                toolbar: [
-                    'bold',        // Kalın yazma
-                    'italic',      // İtalik yazma
-                    'heading'      // Başlıklar (h1-h6)
-                ],
-                heading: {
-                    options: [
-                        { model: 'paragraph', title: 'Başlık', class: 'ck-heading_paragraph' },
-                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-                        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
-                        { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
-                        { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
-                        { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
-                    ]
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        /*
+        this.CkEditorObject = CKEDITOR.replace('editor', {
+            height: 300, // Editör yüksekliği
+            toolbar: [
+                { name: 'document', items: ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print'] },
+                { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'Undo', 'Redo'] },
+                { name: 'editing', items: ['Find', 'Replace'] },
+                { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline'] },
+                { name: 'paragraph', items: ['NumberedList', 'BulletedList'] },
+                { name: 'insert', items: ['Image', 'Table'] },
+            ]
+        });
+        */
     }
 
     localizationCkEditorHandlerAsync = async () => {
@@ -94,8 +137,12 @@ class Localization {
     }
 
     executeAsync = async () => {
-        await this.localizationClickHandlerAsync();
-        await this.localizationCkEditorHandlerAsync();
         await this.getLocalizationDbDataAsync();
+        await this.localizationClickHandlerAsync();
+        if (this.LocalizationData.IsHtmlEditor) {
+            this.localizationCkEditorHandlerAsync();
+        } else {
+
+        }
     }
 }
