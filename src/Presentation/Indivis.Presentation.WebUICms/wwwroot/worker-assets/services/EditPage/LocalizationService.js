@@ -2,9 +2,10 @@
 
 export class LocalizationService {
 
+    /** @type {Array<Localization>} */
+    static Localizations = [];
     constructor() {
-        /** @type {Array<Localization>} */
-        this.Localizations = [];
+        
     }
 
     /**
@@ -12,33 +13,68 @@ export class LocalizationService {
      */
     createPageLocalizatonObject = () => {
         document.querySelectorAll(".js-cms-loc-key").forEach(loc => {
-            this.Localizations.push(new Localization(loc));
-        });
-    }
-
-    createPageWidgetLocalizationObject = () => {
-        document.querySelectorAll(".js-cms-widget-loc-key").forEach(loc => {
-            const newArray = this.Localizations.filter(x => x.key != loc.key);
-            this.WidgetLocalization = newArray;
-        });
-    }
-
-    executeWidgetAsync = () => {
-        this.createPageWidgetLocalizationObject();
-        setTimeout(async () => {
-            for (const loc of this.WidgetLocalization) {
-                await loc.executeAsync();
+            const localization = new Localization(loc);
+            if (LocalizationService.Localizations.findIndex(x => x.getLocalizationId() == localization.getLocalizationId()) <= -1) {
+                LocalizationService.Localizations.push(localization);
             }
-        },500)
+        });
+    }
+
+    /**
+     * Zone yapıları içerisindeki localization nesnesini oluştur ve çalıştır.
+     * @param {Element} pageZoneElement
+     */
+    static createAndExecutePageWidgetLocalizationAsync = async (pageZoneElement) => {
+        const zoneLocs = document.querySelectorAll(".js-cms-widget-loc-key");
+
+        for (const loc of zoneLocs) {
+
+            /** @type {Localization} */
+            const localization = new Localization(loc);
+
+            if (LocalizationService.Localizations.findIndex(x => x.getLocalizationId() == localization.getLocalizationId()) <= -1) {
+                LocalizationService.Localizations.push(localization);
+            } else {
+                const index = LocalizationService.Localizations.findIndex(x => x.key == localization.getLocalizationKey());
+                LocalizationService.Localizations[index] = localization;
+            }
+            await LocalizationService.localizationAllRunExecuteAsync();
+        }
+    }
+
+
+    static localizationAllRunExecuteAsync = async () => {
+        setTimeout(async () => {
+            for (const loc of LocalizationService.Localizations) {
+                if (!loc.RunExecuteControl) {
+                    loc.RunExecuteControl = true;
+                    await loc.executeAsync();
+                }
+            }
+        }, 500);
+    }
+
+
+   /**
+    * Aynı olan localization değerleri güncelle
+    * @param {Localization} Localization
+    * @param {string} value
+    */
+    static localizationAllUpdateValueAsync = async (localization,value) => {
+
+        const filterResult = LocalizationService.Localizations.filter(x => x.getLocalizationDbId() == localization.getLocalizationDbId())
+
+        if (filterResult) {
+            for (const loc of filterResult) {
+                loc.LocalizationElement.innerHTML = value;
+            }
+        }
+        
     }
 
     executeAsync = async () => {
         this.createPageLocalizatonObject();
-        setTimeout(async () => {
-            for (const loc of this.Localizations) {
-                await loc.executeAsync();
-            }
-        }, 500);
+        await LocalizationService.localizationAllRunExecuteAsync();
     }
 }
 
@@ -73,6 +109,7 @@ class Localization {
         /** @type {LocalizationData} */
         this.LocalizationData = null;
         this.CkEditorObject = null;
+        this.RunExecuteControl = false;
     }
 
     /**
@@ -123,9 +160,49 @@ class Localization {
                 console.error(x);
                 console.log("getLocalizationDbDataAsync");
             })
-
-            
     }
+
+    valueSaveAsync = async () => {
+
+        const req = {
+            Localization: {
+                LocalizationId: this.getLocalizationDbId(),
+                Key: this.getLocalizationKey(),
+                Value: this.CkEditorObject.getData()
+            }
+        };
+
+        const settings = {
+            method:'POST',
+            body: JSON.stringify(req),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+
+        await fetch('/api/localizationCmsApi/update-localization', settings)
+            .then(x => x.json())
+            .then(async json => {
+
+                console.log(json);
+                if (json.isSuccess) {
+                    CmsAlert.success("İşlem Başarılı", "Metin başarıyla güncellendi !");
+                    this.CkEditorObject.destroy();
+                    await LocalizationService.localizationAllUpdateValueAsync(this, json.data.region[0].value);
+                } else {
+                    CmsAlert.error("Uyarı !", "Beklenmedik teknik bir problem yaşandı lütfen daha sonra tekrar deneyin !");
+                    console.error(json);
+                    console.error("valueSaveAsync");
+                }
+            })
+            .catch(x => {
+                CmsAlert.error("Uyarı !", "Beklenmedik teknik bir problem yaşandı !");
+                console.error(x);
+                console.log("valueSaveAsync");
+            });
+
+    }
+
 
     /**
      * CkEditor nesnesi döndürür.
@@ -133,6 +210,7 @@ class Localization {
      * @returns
      */
     getCreateCkEditorObject = (id) => {
+
         this.CkEditorObject = CKEDITOR.replace(`${id}`, {
             height: 75,
             width: 'auto'
@@ -145,8 +223,8 @@ class Localization {
 
     ckEditorSaveButton = () => {
         this.CkEditorObject.addCommand('LocalizationSaveHandler', {
-            exec: function (edit) {
-                alert("sdfsdf");
+            exec: () => {
+                this.valueSaveAsync();
             }
         });
 
@@ -180,12 +258,6 @@ class Localization {
     executeAsync = async () => {
         await this.getLocalizationDbDataAsync();
         await this.localizationClickHandlerAsync();
-        if (this.LocalizationData.IsHtmlEditor) {
-            
-        } else {
-
-        }
-
-        
+        this.LocalizationData.RunExecuteControl = true;
     }
 }

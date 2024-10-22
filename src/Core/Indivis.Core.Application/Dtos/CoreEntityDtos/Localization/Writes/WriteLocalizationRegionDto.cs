@@ -1,4 +1,5 @@
 ﻿using Indivis.Core.Application.Attributes.Systems;
+using Indivis.Core.Application.Common.BaseClasses.Dtos.CoreEntities;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Language.Reads;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Localization.Writes
 {
     [CreateMap(typeof(Indivis.Core.Domain.Entities.CoreEntities.LocalizationRegion))]
-    public partial class WriteLocalizationRegionDto
+    public partial class WriteLocalizationRegionDto : BaseWriteEntityDto
     {
         public string Value { get; set; }
     }
@@ -20,5 +21,6 @@ namespace Indivis.Core.Application.Dtos.CoreEntityDtos.Localization.Writes
     public partial class WriteLocalizationRegionDto
     {
         public Guid LocalizationId { get; set; }
+
     }
 }

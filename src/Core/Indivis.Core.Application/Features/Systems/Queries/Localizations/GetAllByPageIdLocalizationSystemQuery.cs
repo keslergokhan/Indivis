@@ -44,7 +44,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Localizations
             {
                 List<Localization> localizationList = await this._applicationDbContext.Localization
                     .Where(x => x.PageId == request.PageId && x.State == (int)StateEnum.Online)
-                    .Include(x => x.Region.Where(i => i.State == (int)StateEnum.Online && i.LocalizationId == request.LanguageId))
+                    .Include(x => x.Region.Where(i => i.State == (int)StateEnum.Online && i.LanguageId == request.LanguageId))
                     .ToListAsync();
 
                 model.SuccessSetData(this._mapper.Map<List<ReadLocalizationDto>>(localizationList));

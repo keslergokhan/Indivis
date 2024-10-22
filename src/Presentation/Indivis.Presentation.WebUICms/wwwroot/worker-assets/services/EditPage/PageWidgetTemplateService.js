@@ -1,4 +1,5 @@
 ﻿import { HelperFunction, CmsAlert } from '../helpers/HelperFunctions.js';
+import { LocalizationService } from './LocalizationService.js'
 
 export class PageWidgetTemplateService {
 
@@ -250,6 +251,7 @@ class PageZone {
         this.pageZoneDragoverHandler();
         this.pageZoneDropHandler();
         this.pageZoneDragleaveHandler();
+        await LocalizationService.createAndExecutePageWidgetLocalizationAsync(this.Zone);
     }
 }
 

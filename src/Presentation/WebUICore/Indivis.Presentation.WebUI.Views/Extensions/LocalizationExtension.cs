@@ -81,7 +81,7 @@ namespace Indivis.Presentation.WebUI.Views.Extensions
             {
                 if (localization.Region.Any())
                 {
-                    value = localization.Region.FirstOrDefault().Value;
+                    value = localization.Region.FirstOrDefault(x=>x.LanguageId == currentResposne.CurrentPage.LanguageId).Value;
                 }
                 else
                 {
