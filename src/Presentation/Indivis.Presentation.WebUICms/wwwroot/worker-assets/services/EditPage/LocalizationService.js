@@ -137,15 +137,6 @@ class Localization {
     }
 
     /**
-     * Localization click event
-     */
-    localizationClickHandlerAsync = async () => {
-        this.LocalizationElement.addEventListener('click', () => {
-            this.localizationCkEditorHandlerAsync();
-        })
-    }
-
-    /**
      * Localization db data
      */
     getLocalizationDbDataAsync = async () => {
@@ -162,13 +153,13 @@ class Localization {
             })
     }
 
-    valueSaveAsync = async () => {
+    valueSaveAsync = async (newValue) => {
 
         const req = {
             Localization: {
                 LocalizationId: this.getLocalizationDbId(),
                 Key: this.getLocalizationKey(),
-                Value: this.CkEditorObject.getData()
+                Value: newValue
             }
         };
 
@@ -184,10 +175,11 @@ class Localization {
             .then(x => x.json())
             .then(async json => {
 
-                console.log(json);
                 if (json.isSuccess) {
                     CmsAlert.success("İşlem Başarılı", "Metin başarıyla güncellendi !");
-                    this.CkEditorObject.destroy();
+                    if (this.LocalizationData.IsHtmlEditor) {
+                        this.CkEditorObject.destroy();
+                    }
                     await LocalizationService.localizationAllUpdateValueAsync(this, json.data.region[0].value);
                 } else {
                     CmsAlert.error("Uyarı !", "Beklenmedik teknik bir problem yaşandı lütfen daha sonra tekrar deneyin !");
@@ -224,7 +216,7 @@ class Localization {
     ckEditorSaveButton = () => {
         this.CkEditorObject.addCommand('LocalizationSaveHandler', {
             exec: () => {
-                this.valueSaveAsync();
+                this.valueSaveAsync(this.CkEditorObject.getData());
             }
         });
 
@@ -253,6 +245,55 @@ class Localization {
 
     localizationCkEditorHandlerAsync = async () => {
         this.getCreateCkEditorObject(this.getLocalizationId())
+    }
+
+    alertUpdateValueHandlerAsync = async () => {
+
+        let value = this.LocalizationData.DefaultValue;
+        if (this.LocalizationData.Region && this.LocalizationData.Region.length > 0) {
+            value = this.LocalizationData.Region[0].value;
+        }
+        
+        Swal.fire({
+            title: value,
+            input: "textarea",
+            inputAttributes: {
+                autocapitalize: "off"
+            },
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "İptal",
+            confirmButtonText: "Güncelle",
+            showLoaderOnConfirm: true,
+            preConfirm: async (login) => {
+                try {
+
+                } catch (error) {
+                    Swal.showValidationMessage(`
+                        Request failed: ${error}
+                      `);
+                }
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await this.valueSaveAsync(result.value);
+            }
+        });
+    }
+
+    /**
+    * Localization click event
+    */
+    localizationClickHandlerAsync = async () => {
+        this.LocalizationElement.addEventListener('click', () => {
+            if (this.LocalizationData.IsHtmlEditor) {
+                this.localizationCkEditorHandlerAsync();
+            } else {
+                this.alertUpdateValueHandlerAsync();
+            }
+        })
     }
 
     executeAsync = async () => {

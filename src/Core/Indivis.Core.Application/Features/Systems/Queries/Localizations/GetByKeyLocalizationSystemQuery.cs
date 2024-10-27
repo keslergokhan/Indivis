@@ -37,7 +37,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Localizations
             IResultDataControl<ReadLocalizationDto> model = new ResultDataControl<ReadLocalizationDto>();
             try
             {
-                Localization localization = await this._applicationDbContext.Localization
+                Localization localization = await this._applicationDbContext.Localization.AsNoTracking()
                     .Where(x => x.Key == request.Key && x.State == (int)StateEnum.Online)
                     .Include(x => x.Region)
                     .SingleAsync();

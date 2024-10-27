@@ -61,7 +61,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Widgets
                 }
 
 
-                ICollection<WidgetForm> widgetFormResult = await widgetQuery
+                ICollection<WidgetForm> widgetFormResult = await widgetQuery.AsNoTracking()
                     .Include(x => x.WidgetService)
                     .ThenInclude(x => x.WidgetForms)
                     .ThenInclude(x => x.WidgetForm_WidgetFormInputs)

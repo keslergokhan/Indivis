@@ -43,7 +43,7 @@ namespace Indivis.Core.Application.Features.Pages.Queries
 
             try
             {
-                List<PageSystem> result = await this._applicationDbContext.PageSystems.Where(x => x.State == (int)request.Status).ToListAsync();
+                List<PageSystem> result = await this._applicationDbContext.PageSystems.AsNoTracking().Where(x => x.State == (int)request.Status).ToListAsync();
 
                 model.SuccessSetData(this._mapper.Map<List<ReadPageSystemDto>>(result));
             }

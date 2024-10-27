@@ -40,7 +40,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Urls
         {
             IResultDataControl<ReadUrlDto> model = new ResultDataControl<ReadUrlDto>();
 
-            Url firstUrl = _applicaitonDbContext.Urls
+            Url firstUrl = _applicaitonDbContext.Urls.AsNoTracking()
                 .Include(x => x.ParentUrl)
                 .Include(x => x.Language)
                 .Include(x => x.UrlSystemType)

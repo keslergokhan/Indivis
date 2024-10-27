@@ -3,6 +3,7 @@ using Indivis.Core.Domain.Entities.CoreEntities.ManyToMany;
 using Indivis.Core.Domain.Entities.CoreEntities.Widgets;
 using Indivis.Core.Domain.Interfaces.Entities.CoreEntities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,7 @@ namespace Indivis.Core.Application.Interfaces.Data
         public DbSet<LocalizationRegion> LocalizationRegions { get; }
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+        public EntityEntry Entry(object entity);
 
     }
 }

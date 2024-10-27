@@ -46,7 +46,7 @@ namespace Indivis.Core.Application.Features.Systems.Commands.Localizations
 
                 if (loc.Region.Any())
                 {
-                    LocalizationRegion localizationRegion = loc.Region.FirstOrDefault(x => x.LanguageId == request.LanguageId);
+                    LocalizationRegion localizationRegion = loc.Region.Where(x => x.LanguageId == request.LanguageId).FirstOrDefault();
                     localizationRegion.Value = request.LocalizationRegion.Value;
                     localizationRegion.ModifiedDate = DateTime.Now;
 
@@ -60,6 +60,7 @@ namespace Indivis.Core.Application.Features.Systems.Commands.Localizations
                
 
                 int save = await this._applicationDbContext.SaveChangesAsync();
+                this._applicationDbContext.Entry(loc).State = EntityState.Detached;
                 if (save > 0)
                 {
                     model.SuccessSetData(this._mapper.Map<ReadLocalizationDto>(loc));

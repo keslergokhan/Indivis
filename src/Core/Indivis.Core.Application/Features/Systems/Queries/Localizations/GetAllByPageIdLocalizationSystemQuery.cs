@@ -42,7 +42,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Localizations
 
             try
             {
-                List<Localization> localizationList = await this._applicationDbContext.Localization
+                List<Localization> localizationList = await this._applicationDbContext.Localization.AsNoTracking()
                     .Where(x => x.PageId == request.PageId && x.State == (int)StateEnum.Online)
                     .Include(x => x.Region.Where(i => i.State == (int)StateEnum.Online && i.LanguageId == request.LanguageId))
                     .ToListAsync();

@@ -1,9 +1,15 @@
-﻿using Indivis.Core.Application.Common.Data.Presentation;
+﻿using AutoMapper;
+using Indivis.Core.Application.Common.Data.Presentation;
 using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Reads;
+using Indivis.Core.Application.Dtos.CoreEntityDtos.Widgets.Writes;
+using Indivis.Core.Application.Enums.Systems;
+using Indivis.Core.Application.Features.Systems.Commands.Widgets;
 using Indivis.Core.Application.Interfaces.Data.Presentation;
+using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Domain.Entities.CoreEntities.Widgets;
 using Indivis.Presentation.WebUI.Widgets.Models.ViewComponents;
 using Indivis.Presentation.WebUI.Widgets.ViewComponents.Widgets;
+using MediatR;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +21,47 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
 {
     public static class WidgetExtension
     {
+        private static IServiceProvider _serviceProvider;
+        public static void Initialize(IServiceProvider serviceProvider)
+        {
+            WidgetExtension._serviceProvider = serviceProvider;
+        }
+
+
+        private static async Task<ReadPageZoneDto> AddPageZoneAsync(string key, ICurrentResponse currentResposne)
+        {
+            IMediator mediator = (IMediator)WidgetExtension._serviceProvider.GetService(typeof(IMediator));
+
+            IResultDataControl<ReadPageZoneDto> pageZoneResult = await mediator.Send(new AddPageZoneSystemCommand()
+            {
+                PageZone = new WritePageZoneDto()
+                {
+                    Key = key,
+                    LanguageId = currentResposne.CurrentPage.LanguageId,
+                    PageId = currentResposne.CurrentPage.Id,
+                    State = (int)StateEnum.Online,
+                    CreateDate= DateTime.Now,
+                }
+            });
+
+
+            if (!pageZoneResult.IsSuccess)
+            {
+                throw new Exception($"{key} ekleme aşamasında beklenmedik bir problem yaşandı !");
+            }
+
+            
+
+            return pageZoneResult.Data;
+        }
+
         public static async Task<IHtmlContent> Zone(this IViewComponentHelper viewComponent, string key,ICurrentResponse currentResposne)
         {
             ReadPageZoneDto pageZone = currentResposne.CurrentPage.PageZones.FirstOrDefault(x => x.Key == key);
 
             if (pageZone==null)
             {
-                return null;
+                pageZone = await WidgetExtension.AddPageZoneAsync(key, currentResposne);
             }
 
             using StringWriter writer = new StringWriter();
@@ -33,11 +73,11 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
             zone.MergeAttribute("data-zone-id", pageZone.Id.ToString());
             zone.MergeAttribute("data-zone-key", pageZone.Key);
             zone.MergeAttribute("data-zone-type", "widget");
-            zone.MergeAttribute("data-zone-page-id", pageZone.Page.Id.ToString());
+            zone.MergeAttribute("data-zone-page-id", currentResposne.CurrentPage.Id.ToString());
 
             TagBuilder baseDiv = new TagBuilder("div");
             baseDiv.AddCssClass("zone-widgets-container");
-            if (pageZone.PageWidgets.Count <= 0)
+            if (pageZone.PageWidgets!= null && pageZone.PageWidgets.Count <= 0)
             {
                 baseDiv.AddCssClass("empty-widgets-container");
                 zone.InnerHtml.AppendHtml(baseDiv);
@@ -78,10 +118,8 @@ namespace Indivis.Presentation.WebUI.Widgets.Extensions
                         div.AddCssClass("empty-widget cms-spinner-border");
                     }
 
-
                     div.InnerHtml.AppendHtml(content);
                     baseDiv.InnerHtml.AppendHtml(div);
-
                 }
             }
             

@@ -40,7 +40,7 @@ namespace Indivis.Core.Application.Features.Systems.Queries.Pages
             IResultDataControl<ReadPageDto> model = new ResultDataControl<ReadPageDto>();
 
             Page page = await this._applicationDbContext
-                .Pages
+                .Pages.AsNoTracking()
                 .Include(x=>x.PageSystem)
                 .FirstOrDefaultAsync(x => x.UrlId == request.UrlId);
 
