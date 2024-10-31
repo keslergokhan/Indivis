@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\WebUI\Shareds\Partials\" />
+    <Folder Include="Areas\Widgets\EditorComponent\" />
     <Folder Include="wwwroot\assets\areas\webui\" />
     <Folder Include="wwwroot\assets\areas\widgets\TestDefault\" />
   </ItemGroup>

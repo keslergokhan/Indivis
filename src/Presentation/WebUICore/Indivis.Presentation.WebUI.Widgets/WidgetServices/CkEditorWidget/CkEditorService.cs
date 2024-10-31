@@ -4,22 +4,27 @@ using Indivis.Core.Application.Interfaces.Data.Presentation;
 using Indivis.Core.Application.Interfaces.Results;
 using Indivis.Core.Application.Results;
 using Indivis.Presentation.WebUI.Widgets.Common.WidgetServices;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Indivis.Presentation.WebUI.Widgets.WidgetServices.TestWidget
+namespace Indivis.Presentation.WebUI.Widgets.WidgetServices.CkEditorWidget
 {
-    [DependencyRegister(typeof(TestWidgetService), DependencyTypes.Scopet)]
-    public class TestWidgetService : BaseWidgetService<TestWidgetOutModel>
+    [DependencyRegister(typeof(CkEditorService), DependencyTypes.Scopet)]
+    public class CkEditorService : BaseWidgetService<CkEditorServiceOutModel>
     {
         public readonly ICurrentResponse _currentResponse;
 
-        public TestWidgetService(ICurrentResponse currentResponse)
+        public CkEditorService(ICurrentResponse currentResponse)
         {
             _currentResponse = currentResponse;
         }
 
-        public async override Task<IResultDataControl<TestWidgetOutModel>> ExecuteAsync(ReadPageWidgetDto pageWidget)
+        public override async Task<IResultDataControl<CkEditorServiceOutModel>> ExecuteAsync(ReadPageWidgetDto pageWidget)
         {
-            IResultDataControl<TestWidgetOutModel> model = new ResultDataControl<TestWidgetOutModel>();
+            IResultDataControl<CkEditorServiceOutModel> model = new ResultDataControl<CkEditorServiceOutModel>();
             model.SetData(base.JsonConvertToModel(pageWidget));
 
             try
@@ -32,7 +37,7 @@ namespace Indivis.Presentation.WebUI.Widgets.WidgetServices.TestWidget
 
             return model;
         }
-
-       
     }
+
+   
 }

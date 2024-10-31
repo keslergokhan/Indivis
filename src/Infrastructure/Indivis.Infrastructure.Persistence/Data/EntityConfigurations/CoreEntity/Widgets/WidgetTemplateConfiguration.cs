@@ -51,6 +51,7 @@ namespace Indivis.Infrastructure.Persistence.Data.EntityConfigurations.CoreEntit
 
             builder.HasOne(x => x.WidgetService).WithOne()
                 .HasForeignKey<WidgetTemplate>(x => x.WidgetServiceId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }

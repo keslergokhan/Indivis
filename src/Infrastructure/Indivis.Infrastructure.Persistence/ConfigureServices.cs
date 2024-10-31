@@ -103,6 +103,8 @@ namespace Indivis.Infrastructure.Persistence
         {
             IndivisContext db = services.BuildServiceProvider().GetService<IndivisContext>();
 
+            AddContentWidget(db);
+            /*
             AddLanguage(db);
 
             AddEntity(db);
@@ -121,7 +123,7 @@ namespace Indivis.Infrastructure.Persistence
             AddPageAnnouncementDetail(db);
 
             AnnouncementEntity(db);
-            
+            */
         }
 
 
@@ -470,6 +472,79 @@ namespace Indivis.Infrastructure.Persistence
 
 
             db.SaveChanges();
+        }
+
+        public static void AddContentWidget(IndivisContext db)
+        {
+            Language language = db.Languages.FirstOrDefault(x=>x.CountryCode == "TR");
+
+            WidgetTemplate template = new WidgetTemplate()
+            {
+                Id = Guid.NewGuid(),
+                CreateDate = DateTime.Now,
+                State = 1,
+                LanguageId= language.Id,
+                Title = "İçerik Editörü",
+                Description = "İstediğin gibi bir blog oluştur ve içeriğini zenginleştir.",
+                Image = "",
+                Template = "/TestWidget/ContentDefault.cshtml",
+                WidgetService = new WidgetService()
+                {
+                    Id = Guid.NewGuid(),
+                    WidgetServiceTypeName = "CkEditorService",
+                    CreateDate = DateTime.Now,
+                    State = 1
+                }
+            };
+
+            Widget widget = new Widget()
+            {
+
+                Id = Guid.NewGuid(),
+                Name = "İçerik Editörü",
+                Description = "İstediğin gibi bir blog oluştur ve içeriğini zenginleştir.",
+                CreateDate = DateTime.Now,
+                Image = "",
+                State = 1,
+                Order = 2,
+                LanguageId = language.Id,
+                WidgetTemplates = new List<WidgetTemplate>() { template}
+            };
+
+
+            db.Widgets.Add(widget);
+
+            WidgetFormInput input = new WidgetFormInput()
+            {
+                Id = Guid.NewGuid(),
+                State = 1,
+                CreateDate = DateTime.Now,
+                Name = "EditorContent",
+                Label = "İçerik",
+                Required = false,
+                InputComponentName = "CkEditorContent"
+            };
+
+            WidgetForm widgetForm = new WidgetForm()
+            {
+                Id = Guid.NewGuid(),
+                Name = "EditorContentForm",
+                State = 1,
+                CreateDate = DateTime.Now,
+                WidgetServiceId = template.WidgetServiceId
+
+            };
+
+
+            db.WidgetForm_WidgetFormInput.Add(new WidgetForm_WidgetFormInput()
+            {
+                WidgetForm = widgetForm,
+                WidgetFormInput = input
+            });
+
+            int aa = db.SaveChanges();
+            
+            
         }
 
 

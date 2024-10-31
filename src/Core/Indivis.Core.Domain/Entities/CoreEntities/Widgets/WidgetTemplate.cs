@@ -34,7 +34,7 @@ namespace Indivis.Core.Domain.Entities.CoreEntities.Widgets
     public partial class WidgetTemplate
     {
         public Widget Widget { get; set; }
-        public Guid WidgetId { get; set; }
+        public Guid? WidgetId { get; set; }
         public WidgetService WidgetService { get; set; }
         public Guid WidgetServiceId { get; set; }
     }
