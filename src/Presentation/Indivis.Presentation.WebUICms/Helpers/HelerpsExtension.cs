@@ -7,11 +7,32 @@ namespace Indivis.Presentation.WebUICms.Helpers
 {
 	public static class HelerpsExtension
 	{
+        /*
+		 
+			<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+				<!--begin::Item-->
+				<li class="breadcrumb-item text-muted">
+					<a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">Home</a>
+				</li>
+				<!--end::Item-->
+				<!--begin::Item-->
+				<li class="breadcrumb-item">
+					<span class="bullet bg-gray-400 w-5px h-2px"></span>
+				</li>
+				<!--end::Item-->
+				<!--begin::Item-->
+				<li class="breadcrumb-item text-muted">Subscription</li>
+				<!--end::Item-->
+			</ul> 
+		 
+		 */
 
-		public static IHtmlContent GetBreadcrumbs(this IHtmlHelper htmlHelper, string key)
+
+
+        public static IHtmlContent GetBreadcrumbs(this IHtmlHelper htmlHelper, string key)
 		{
 			IHtmlContentBuilder html = new HtmlContentBuilder();
-			string li = "<li class=\"breadcrumb-item pe-3 \">{0}</li>";
+			string li = "<li class=\"breadcrumb-item text-muted\">{0}</li>";
 
 			KeyValuePair<string, CmsBreadcrumbModel> currentBreadcrumb = BaseCmsController.Breadcrumbs.First(x => x.Key == key);
 
@@ -30,7 +51,8 @@ namespace Indivis.Presentation.WebUICms.Helpers
 				}
 				else
 				{
-					html.AppendHtml(string.Format(li, string.Format("<a href=\"{1}\" class=\"pe-3\">{2}</a>", li, item.Value.Link, item.Value.Title)));
+					html.AppendHtml(string.Format(li, string.Format("<a href=\"{1}\" class=\"text-muted text-hover-primary\">{2}</a>", li, item.Value.Link, item.Value.Title)));
+					html.AppendHtml(string.Format(li, "<span class=\"bullet bg-gray-400 w-5px h-2px\"></span>"));
 				}
 
 			}

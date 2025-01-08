@@ -1,102 +1,335 @@
-﻿<!--begin::Aside-->
-<div id="kt_aside" class="aside aside-dark aside-hoverable" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
-	<!--begin::Brand-->
-	<div class="aside-logo flex-column-auto" id="kt_aside_logo">
-		<!--begin::Logo-->
+﻿<div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
+	<!--begin::Logo-->
+	<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
+		<!--begin::Logo image-->
 		<a href="../../demo1/dist/index.html">
-			<a href="/">
-				<span class="indivis">indivis</span>
-				<span class="indivis-point">
-					<!--begin::Svg Icon | path: assets/media/icons/duotune/arrows/arr087.svg-->
-					<span class="svg-icon svg-icon-muted svg-icon-2hx">
-						<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="5 0 24 24" fill="none">
-							<rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="black" />
-							<rect x="6" y="11" width="12" height="2" rx="1" fill="black" />
-						</svg>
-					</span>
-					<!--end::Svg Icon-->
-				</span>
-			</a>
+			<img alt="Logo" src="assets/media/logos/default-dark.svg" class="h-25px app-sidebar-logo-default" />
+			<img alt="Logo" src="assets/media/logos/default-small.svg" class="h-20px app-sidebar-logo-minimize" />
 		</a>
-
-	</div>
-	<!--end::Brand-->
-	<!--begin::Aside menu-->
-	<div class="aside-menu flex-column-fluid">
-		<!--begin::Aside Menu-->
-		<div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="0">
-			<!--begin::Menu-->
-			<div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
-				
-				<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-					<span class="menu-link">
-						<span class="menu-icon">
-							<!--begin::Svg Icon | path: icons/duotune/general/gen009.svg-->
-							<span class="svg-icon svg-icon-2">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-									<path opacity="0.3" d="M21 22H14C13.4 22 13 21.6 13 21V3C13 2.4 13.4 2 14 2H21C21.6 2 22 2.4 22 3V21C22 21.6 21.6 22 21 22Z" fill="black" />
-									<path d="M10 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H10C10.6 2 11 2.4 11 3V21C11 21.6 10.6 22 10 22Z" fill="black" />
-								</svg>
-							</span>
-							<!--end::Svg Icon-->
-						</span>
-						<span class="menu-title">Sayfa</span>
-						<span class="menu-arrow"></span>
-					</span>
-					<div class="menu-sub menu-sub-accordion menu-active-bg">
-						<div class="menu-item">
-							<a class="menu-link" href="/PageCms/PageSystems">
-								<span class="menu-bullet">
-									<span class="bullet bullet-dot"></span>
-								</span>
-								<span class="menu-title">Yeni Sayfa Ekle</span>
-							</a>
-						</div>
-						<div class="menu-item">
-							<a class="menu-link" href="../../demo1/dist/layouts/aside/font-icons.html">
-								<span class="menu-bullet">
-									<span class="bullet bullet-dot"></span>
-								</span>
-								<span class="menu-title">Font Icons</span>
-							</a>
-						</div>
-						<div class="menu-item">
-							<a class="menu-link" href="../../demo1/dist/layouts/aside/minimized.html">
-								<span class="menu-bullet">
-									<span class="bullet bullet-dot"></span>
-								</span>
-								<span class="menu-title">Minimized</span>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="menu-item">
-					<a class="menu-link" href="https://preview.keenthemes.com/metronic8/demo1/layout-builder.html" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
-						<span class="menu-icon">
-							<!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-							<span class="svg-icon svg-icon-2">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-									<path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="black" />
-									<path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="black" />
-								</svg>
-							</span>
-							<!--end::Svg Icon-->
-						</span>
-						<span class="menu-title">Layout Builder</span>
-					</a>
-				</div>
-				<div class="menu-item">
-					<div class="menu-content">
-						<div class="separator mx-1 my-4"></div>
-					</div>
-				</div>
-				
-			</div>
-			<!--end::Menu-->
+		<!--end::Logo image-->
+		<!--begin::Sidebar toggle-->
+		<!--begin::Minimized sidebar setup:
+			if (isset($_COOKIE["sidebar_minimize_state"]) && $_COOKIE["sidebar_minimize_state"] === "on") {
+				1. "src/js/layout/sidebar.js" adds "sidebar_minimize_state" cookie value to save the sidebar minimize state.
+				2. Set data-kt-app-sidebar-minimize="on" attribute for body tag.
+				3. Set data-kt-toggle-state="active" attribute to the toggle element with "kt_app_sidebar_toggle" id.
+				4. Add "active" class to to sidebar toggle element with "kt_app_sidebar_toggle" id.
+			}
+		-->
+		<div id="kt_app_sidebar_toggle" class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary h-30px w-30px position-absolute top-50 start-100 translate-middle rotate" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="app-sidebar-minimize">
+			<i class="ki-duotone ki-black-left-line fs-3 rotate-180">
+				<span class="path1"></span>
+				<span class="path2"></span>
+			</i>
 		</div>
-		<!--end::Aside Menu-->
+		<!--end::Sidebar toggle-->
 	</div>
-	<!--end::Aside menu-->
-	
+	<!--end::Logo-->
+	<!--begin::sidebar menu-->
+	<div class="app-sidebar-menu overflow-hidden flex-column-fluid">
+		<!--begin::Menu wrapper-->
+		<div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper">
+			<!--begin::Scroll wrapper-->
+			<div id="kt_app_sidebar_menu_scroll" class="scroll-y my-5 mx-3" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
+				<!--begin::Menu-->
+				<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
+					<!--begin:Menu item-->
+					<div data-kt-menu-trigger="click" class="menu-item menu-accordion" hidden>
+						<!--begin:Menu link-->
+						<span class="menu-link">
+							<span class="menu-icon">
+								<i class="ki-duotone ki-element-11 fs-2">
+									<span class="path1"></span>
+									<span class="path2"></span>
+									<span class="path3"></span>
+									<span class="path4"></span>
+								</i>
+							</span>
+							<span class="menu-title">Dashboards</span>
+							<span class="menu-arrow"></span>
+						</span>
+						<!--end:Menu link-->
+						<!--begin:Menu sub-->
+						<div class="menu-sub menu-sub-accordion">
+							<!--begin:Menu item-->
+							<div class="menu-item">
+								<!--begin:Menu link-->
+								<a class="menu-link" href="../../demo1/dist/index.html">
+									<span class="menu-bullet">
+										<span class="bullet bullet-dot"></span>
+									</span>
+									<span class="menu-title">Default</span>
+								</a>
+								<!--end:Menu link-->
+							</div>
+							<!--end:Menu item-->
+							<!--begin:Menu item-->
+							<div class="menu-item">
+								<!--begin:Menu link-->
+								<a class="menu-link" href="../../demo1/dist/dashboards/ecommerce.html">
+									<span class="menu-bullet">
+										<span class="bullet bullet-dot"></span>
+									</span>
+									<span class="menu-title">eCommerce</span>
+								</a>
+								<!--end:Menu link-->
+							</div>
+							<!--end:Menu item-->
+							<!--begin:Menu item-->
+							<div class="menu-item">
+								<!--begin:Menu link-->
+								<a class="menu-link" href="../../demo1/dist/dashboards/projects.html">
+									<span class="menu-bullet">
+										<span class="bullet bullet-dot"></span>
+									</span>
+									<span class="menu-title">Projects</span>
+								</a>
+								<!--end:Menu link-->
+							</div>
+							<!--end:Menu item-->
+							<!--begin:Menu item-->
+							<div class="menu-item">
+								<!--begin:Menu link-->
+								<a class="menu-link" href="../../demo1/dist/dashboards/online-courses.html">
+									<span class="menu-bullet">
+										<span class="bullet bullet-dot"></span>
+									</span>
+									<span class="menu-title">Online Courses</span>
+								</a>
+								<!--end:Menu link-->
+							</div>
+							<!--end:Menu item-->
+							<!--begin:Menu item-->
+							<div class="menu-item">
+								<!--begin:Menu link-->
+								<a class="menu-link" href="../../demo1/dist/dashboards/marketing.html">
+									<span class="menu-bullet">
+										<span class="bullet bullet-dot"></span>
+									</span>
+									<span class="menu-title">Marketing</span>
+								</a>
+								<!--end:Menu link-->
+							</div>
+							<!--end:Menu item-->
+							<div class="menu-inner flex-column collapse" id="kt_app_sidebar_menu_dashboards_collapse">
+								<!--begin:Menu item-->
+								<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="../../demo1/dist/dashboards/bidding.html">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">Bidding</span>
+									</a>
+									<!--end:Menu link-->
+								</div>
+								<!--end:Menu item-->
+								<!--begin:Menu item-->
+								<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="../../demo1/dist/dashboards/pos.html">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">POS System</span>
+									</a>
+									<!--end:Menu link-->
+								</div>
+								<!--end:Menu item-->
+								<!--begin:Menu item-->
+								<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="../../demo1/dist/dashboards/call-center.html">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">Call Center</span>
+									</a>
+									<!--end:Menu link-->
+								</div>
+								<!--end:Menu item-->
+								<!--begin:Menu item-->
+								<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="../../demo1/dist/dashboards/logistics.html">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">Logistics</span>
+									</a>
+									<!--end:Menu link-->
+								</div>
+								<!--end:Menu item-->
+								<!--begin:Menu item-->
+								<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="../../demo1/dist/dashboards/website-analytics.html">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">Website Analytics</span>
+									</a>
+									<!--end:Menu link-->
+								</div>
+								<!--end:Menu item-->
+								<!--begin:Menu item-->
+								<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="../../demo1/dist/dashboards/finance-performance.html">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">Finance Performance</span>
+									</a>
+									<!--end:Menu link-->
+								</div>
+								<!--end:Menu item-->
+								<!--begin:Menu item-->
+								<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="../../demo1/dist/dashboards/store-analytics.html">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">Store Analytics</span>
+									</a>
+									<!--end:Menu link-->
+								</div>
+								<!--end:Menu item-->
+								<!--begin:Menu item-->
+								<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="../../demo1/dist/dashboards/social.html">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">Social</span>
+									</a>
+									<!--end:Menu link-->
+								</div>
+								<!--end:Menu item-->
+								<!--begin:Menu item-->
+								<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="../../demo1/dist/dashboards/delivery.html">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">Delivery</span>
+									</a>
+									<!--end:Menu link-->
+								</div>
+								<!--end:Menu item-->
+								<!--begin:Menu item-->
+								<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="../../demo1/dist/dashboards/crypto.html">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">Crypto</span>
+									</a>
+									<!--end:Menu link-->
+								</div>
+								<!--end:Menu item-->
+								<!--begin:Menu item-->
+								<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="../../demo1/dist/dashboards/school.html">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">School</span>
+									</a>
+									<!--end:Menu link-->
+								</div>
+								<!--end:Menu item-->
+								<!--begin:Menu item-->
+								<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="../../demo1/dist/dashboards/podcast.html">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">Podcast</span>
+									</a>
+									<!--end:Menu link-->
+								</div>
+								<!--end:Menu item-->
+								<!--begin:Menu item-->
+								<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="../../demo1/dist/landing.html">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">Landing</span>
+									</a>
+									<!--end:Menu link-->
+								</div>
+								<!--end:Menu item-->
+							</div>
+							<div class="menu-item">
+								<div class="menu-content">
+									<a class="btn btn-flex btn-color-primary d-flex flex-stack fs-base p-0 ms-2 mb-2 toggle collapsible collapsed" data-bs-toggle="collapse" href="#kt_app_sidebar_menu_dashboards_collapse" data-kt-toggle-text="Show Less">
+										<span data-kt-toggle-text-target="true">Show 12 More</span>
+										<i class="ki-duotone ki-minus-square toggle-on fs-2 me-0">
+											<span class="path1"></span>
+											<span class="path2"></span>
+										</i>
+										<i class="ki-duotone ki-plus-square toggle-off fs-2 me-0">
+											<span class="path1"></span>
+											<span class="path2"></span>
+											<span class="path3"></span>
+										</i>
+									</a>
+								</div>
+							</div>
+						</div>
+						<!--end:Menu sub-->
+					</div>
+					<!--end:Menu item-->
+					<!--begin:Menu item-->
+					<div class="menu-item pt-5">
+						<!--begin:Menu content-->
+						<div class="menu-content">
+							<span class="menu-heading fw-bold text-uppercase fs-7">Sayfa</span>
+						</div>
+						<!--end:Menu content-->
+					</div>
+					
+					<!--begin:Menu item-->
+					<div class="menu-item">
+						<!--begin:Menu link-->
+						<a class="menu-link" href="/pagecms/pagesystems">
+							<span class="menu-icon">
+								<i class="ki-duotone ki-abstract-13 fs-2">
+									<span class="path1"></span>
+									<span class="path2"></span>
+								</i>
+							</span>
+							<span class="menu-title">Sayfa Sistemi</span>
+						</a>
+						<!--end:Menu link-->
+					</div>
+					<!--end:Menu item-->
+				</div>
+				<!--end::Menu-->
+			</div>
+			<!--end::Scroll wrapper-->
+		</div>
+		<!--end::Menu wrapper-->
+	</div>
+	<!--end::sidebar menu-->
+	<!--begin::Footer-->
+	<div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
+		<a href="https://preview.keenthemes.com/html/metronic/docs" class="btn btn-flex flex-center btn-custom btn-primary overflow-hidden text-nowrap px-0 h-40px w-100" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="200+ in-house components and 3rd-party plugins">
+			<span class="btn-label">Docs & Components</span>
+			<i class="ki-duotone ki-document btn-icon fs-2 m-0">
+				<span class="path1"></span>
+				<span class="path2"></span>
+			</i>
+		</a>
+	</div>
+	<!--end::Footer-->
 </div>
-<!--end::Aside-->

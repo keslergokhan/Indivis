@@ -34,15 +34,9 @@
             </div>
         </div>
     </div>
-
-
-
     <header>
-        @{
-            await Html.RenderPartialAsync("~/Views/Shareds/Partials/_CmdEditPageTopMenuPartial.cshtml");
-            @await Component.InvokeAsync(nameof(WidgetsComponent));
-        }
-       
+        @await Html.PartialAsync("~/Views/Shareds/Partials/_CmdEditPageTopMenuPartial.cshtml")
+        @await Component.InvokeAsync(nameof(WidgetsComponent))
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Navbar</a>

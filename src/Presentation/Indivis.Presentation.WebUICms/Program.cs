@@ -1,7 +1,6 @@
 using Indivis.Core.Application;
 using Indivis.Infrastructure.Persistence;
 using Indivis.Presentation.WebUI.Controllers;
-using Indivis.Presentation.WebUI.Widgets;
 using Indivis.Presentation.WebUICms.Middleware;
 using System.Text.Json.Serialization;
 
